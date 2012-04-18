@@ -47,23 +47,12 @@ exmp.hangul.core.Controller = window; {
     exmp.hangul.core.Controller._initializeComponent = function() {
         
         var controller = exmp.hangul.core.Controller;
-        
-//        var closure1 = exmp.hangul.functor.event.KeyupEventClosure1;
         var closure = exmp.hangul.functor.event.KeyupEventClosure;
         
-        $("#roman").keyup(function(event) {
-            //$("#hangul").val("hoge");
-            
-//            closure1.execute({
-//                keyCode: event.keyCode,
-//                shiftKey: event.shiftKey,
-//                ctrlKey: event.ctrlKey
-//            });
-            
+        $("#roman").keyup(function(event) {            
             closure.execute({
                 value: $("#roman").val()
             });
-            
         });
     }
 }
