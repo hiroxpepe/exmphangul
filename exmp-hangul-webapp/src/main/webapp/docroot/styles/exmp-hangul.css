@@ -297,3 +297,28 @@ div.index-content {
         margin-top: 0.5em;
         font-size: 90%;
     }
+
+/* ****************************************************************************
+ * define the appearance of the alphabet content.
+ */
+div.alphabet {
+    background: white;
+    padding: 0.25em;
+    padding-bottom: 1em;
+}
+    div.alphabet table {
+        border: 1px solid silver;
+        border-collapse: collapse;
+        border-spacing: 0;
+    }
+        div.alphabet table th {
+            background-color: #f3f3f3;
+            border: 1px solid silver;
+            text-align: left;
+            padding: 0.25em;
+        }
+        div.alphabet table td {
+            border: 1px solid silver;
+            text-align: left;
+            padding: 0.25em;
+        }
