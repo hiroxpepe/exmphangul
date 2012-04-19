@@ -38,8 +38,21 @@ exmp.hangul.functor.value.LetterIdArrayTransformer = {
         var value = obj.value;
         var text = "";
         
-        // loop..
+        // TODO: this is still provisional..
         for (var i = 0; i < 50; i++) {
+            
+            // finally not match..
+            if (i == 49) {
+                var remains = this._remains;
+                LetterIdArray[i] = {
+                    initialId: null,
+                    peakId: null,
+                    finalId: null,
+                    remains: remains
+                };
+                return LetterIdArray;
+            }
+            
             if (i == 0) {
                 text = value;
             }
@@ -160,7 +173,8 @@ exmp.hangul.functor.value.LetterIdArrayTransformer = {
         return {
             initialId: initialId,
             peakId: peakId,
-            finalId: finalId
+            finalId: finalId,
+            remains: null
         };
     }
 }

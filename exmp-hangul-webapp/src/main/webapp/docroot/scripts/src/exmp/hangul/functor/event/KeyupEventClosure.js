@@ -67,20 +67,26 @@ exmp.hangul.functor.event.KeyupEventClosure = {
             // loop..
             for (var i in letterIdObj) {
                 
-                // get the UTF-16 code.
-                var code = decodedValueTransformer.transform(
-                    letterIdObj[i]
-                );
-                if (code == null) {
-                    console.log("not match word: " + oneWord);
-                    continue;
+                var idObj = letterIdObj[i];
+                if (idObj.remains != null) {
+                    text = text + idObj.remains;
                 }
-            
-                // get the decoded string.
-                var decodedString = utf.packUTF16([code]);
+                else {
+                    // get the UTF-16 code.
+                    var code = decodedValueTransformer.transform(
+                        idObj
+                    );
+                    if (code == null) {
+                        console.log("not match word: " + oneWord);
+                        continue;
+                    }
 
-                // merge the text.
-                text = text + decodedString;
+                    // get the decoded string.
+                    var decodedString = utf.packUTF16([code]);
+
+                    // merge the text.
+                    text = text + decodedString;
+                }
             }
         }
         
