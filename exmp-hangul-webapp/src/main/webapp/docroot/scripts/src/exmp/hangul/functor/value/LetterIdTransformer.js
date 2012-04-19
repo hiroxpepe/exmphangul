@@ -31,7 +31,7 @@ exmp.hangul.functor.value.LetterIdTransformer = {
         
         var initialArray = ["g","kk","n","d","tt","r","m","b","pp","s","ss","-","j","jj","ch","k","t","p","h"];
         var peakArray = ["a","ae","ya","yae","eo","e","yeo","ye","o","wa","wae","oe","yo","u","wo","we","wi","yu","eu","ui","i"];
-        var finalArray = ["-","g","kk","ks","n","nj","nh","d","r","rg","rm","rb","rs","rt","rp","rh","m","b","bs","s","ss","ng","j","c","k","t","p","h"];
+        var finalArray = ["-","g","kk","ks","n","nj","nh","d","r","rg","rm","rb","rs","rt","rp","rh","m","b","bs","s","ss","ng","j","ch","k","t","p","h"];
         
         var initialId = null;
         var peakId = null;
