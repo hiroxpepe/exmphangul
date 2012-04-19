@@ -28,7 +28,7 @@ exmp.hangul.functor.event.KeyupEventClosure = {
         console.log("exmp.hangul.functor.event.KeyupEventClosure#execute");
         
         var sentenceDivideTransformer = exmp.hangul.functor.value.SentenceDivideTransformer;
-        var letterIdTransformer = exmp.hangul.functor.value.LetterIdTransformer;
+        var letterIdTransformer = exmp.hangul.functor.value.LetterIdArrayTransformer;
         var decodedValueTransformer = exmp.hangul.functor.value.DecodedValueTransformer;
      
         // get the sentence.
@@ -64,20 +64,24 @@ exmp.hangul.functor.event.KeyupEventClosure = {
                 continue;
             }
             
-            // get the UTF-16 code.
-            var code = decodedValueTransformer.transform(
-                letterIdObj
-            );
-            if (code == null) {
-                console.log("not match word: " + oneWord);
-                continue;
+            // loop..
+            for (var i in letterIdObj) {
+                
+                // get the UTF-16 code.
+                var code = decodedValueTransformer.transform(
+                    letterIdObj[i]
+                );
+                if (code == null) {
+                    console.log("not match word: " + oneWord);
+                    continue;
+                }
+            
+                // get the decoded string.
+                var decodedString = utf.packUTF16([code]);
+
+                // merge the text.
+                text = text + decodedString;
             }
-            
-            // get the decoded string.
-            var decodedString = utf.packUTF16([code]);
-            
-            // merge the text.
-            text = text + decodedString;
         }
         
         $("#hangul").val(text);
