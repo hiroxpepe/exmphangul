@@ -11,6 +11,7 @@
     <version>0.1.0-SNAPSHOT</version>
     
     <properties>
+        <exmp.version>0.1.0-SNAPSHOT</exmp.version>
         <spring.version>3.1.1.RELEASE</spring.version>
         <tiles.version>2.1.4</tiles.version>
         <slf4j.version>1.6.1</slf4j.version>
@@ -19,6 +20,16 @@
     </properties>
     
     <dependencies>
+        <!--//////////////////////////////////////////////////////////////////////////-->
+        <!-- USER LIB -->
+        
+        <!-- exmp-hangul-mvc -->
+        <dependency>
+            <groupId>org.examproject</groupId>
+            <artifactId>exmp-hangul-mvc</artifactId>
+            <version>${exmp.version}</version>
+        </dependency>
+        
         <!--//////////////////////////////////////////////////////////////////////////-->
         <!-- OSS LIB -->
     
