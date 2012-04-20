@@ -38,7 +38,7 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.examproject.hangul.dto.TweetDto;
 import org.examproject.hangul.form.TweetForm;
 import org.examproject.hangul.model.TweetModel;
-import org.examproject.hangul.response.Result;
+import org.examproject.hangul.response.AjaxResponse;
 import org.examproject.hangul.service.TweetService;
 import org.examproject.hangul.value.OAuthValue;
 import org.examproject.hangul.value.TweetAuthValue;
@@ -51,7 +51,15 @@ import org.examproject.hangul.value.TweetCookie;
 @Scope(value="session")
 public class TweetController {
     
-    private static final Log LOG = LogFactory.getLog(TweetController.class);
+    private static final Log LOG = LogFactory.getLog(
+        TweetController.class
+    );
+
+    private static final String TWEET_AUTH_VALUE_BEAN_ID = "tweetAuthValue";
+    
+    private static final String TWEET_SERVICE_BEAN_ID = "tweetService";
+                
+    private static final String AJAX_RESPONSE_BEAN_ID = "ajaxResponse";
     
     @Inject
     private final ApplicationContext context = null;
@@ -65,14 +73,23 @@ public class TweetController {
     ///////////////////////////////////////////////////////////////////////////
     // public methods
     
-    @RequestMapping(value="/main", method=RequestMethod.GET)
+    @RequestMapping(
+        value="/main",
+        method=RequestMethod.GET
+    )
     public String getForm(
-        @RequestParam(value="locale", defaultValue="") String locale,
-        @CookieValue(value="__exmphangul_request_token", defaultValue="") String requestToken,
-        @CookieValue(value="__exmphangul_access_token", defaultValue="") String oauthToken,
-        @CookieValue(value="__exmphangul_token_secret", defaultValue="") String oauthTokenSecret,
-        @CookieValue(value="__exmphangul_user_id", defaultValue="") String userId,
-        @CookieValue(value="__exmphangul_screen_name", defaultValue="") String screenName,
+        @RequestParam(value="locale", defaultValue="")
+        String locale,
+        @CookieValue(value="__exmphangul_request_token", defaultValue="")
+        String requestToken,
+        @CookieValue(value="__exmphangul_access_token", defaultValue="")
+        String oauthToken,
+        @CookieValue(value="__exmphangul_token_secret", defaultValue="")
+        String oauthTokenSecret,
+        @CookieValue(value="__exmphangul_user_id", defaultValue="")
+        String userId,
+        @CookieValue(value="__exmphangul_screen_name", defaultValue="")
+        String screenName,
         Model model
      ) {
         LOG.debug("called.");
@@ -83,8 +100,12 @@ public class TweetController {
             if (!isValidParameterOfGet(oauthToken, oauthTokenSecret, userId, screenName)) {            
                 String msg = "is not a valid authentication.";
                 LOG.info(msg);
-                Result result = (Result) context.getBean("result", true, msg);
-                model.addAttribute(result);
+                AjaxResponse response = (AjaxResponse) context.getBean(
+                    AJAX_RESPONSE_BEAN_ID,
+                    true,
+                    msg
+                );
+                model.addAttribute(response);
                 return "redirect:/index.html" + "?locale=" + locale;
             }
             
@@ -109,21 +130,36 @@ public class TweetController {
         
         } catch(Exception e) {
             LOG.fatal(e.getMessage());
-            Result result = (Result) context.getBean("result", true, e.getMessage());
-            model.addAttribute(result);
+            AjaxResponse response = (AjaxResponse) context.getBean(
+                AJAX_RESPONSE_BEAN_ID,
+                true,
+                e.getMessage()
+            );
+            model.addAttribute(response);
             return "error";
         } 
     }
     
-    @RequestMapping(value="/tweet", method=RequestMethod.POST, headers="Accept=application/json")
-    public @ResponseBody Result doTweet(
-        @RequestParam(value="tweet", defaultValue="") String content,
-        @RequestParam(value="user_id", defaultValue="") String requestUserId,
-        @CookieValue(value="__exmphangul_request_token", defaultValue="") String requestToken,
-        @CookieValue(value="__exmphangul_access_token", defaultValue="") String oauthToken,
-        @CookieValue(value="__exmphangul_token_secret", defaultValue="") String oauthTokenSecret,
-        @CookieValue(value="__exmphangul_user_id", defaultValue="") String userId,
-        @CookieValue(value="__exmphangul_screen_name", defaultValue="") String screenName
+    @RequestMapping(
+        value="/tweet",
+        method=RequestMethod.POST,
+        headers="Accept=application/json"
+    )
+    public @ResponseBody AjaxResponse doTweet(
+        @RequestParam(value="tweet", defaultValue="")
+        String content,
+        @RequestParam(value="user_id", defaultValue="")
+        String requestUserId,
+        @CookieValue(value="__exmphangul_request_token", defaultValue="")
+        String requestToken,
+        @CookieValue(value="__exmphangul_access_token", defaultValue="")
+        String oauthToken,
+        @CookieValue(value="__exmphangul_token_secret", defaultValue="")
+        String oauthTokenSecret,
+        @CookieValue(value="__exmphangul_user_id", defaultValue="")
+        String userId,
+        @CookieValue(value="__exmphangul_screen_name", defaultValue="")
+        String screenName
     ) {        
         LOG.debug("called.");
         
@@ -141,10 +177,10 @@ public class TweetController {
 
             // get the service object.
             TweetService service = (TweetService) context.getBean(
-                "tweetService",
+                TWEET_SERVICE_BEAN_ID,
                 // get the authentication value object.
                 (TweetAuthValue) context.getBean(
-                    "tweetAuthValue",
+                    TWEET_AUTH_VALUE_BEAN_ID,
                     authValue.getConsumerKey(),
                     authValue.getConsumerSecret(),
                     oauthToken,
@@ -171,24 +207,40 @@ public class TweetController {
             }
 
             // return the response object.
-            Result result = new Result(tweetModelList);
-            return result;
+            AjaxResponse response = new AjaxResponse(
+                tweetModelList
+            );
+            return response;
         
         } catch(Exception e) {
             LOG.fatal(e.getMessage());
-            Result result = (Result) context.getBean("result", true, e.getMessage());
-            return result;
+            AjaxResponse response = (AjaxResponse) context.getBean(
+                AJAX_RESPONSE_BEAN_ID,
+                true,
+                e.getMessage()
+            );
+            return response;
         }
     }
     
-    @RequestMapping(value="/list", method=RequestMethod.GET, headers="Accept=application/json")
-    public @ResponseBody Result getTimeLine(
-        @RequestParam(value="user_id", defaultValue="") String requestUserId,
-        @CookieValue(value="__exmphangul_request_token", defaultValue="") String requestToken,
-        @CookieValue(value="__exmphangul_access_token", defaultValue="") String oauthToken,
-        @CookieValue(value="__exmphangul_token_secret", defaultValue="") String oauthTokenSecret,
-        @CookieValue(value="__exmphangul_user_id", defaultValue="") String userId,
-        @CookieValue(value="__exmphangul_screen_name", defaultValue="") String screenName
+    @RequestMapping(
+        value="/list",
+        method=RequestMethod.GET,
+        headers="Accept=application/json"
+    )
+    public @ResponseBody AjaxResponse getTimeLine(
+        @RequestParam(value="user_id", defaultValue="")
+        String requestUserId,
+        @CookieValue(value="__exmphangul_request_token", defaultValue="")
+        String requestToken,
+        @CookieValue(value="__exmphangul_access_token", defaultValue="")
+        String oauthToken,
+        @CookieValue(value="__exmphangul_token_secret", defaultValue="")
+        String oauthTokenSecret,
+        @CookieValue(value="__exmphangul_user_id", defaultValue="")
+        String userId,
+        @CookieValue(value="__exmphangul_screen_name", defaultValue="")
+        String screenName
     ) {        
         LOG.debug("called.");
         
@@ -205,7 +257,7 @@ public class TweetController {
             }
 
             // get the value object for authentication.
-            TweetAuthValue tauthValue = new TweetAuthValue(
+            TweetAuthValue tweetAuthValue = new TweetAuthValue(
                 authValue.getConsumerKey(),
                 authValue.getConsumerSecret(),
                 oauthToken,
@@ -214,7 +266,7 @@ public class TweetController {
 
             // get the service object.
             TweetService service = new TweetService(
-                tauthValue
+                tweetAuthValue
             );
 
             // get the timeline.
@@ -231,25 +283,42 @@ public class TweetController {
             }
             
             // return the response object.
-            Result result = new Result(tweetModelList);
-            return result;
+            AjaxResponse response = new AjaxResponse(
+                tweetModelList
+            );
+            return response;
         
         } catch(Exception e) {
             LOG.fatal(e.getMessage());
-            Result result = (Result) context.getBean("result", true, e.getMessage());
-            return result;
+            AjaxResponse response = (AjaxResponse) context.getBean(
+                AJAX_RESPONSE_BEAN_ID,
+                true,
+                e.getMessage()
+            );
+            return response;
         }
     }
     
-    @RequestMapping(value="/favor", method=RequestMethod.POST, headers="Accept=application/json")
-    public @ResponseBody Result doFavor(
-        @RequestParam(value="user_id", defaultValue="") String requestUserId,
-        @RequestParam(value="status_id", defaultValue="") String statusId,
-        @CookieValue(value="__exmphangul_request_token", defaultValue="") String requestToken,
-        @CookieValue(value="__exmphangul_access_token", defaultValue="") String oauthToken,
-        @CookieValue(value="__exmphangul_token_secret", defaultValue="") String oauthTokenSecret,
-        @CookieValue(value="__exmphangul_user_id", defaultValue="") String userId,
-        @CookieValue(value="__exmphangul_screen_name", defaultValue="") String screenName
+    @RequestMapping(
+        value="/favor",
+        method=RequestMethod.POST,
+        headers="Accept=application/json"
+    )
+    public @ResponseBody AjaxResponse doFavor(
+        @RequestParam(value="user_id", defaultValue="")
+        String requestUserId,
+        @RequestParam(value="status_id", defaultValue="")
+        String statusId,
+        @CookieValue(value="__exmphangul_request_token", defaultValue="")
+        String requestToken,
+        @CookieValue(value="__exmphangul_access_token", defaultValue="")
+        String oauthToken,
+        @CookieValue(value="__exmphangul_token_secret", defaultValue="")
+        String oauthTokenSecret,
+        @CookieValue(value="__exmphangul_user_id", defaultValue="")
+        String userId,
+        @CookieValue(value="__exmphangul_screen_name", defaultValue="")
+        String screenName
     ) {        
         LOG.debug("called.");
         
@@ -266,7 +335,7 @@ public class TweetController {
             }
 
             // get the value object for authentication.
-            TweetAuthValue tauthValue = new TweetAuthValue(
+            TweetAuthValue tweetAuthValue = new TweetAuthValue(
                 authValue.getConsumerKey(),
                 authValue.getConsumerSecret(),
                 oauthToken,
@@ -275,7 +344,7 @@ public class TweetController {
 
             // get the service object.
             TweetService service = new TweetService(
-                tauthValue
+                tweetAuthValue
             );
 
             // TODO: on error..
@@ -284,24 +353,43 @@ public class TweetController {
             );
             
             // return the response object.
-            return (Result) context.getBean("result", false, "favor!");
+            return (AjaxResponse) context.getBean(
+                AJAX_RESPONSE_BEAN_ID,
+                false,
+                "favor."
+            );
         
-        } catch(Exception e) {
+        } catch (Exception e) {
             LOG.fatal(e.getMessage());
-            Result result = (Result) context.getBean("result", true, e.getMessage());
-            return result;
+            AjaxResponse response = (AjaxResponse) context.getBean(
+                AJAX_RESPONSE_BEAN_ID,
+                true,
+                e.getMessage()
+            );
+            return response;
         }
     }
     
-    @RequestMapping(value="/retweet", method=RequestMethod.POST, headers="Accept=application/json")
-    public @ResponseBody Result doRetweet(
-        @RequestParam(value="user_id", defaultValue="") String requestUserId,
-        @RequestParam(value="status_id", defaultValue="") String statusId,
-        @CookieValue(value="__exmphangul_request_token", defaultValue="") String requestToken,
-        @CookieValue(value="__exmphangul_access_token", defaultValue="") String oauthToken,
-        @CookieValue(value="__exmphangul_token_secret", defaultValue="") String oauthTokenSecret,
-        @CookieValue(value="__exmphangul_user_id", defaultValue="") String userId,
-        @CookieValue(value="__exmphangul_screen_name", defaultValue="") String screenName
+    @RequestMapping(
+        value="/retweet",
+        method=RequestMethod.POST,
+        headers="Accept=application/json"
+    )
+    public @ResponseBody AjaxResponse doRetweet(
+        @RequestParam(value="user_id", defaultValue="")
+        String requestUserId,
+        @RequestParam(value="status_id", defaultValue="")
+        String statusId,
+        @CookieValue(value="__exmphangul_request_token", defaultValue="")
+        String requestToken,
+        @CookieValue(value="__exmphangul_access_token", defaultValue="")
+        String oauthToken,
+        @CookieValue(value="__exmphangul_token_secret", defaultValue="")
+        String oauthTokenSecret,
+        @CookieValue(value="__exmphangul_user_id", defaultValue="")
+        String userId,
+        @CookieValue(value="__exmphangul_screen_name", defaultValue="")
+        String screenName
     ) {        
         LOG.debug("called.");
         
@@ -318,7 +406,7 @@ public class TweetController {
             }
 
             // get the value object for authentication.
-            TweetAuthValue tauthValue = new TweetAuthValue(
+            TweetAuthValue tweetAuthValue = new TweetAuthValue(
                 authValue.getConsumerKey(),
                 authValue.getConsumerSecret(),
                 oauthToken,
@@ -327,7 +415,7 @@ public class TweetController {
 
             // get the service object.
             TweetService service = new TweetService(
-                tauthValue
+                tweetAuthValue
             );
 
             // TODO: on error..
@@ -336,25 +424,45 @@ public class TweetController {
             );
             
             // return the response object.
-            return (Result) context.getBean("result", false, "retweet!");
+            return (AjaxResponse) context.getBean(
+                AJAX_RESPONSE_BEAN_ID,
+                false,
+                "retweet."
+            );
         
         } catch(Exception e) {
             LOG.fatal(e.getMessage());
-            Result result = (Result) context.getBean("result", true, e.getMessage());
-            return result;
+            AjaxResponse response = (AjaxResponse) context.getBean(
+                AJAX_RESPONSE_BEAN_ID,
+                true,
+                e.getMessage()
+            );
+            return response;
         }
     }
     
-    @RequestMapping(value="/reply", method=RequestMethod.POST, headers="Accept=application/json")
-    public @ResponseBody Result doReply(
-        @RequestParam(value="tweet", defaultValue="") String content,
-        @RequestParam(value="user_id", defaultValue="") String requestUserId,
-        @RequestParam(value="status_id", defaultValue="") String statusId,
-        @CookieValue(value="__exmphangul_request_token", defaultValue="") String requestToken,
-        @CookieValue(value="__exmphangul_access_token", defaultValue="") String oauthToken,
-        @CookieValue(value="__exmphangul_token_secret", defaultValue="") String oauthTokenSecret,
-        @CookieValue(value="__exmphangul_user_id", defaultValue="") String userId,
-        @CookieValue(value="__exmphangul_screen_name", defaultValue="") String screenName
+    @RequestMapping(
+        value="/reply",
+        method=RequestMethod.POST,
+        headers="Accept=application/json"
+    )
+    public @ResponseBody AjaxResponse doReply(
+        @RequestParam(value="tweet", defaultValue="")
+        String content,
+        @RequestParam(value="user_id", defaultValue="")
+        String requestUserId,
+        @RequestParam(value="status_id", defaultValue="")
+        String statusId,
+        @CookieValue(value="__exmphangul_request_token", defaultValue="")
+        String requestToken,
+        @CookieValue(value="__exmphangul_access_token", defaultValue="")
+        String oauthToken,
+        @CookieValue(value="__exmphangul_token_secret", defaultValue="")
+        String oauthTokenSecret,
+        @CookieValue(value="__exmphangul_user_id", defaultValue="")
+        String userId,
+        @CookieValue(value="__exmphangul_screen_name", defaultValue="")
+        String screenName
     ) {        
         LOG.debug("called.");
         
@@ -371,7 +479,7 @@ public class TweetController {
             }
 
             // get the value object for authentication.
-            TweetAuthValue tauthValue = new TweetAuthValue(
+            TweetAuthValue tweetAuthValue = new TweetAuthValue(
                 authValue.getConsumerKey(),
                 authValue.getConsumerSecret(),
                 oauthToken,
@@ -380,7 +488,7 @@ public class TweetController {
 
             // get the service object.
             TweetService service = new TweetService(
-                tauthValue
+                tweetAuthValue
             );
 
             // TODO: on error..
@@ -403,17 +511,26 @@ public class TweetController {
             }
 
             // return the response object.
-            Result result = new Result(tweetModelList);
-            return result;
+            AjaxResponse response = new AjaxResponse(
+                tweetModelList
+            );
+            return response;
         
         } catch(Exception e) {
             LOG.fatal(e.getMessage());
-            Result result = (Result) context.getBean("result", true, e.getMessage());
-            return result;
+            AjaxResponse response = (AjaxResponse) context.getBean(
+                AJAX_RESPONSE_BEAN_ID,
+                true,
+                e.getMessage()
+            );
+            return response;
         }
     }
     
-    @RequestMapping(value="/logout", method=RequestMethod.GET)
+    @RequestMapping(
+        value="/logout",
+        method=RequestMethod.GET        
+    )
     public String doLogout(
         HttpServletResponse response,
         SessionStatus sessionStatus,
@@ -426,7 +543,10 @@ public class TweetController {
         return "redirect:/";
     }
 
-    @RequestMapping(value="/error", method=RequestMethod.GET)
+    @RequestMapping(
+        value="/error",
+        method=RequestMethod.GET
+    )
     public String doError(
         Model model
     ) {
@@ -436,8 +556,13 @@ public class TweetController {
     ///////////////////////////////////////////////////////////////////////////
     // private methods
     
-    // check the parameter 
-    private boolean isValidParameterOfGet(String oauthToken, String oauthTokenSecret, String userId, String screenName) {
+    // check the parameter.
+    private boolean isValidParameterOfGet(
+        String oauthToken,
+        String oauthTokenSecret,
+        String userId,
+        String screenName
+    ) {
         if ((oauthToken == null || oauthToken.equals("")) ||
            (oauthTokenSecret == null || oauthTokenSecret.equals("")) ||
            (userId == null || userId.equals("")) ||
@@ -447,8 +572,12 @@ public class TweetController {
         return true;
     }
     
-    // check the parameter 
-    private boolean isValidParameterOfTweet(String oauthToken, String oauthTokenSecret, String content) {
+    // check the parameter.
+    private boolean isValidParameterOfTweet(
+        String oauthToken,
+        String oauthTokenSecret,
+        String content
+    ) {
         if ((oauthToken == null || oauthToken.equals("")) ||
             (oauthTokenSecret == null || oauthTokenSecret.equals("")) ||
             (content == null || content.equals(""))) {
@@ -457,21 +586,34 @@ public class TweetController {
         return true;
     }
 
-    private Result doAuthenticationIsInvalid() {
+    private AjaxResponse doAuthenticationIsInvalid() {
         String msg = "is not a valid authentication.";
         LOG.warn(msg);
-        Result result = (Result) context.getBean("result", true, msg);
-        return result;
+        AjaxResponse response = (AjaxResponse) context.getBean(
+            AJAX_RESPONSE_BEAN_ID,
+            true,
+            msg
+        );
+        return response;
     }
     
-    private Result doUserIdIsInvalid() {
+    private AjaxResponse doUserIdIsInvalid() {
         String msg = "a use the user id is invalid.";
         LOG.warn(msg);
-        Result result = (Result) context.getBean("result", true, msg);
-        return result;
+        AjaxResponse response = (AjaxResponse) context.getBean(
+            AJAX_RESPONSE_BEAN_ID,
+            true,
+            msg
+        );
+        return response;
     }
     
-    private void debugOut(String oauthToken, String oauthTokenSecret, String userId, String screenName) {
+    private void debugOut(
+        String oauthToken,
+        String oauthTokenSecret,
+        String userId,
+        String screenName
+    ) {
         LOG.debug("oauth_token: " + oauthToken);
         LOG.debug("oauth_token_secret: " + oauthTokenSecret);
         LOG.debug("user_id: " + userId);

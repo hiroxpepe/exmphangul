@@ -35,7 +35,9 @@ import org.examproject.hangul.value.TweetAuthValue;
  */
 public class TweetService {
  
-    private static final Log LOG = LogFactory.getLog(TweetService.class);
+    private static final Log LOG = LogFactory.getLog(
+        TweetService.class
+    );
     
     private final TweetAuthValue authValue;
     
@@ -53,18 +55,19 @@ public class TweetService {
         
         // map the value.
         ResponseList responseList = getResponseList();
-        List<TweetDto> tweetList = new ArrayList<TweetDto>();
+        List<TweetDto> tweetDtoList = new ArrayList<TweetDto>();
         for (Object response : responseList) {
            Status responseStatus = (Status) response;
-           TweetDto tweet = new TweetDto();
-           tweet.setUserProfileImageURL(responseStatus.getUser().getProfileImageURL().toString());
-           tweet.setUserName(responseStatus.getUser().getScreenName());
-           tweet.setText(responseStatus.getText());
-           tweet.setStatusId(String.valueOf(responseStatus.getId()));
-           tweet.setIsFavorited(responseStatus.isFavorited());
-           tweetList.add(tweet);
+           
+           TweetDto tweetDto = new TweetDto();
+           tweetDto.setUserProfileImageURL(responseStatus.getUser().getProfileImageURL().toString());
+           tweetDto.setUserName(responseStatus.getUser().getScreenName());
+           tweetDto.setText(responseStatus.getText());
+           tweetDto.setStatusId(String.valueOf(responseStatus.getId()));
+           tweetDto.setIsFavorited(responseStatus.isFavorited());
+           tweetDtoList.add(tweetDto);
         }
-        return tweetList;
+        return tweetDtoList;
     }
     
     public void update(String content) {

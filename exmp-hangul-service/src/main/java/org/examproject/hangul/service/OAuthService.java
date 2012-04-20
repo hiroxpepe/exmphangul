@@ -36,7 +36,9 @@ import org.examproject.hangul.value.OAuthValue;
  */
 public class OAuthService {
     
-    private static final Log LOG = LogFactory.getLog(OAuthService.class);
+    private static final Log LOG = LogFactory.getLog(
+        OAuthService.class
+    );
       
     ///////////////////////////////////////////////////////////////////////////
     // public methods
@@ -46,7 +48,9 @@ public class OAuthService {
         String requestUrl,
         OAuthValue authValue
     ) {
-        OAuthClient client = new OAuthClient(new URLConnectionClient());
+        OAuthClient client = new OAuthClient(
+            new URLConnectionClient()
+        );
 
         OAuthServiceProvider provider = new OAuthServiceProvider(
             authValue.getRequestTokenUrl(),
@@ -65,12 +69,12 @@ public class OAuthService {
             provider
         );
 
-        OAuthAccessor accessor = new OAuthAccessor( consumer);
+        OAuthAccessor accessor = new OAuthAccessor(consumer);
 
         String redirectTo = null;
         try{
             try {
-                //get request token first from Twitter.com
+                // get request token first from Twitter.com
                 HashMap params = new HashMap();
                 params.put(
                     "oauth_callback",
@@ -81,23 +85,37 @@ public class OAuthService {
                     )
                 );
 
-                //get request token first from Twitter.com
-                client.getRequestToken(accessor, null, params.entrySet());
+                // get request token first from Twitter.com
+                client.getRequestToken(
+                    accessor,
+                    null,
+                    params.entrySet()
+                );
                 
-            } catch (OAuthException e) {
-                throw new RuntimeException("failed to authenticate Twitter account.", e);
-            } catch (URISyntaxException e) {
-                throw new RuntimeException("failed to authenticate Twitter account.", e);
+            } catch (OAuthException oae) {
+                throw new RuntimeException(
+                    "failed to authenticate Twitter account.",
+                    oae
+                );
+            } catch (URISyntaxException urise) {
+                throw new RuntimeException(
+                    "failed to authenticate Twitter account.",
+                    urise
+                );
             }
 
-            //build redirect path to twitter authentication page
+            // build redirect path to twitter authentication page.
             redirectTo = OAuth.addParameters(
                 accessor.consumer.serviceProvider.userAuthorizationURL,
                 "oauth_token",
                 accessor.requestToken
             );
-        } catch (IOException e) {
-            throw new RuntimeException("failed to authenticate Twitter account.", e);
+            
+        } catch (IOException ioe) {
+            throw new RuntimeException(
+                "failed to authenticate Twitter account.",
+                ioe
+            );
         }
      
         return redirectTo;

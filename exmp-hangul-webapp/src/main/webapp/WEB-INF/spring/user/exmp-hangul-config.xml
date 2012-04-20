@@ -23,9 +23,9 @@
         <constructor-arg name="callbackUrlPath" value="callback.html" />
     </bean>
     
-    <bean name="result"
-        class="org.examproject.hangul.response.Result"
-        scope="prototype">
+    <bean name="tweetForm"
+        class="org.examproject.hangul.form.TweetForm"
+        scope="session">
     </bean>
     
     <bean name="tweetModel"
@@ -33,9 +33,9 @@
         scope="prototype">
     </bean>
     
-    <bean name="tweetForm"
-        class="org.examproject.hangul.form.TweetForm"
-        scope="session">
+    <bean name="ajaxResponse"
+        class="org.examproject.hangul.response.AjaxResponse"
+        scope="prototype">
     </bean>
     
     <bean name="tweetDto"

@@ -23,7 +23,7 @@ import reflect.BeanProperty
 /**
  * @author hiroxpepe
  */
-class Result(
+class AjaxResponse(
     @BeanProperty
     val tweetModelList: List[TweetModel]
 ) {

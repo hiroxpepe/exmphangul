@@ -42,7 +42,9 @@ import org.examproject.hangul.value.OAuthValue;
  */
 public class CallbackService {
     
-    private static final Log LOG = LogFactory.getLog(CallbackService.class);
+    private static final Log LOG = LogFactory.getLog(
+        CallbackService.class
+    );
     
     ///////////////////////////////////////////////////////////////////////////
     // public methods
@@ -54,7 +56,9 @@ public class CallbackService {
         OAuthValue authValue
     ) { 
         try {
-            OAuthClient client = new OAuthClient(new URLConnectionClient());
+            OAuthClient client = new OAuthClient(
+                new URLConnectionClient()
+            );
 
             OAuthServiceProvider provider = new OAuthServiceProvider(
                 authValue.getRequestTokenUrl(),
@@ -74,7 +78,6 @@ public class CallbackService {
             );
 
             OAuthAccessor accessor = new OAuthAccessor(consumer);
-
             accessor.requestToken = requestToken;
 
             try {
@@ -82,33 +85,62 @@ public class CallbackService {
                 params.put(OAuth.OAUTH_VERIFIER, verifire);
 
                 //get access token and secret from twitter.com
-                OAuthMessage accessTokenMessage = client.getAccessToken(accessor, "GET", params.entrySet());
+                OAuthMessage accessTokenMessage = client.getAccessToken(
+                    accessor,
+                    "GET",
+                    params.entrySet()
+                );
 
-                String oauthToken = accessTokenMessage.getParameter("oauth_token");
-                String oauthTokenSecret = accessTokenMessage.getParameter("oauth_token_secret");
+                String oauthToken = accessTokenMessage.getParameter(
+                    "oauth_token"
+                );
+                
+                String oauthTokenSecret = accessTokenMessage.getParameter(
+                    "oauth_token_secret"
+                );
 
                 LOG.debug("oauth_token: " + oauthToken);
                 LOG.debug("oauth_token_secret: " + oauthTokenSecret);
                 
-            } catch (OAuthException e) {
-                throw new RuntimeException("failed to authenticate Twitter account.", e);
-            } catch (URISyntaxException e) {
-                throw new RuntimeException("failed to authenticate Twitter account.", e);
+            } catch (OAuthException oae) {
+                throw new RuntimeException(
+                    "failed to authenticate Twitter account.",
+                    oae
+                );
+            } catch (URISyntaxException urise) {
+                throw new RuntimeException(
+                    "failed to authenticate Twitter account.",
+                    urise
+                );
             }
 
-            //Retrieve user's information
+            // retrieve user's information
             OAuthMessage authMessage = null;
             try {
-                authMessage = accessor.newRequestMessage("GET", "http://api.twitter.com/1/account/verify_credentials.json", null);
-            } catch (OAuthException e) {
-                throw new RuntimeException("failed to authenticate Twitter account.", e);
-            } catch (URISyntaxException e) {
-                throw new RuntimeException("failed to authenticate Twitter account.", e);
+                authMessage = accessor.newRequestMessage(
+                    "GET",
+                    "http://api.twitter.com/1/account/verify_credentials.json",
+                    null
+                );
+            } catch (OAuthException oae) {
+                throw new RuntimeException(
+                    "failed to authenticate Twitter account.",
+                    oae
+                );
+            } catch (URISyntaxException urise) {
+                throw new RuntimeException(
+                    "failed to authenticate Twitter account.",
+                    urise
+                );
             }
 
-            OAuthResponseMessage responseMessage = client.access(authMessage, ParameterStyle.AUTHORIZATION_HEADER);
+            OAuthResponseMessage responseMessage = client.access(
+                authMessage,
+                ParameterStyle.AUTHORIZATION_HEADER
+            );
+            
             int status = responseMessage.getHttpResponse().getStatusCode();
-            if( status == HttpResponseMessage.STATUS_OK){
+            if (status == HttpResponseMessage.STATUS_OK) {
                 String jsonStr = responseMessage.readBodyAsString();
                 JSONObject jsonObject = JSONObject.fromObject(jsonStr);
                 
@@ -118,8 +150,10 @@ public class CallbackService {
                 accessor.setProperty("id", userId);
                 accessor.setProperty("screen_name", screenName);
 
-            }else{
-                throw new RuntimeException("failed to authenticate Twitter account STATUS CODE: " + status);
+            } else {
+                throw new RuntimeException(
+                    "failed to authenticate Twitter account STATUS CODE: " + status
+                );
             }
 
             // return the value object.      
@@ -131,8 +165,11 @@ public class CallbackService {
                 (String)accessor.getProperty("screen_name")
             );
             
-        } catch (IOException e) {
-            throw new RuntimeException("failed.", e);
+        } catch (IOException ioe) {
+            throw new RuntimeException(
+                "failed.",
+                ioe
+            );
         }
     }
     

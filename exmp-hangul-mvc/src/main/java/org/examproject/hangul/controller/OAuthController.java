@@ -41,7 +41,9 @@ import org.examproject.hangul.value.TweetCookie;
 @Scope(value="session")
 public class OAuthController {
     
-    private static final Log LOG = LogFactory.getLog(OAuthController.class);
+    private static final Log LOG = LogFactory.getLog(
+        OAuthController.class
+    );
 
     @Inject
     private final HttpServletRequest request = null;
@@ -52,7 +54,10 @@ public class OAuthController {
     ///////////////////////////////////////////////////////////////////////////
     // public methods
 
-    @RequestMapping(value="/oauth", method=RequestMethod.GET)
+    @RequestMapping(
+        value="/oauth",
+        method=RequestMethod.GET
+    )
     public String doOAuth(
         Model model
     ) {
@@ -72,7 +77,10 @@ public class OAuthController {
         return "redirect:" + redirectTo;
     }
     
-    @RequestMapping(value="/callback", method=RequestMethod.GET)
+    @RequestMapping(
+        value="/callback",
+        method=RequestMethod.GET
+    )
     public String doCallback(
         HttpServletResponse response,
         Model model
