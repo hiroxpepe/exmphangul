@@ -2,9 +2,9 @@
 
 <div class="block alphabet">
     <div style="float:left; position:relative">
-        <dl>
-            <dt>Consonant Letters</dt>
-        </dl>
+        <div>
+            <fmt:message key="index.label.consonant" />
+        </div>
         <table>
             <tr>
                 <th>&#12593;</th>
@@ -55,10 +55,12 @@
         </table>
     </div>
     
+    <div style="float:left; position:relative">&nbsp;</div>
+        
     <div style="float:left; position:relative">
-        <dl>
-            <dt>Vowel Letters</dt>
-        </dl>
+        <div>
+            <fmt:message key="index.label.vowel" />
+        </div>
         <table>
             <tr>
                 <th>&#12623;</th>

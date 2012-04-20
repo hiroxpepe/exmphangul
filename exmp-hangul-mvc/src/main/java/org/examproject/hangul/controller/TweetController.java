@@ -151,18 +151,7 @@ public class TweetController {
         
         debugOut(oauthToken, oauthTokenSecret, userId, screenName);
         
-        try {            
-            if (!isValidParameterOfGet(oauthToken, oauthTokenSecret, userId, screenName)) {            
-                String msg = "is not a valid authentication.";
-                LOG.info(msg);
-                AjaxResponse response = (AjaxResponse) context.getBean(
-                    AJAX_RESPONSE_BEAN_ID,
-                    true,
-                    msg
-                );
-                model.addAttribute(response);
-                return "redirect:/login.html" + "?locale=" + locale;
-            }
+        try {
             
             // get the current local.
             if (locale.equals("")) {

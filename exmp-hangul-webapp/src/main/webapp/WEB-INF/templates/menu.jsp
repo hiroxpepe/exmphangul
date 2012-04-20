@@ -10,6 +10,9 @@
             <span>
                 <a href="<c:url value="/login.html" />"><fmt:message key="menu.login" /></a>
             </span>
+            <span>
+                <a href="<c:url value="/logout.html" />"><fmt:message key="menu.logout" /></a>
+            </span>
         </div>
         <div class="menu-bar-right">
         </div>

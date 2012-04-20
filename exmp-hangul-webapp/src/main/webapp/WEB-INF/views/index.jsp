@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
@@ -8,21 +9,25 @@
         <form:hidden id="locale" path="locale" />
         <div>
             <div class="block">
-                <fmt:message key="label.hangul" />
+                <fmt:message key="index.label.hangul" />
             </div>
             <div class="block">
                 <textarea id="hangul" cols=40 rows=4></textarea>
             </div>
-            <div class="block tweet-command-block">
-                <input 
-                    id="tweet-button"
-                    class="command-button"
-                    type="button"
-                    value="<fmt:message key="button.save" />"
-                />
-            </div>
+            
+            <c:if test="${not empty tweetForm.userId}">
+                <div class="block tweet-command-block">
+                    <input 
+                        id="tweet-button"
+                        class="command-button"
+                        type="button"
+                        value="<fmt:message key="button.tweet" />"
+                    />
+                </div>
+            </c:if>    
+                
             <div class="block">
-                <fmt:message key="label.roman" />
+                <fmt:message key="index.label.alphabet" />
             </div>
             <div class="block">
                 <textarea id="roman" cols=40 rows=4></textarea>
