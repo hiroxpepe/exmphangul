@@ -3,13 +3,23 @@
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
 
 <div class="block index-content">
-    <form>
+    <form:form modelAttribute="tweetForm">
+        <form:hidden id="user_id" path="userId" />
+        <form:hidden id="locale" path="locale" />
         <div>
             <div class="block">
                 <fmt:message key="label.hangul" />
             </div>
             <div class="block">
                 <textarea id="hangul" cols=40 rows=4></textarea>
+            </div>
+            <div class="block tweet-command-block">
+                <input 
+                    id="tweet-button"
+                    class="command-button"
+                    type="button"
+                    value="<fmt:message key="button.save" />"
+                />
             </div>
             <div class="block">
                 <fmt:message key="label.roman" />
@@ -18,7 +28,7 @@
                 <textarea id="roman" cols=40 rows=4></textarea>
             </div>
         </div>
-    </form>
+    </form:form>
             
     <%-- insert the alphabet table --%>
     <tiles:insertTemplate 

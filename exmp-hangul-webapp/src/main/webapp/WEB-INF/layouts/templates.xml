@@ -23,7 +23,17 @@
 
     <!-- contents of the content, the controller of Spring MVC call "index" -->
     <definition name="index" extends="main-template">
+        <put-attribute name="content" value="/WEB-INF/views/top.jsp" />
+    </definition>
+
+    <!-- contents of the content, the controller of Spring MVC call "main" -->
+    <definition name="main" extends="main-template">
         <put-attribute name="content" value="/WEB-INF/views/index.jsp" />
+    </definition>
+    
+    <!-- contents of the content, the controller of Spring MVC call "error" -->
+    <definition name="error" extends="main-template">
+        <put-attribute name="content" value="/WEB-INF/views/error.jsp" />
     </definition>
 
 </tiles-definitions>

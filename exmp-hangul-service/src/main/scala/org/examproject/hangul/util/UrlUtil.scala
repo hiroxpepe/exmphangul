@@ -23,12 +23,16 @@ object UrlUtil {
         val urlArray = url.split("/")
         var siteDomain: String = ""
         if (url.contains(".appspot.com")) {
-            // GAE
+            // GAE??
             siteDomain = urlArray(0) + "/" + urlArray(1) + "/" + urlArray(2) + "/"
-        } else {
-            // not GAE
-            siteDomain = urlArray(0) + "/" + urlArray(1) + "/" + urlArray(2) + "/" + urlArray(3) + "/"
         }
+//        else {
+//            // not GAE
+//            siteDomain = urlArray(0) + "/" + urlArray(1) + "/" + urlArray(2) + "/" + urlArray(3) + "/"
+//        }
+//      
+        // TODO: what' this??
+        siteDomain = urlArray(0) + "/" + urlArray(1) + "/" + urlArray(2) + "/"
         return siteDomain
     }
 }

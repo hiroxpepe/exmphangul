@@ -37,6 +37,17 @@ exmp.hangul.core.Controller = window; {
     ///////////////////////////////////////////////////////////////////////////
     // event handler methods
     
+    exmp.hangul.core.Controller._doTweetButtonOnClick = function() {
+        
+        var closure = exmp.hangul.functor.request.TweetClosure;
+        
+        // not reply or simple reply
+        closure.execute({
+            content: $("#hangul").val(),
+            userId: $("#user_id").val()
+        });
+        return;
+    }
     
     ///////////////////////////////////////////////////////////////////////////
     // private methods
@@ -53,6 +64,10 @@ exmp.hangul.core.Controller = window; {
             closure.execute({
                 value: $("#roman").val()
             });
+        });
+        
+        $("#tweet-button").click(function() { 
+            controller._doTweetButtonOnClick();
         });
     }
 }

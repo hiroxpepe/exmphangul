@@ -25,6 +25,8 @@ import net.oauth.OAuthException;
 import net.oauth.OAuthServiceProvider;
 import net.oauth.client.OAuthClient;
 import net.oauth.client.URLConnectionClient;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import org.examproject.hangul.util.UrlUtil;
 import org.examproject.hangul.value.OAuthValue;
@@ -33,7 +35,12 @@ import org.examproject.hangul.value.OAuthValue;
  * @author hiroxpepe
  */
 public class OAuthService {
+    
+    private static final Log LOG = LogFactory.getLog(OAuthService.class);
       
+    ///////////////////////////////////////////////////////////////////////////
+    // public methods
+    
     public String execute(
         String destUrl,
         String requestUrl,
@@ -47,9 +54,9 @@ public class OAuthService {
             authValue.getAccessTokenUrl()
         );
         
-        // get domain
+        // get the site domain url.
         String siteDomain = UrlUtil.getDomain(requestUrl);
-        System.out.println("siteDomain : " + siteDomain);
+        LOG.debug("siteDomain: " + siteDomain);
     
         OAuthConsumer consumer = new OAuthConsumer(
             siteDomain + authValue.getCallbackUrlPath(),
@@ -78,9 +85,9 @@ public class OAuthService {
                 client.getRequestToken(accessor, null, params.entrySet());
                 
             } catch (OAuthException e) {
-                throw new RuntimeException("It failed to authenticate Twitter account", e);
+                throw new RuntimeException("failed to authenticate Twitter account.", e);
             } catch (URISyntaxException e) {
-                throw new RuntimeException("It failed to authenticate Twitter account", e);
+                throw new RuntimeException("failed to authenticate Twitter account.", e);
             }
 
             //build redirect path to twitter authentication page
@@ -90,7 +97,7 @@ public class OAuthService {
                 accessor.requestToken
             );
         } catch (IOException e) {
-            throw new RuntimeException("It failed to authenticate Twitter account", e);
+            throw new RuntimeException("failed to authenticate Twitter account.", e);
         }
      
         return redirectTo;

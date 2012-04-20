@@ -322,3 +322,11 @@ div.alphabet {
             text-align: center;
             padding: 0.25em;
         }
+        
+/* ****************************************************************************
+ * define the appearance of the tweet content.
+ */
+div.tweet-command-block {
+    padding: 0.5em 0 0.5em 0;
+    text-align: right;
+}

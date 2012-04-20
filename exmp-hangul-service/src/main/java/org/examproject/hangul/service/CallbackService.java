@@ -30,6 +30,8 @@ import net.oauth.client.OAuthResponseMessage;
 import net.oauth.client.URLConnectionClient;
 import net.oauth.http.HttpResponseMessage;
 import net.sf.json.JSONObject;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import org.examproject.hangul.util.UrlUtil;
 import org.examproject.hangul.value.OAuthAccessorValue;
@@ -39,6 +41,11 @@ import org.examproject.hangul.value.OAuthValue;
  * @author hiroxpepe
  */
 public class CallbackService {
+    
+    private static final Log LOG = LogFactory.getLog(CallbackService.class);
+    
+    ///////////////////////////////////////////////////////////////////////////
+    // public methods
     
     public OAuthAccessorValue execute(
         String requestUrl,
@@ -55,9 +62,9 @@ public class CallbackService {
                 authValue.getAccessTokenUrl()
             );
             
-            // get domain.
+            // get the site domain url.
             String siteDomain = UrlUtil.getDomain(requestUrl);
-            System.out.println("siteDomain : " + siteDomain);
+            LOG.debug("siteDomain: " + siteDomain);
 
             OAuthConsumer consumer = new OAuthConsumer(
                 siteDomain + authValue.getCallbackUrlPath(),
@@ -80,13 +87,13 @@ public class CallbackService {
                 String oauthToken = accessTokenMessage.getParameter("oauth_token");
                 String oauthTokenSecret = accessTokenMessage.getParameter("oauth_token_secret");
 
-                System.out.println("oauth_token :" + oauthToken);
-                System.out.println("oauth_token_secret :" + oauthTokenSecret);
+                LOG.debug("oauth_token: " + oauthToken);
+                LOG.debug("oauth_token_secret: " + oauthTokenSecret);
                 
             } catch (OAuthException e) {
-                throw new RuntimeException("It failed to authenticate Twitter account", e);
+                throw new RuntimeException("failed to authenticate Twitter account.", e);
             } catch (URISyntaxException e) {
-                throw new RuntimeException("It failed to authenticate Twitter account", e);
+                throw new RuntimeException("failed to authenticate Twitter account.", e);
             }
 
             //Retrieve user's information
@@ -94,9 +101,9 @@ public class CallbackService {
             try {
                 authMessage = accessor.newRequestMessage("GET", "http://api.twitter.com/1/account/verify_credentials.json", null);
             } catch (OAuthException e) {
-                throw new RuntimeException("It failed to authenticate Twitter account", e);
+                throw new RuntimeException("failed to authenticate Twitter account.", e);
             } catch (URISyntaxException e) {
-                throw new RuntimeException("It failed to authenticate Twitter account", e);
+                throw new RuntimeException("failed to authenticate Twitter account.", e);
             }
 
             OAuthResponseMessage responseMessage = client.access(authMessage, ParameterStyle.AUTHORIZATION_HEADER);
@@ -112,10 +119,10 @@ public class CallbackService {
                 accessor.setProperty("screen_name", screenName);
 
             }else{
-                throw new RuntimeException("It failed to authenticate Twitter account STATUS CODE:" + status);
+                throw new RuntimeException("failed to authenticate Twitter account STATUS CODE: " + status);
             }
 
-            // returns a value object.      
+            // return the value object.      
             return new OAuthAccessorValue(
                 accessor.requestToken,
                 accessor.accessToken,

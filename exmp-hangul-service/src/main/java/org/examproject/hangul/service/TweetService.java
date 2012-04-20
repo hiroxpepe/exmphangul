@@ -39,6 +39,9 @@ public class TweetService {
     
     private final TweetAuthValue authValue;
     
+    ///////////////////////////////////////////////////////////////////////////
+    // constructor
+    
     public TweetService(TweetAuthValue authValue){
         this.authValue = authValue;
     }
@@ -93,7 +96,7 @@ public class TweetService {
         try {
             status = twitter.updateStatus(content);
         } catch (TwitterException te) {
-            LOG.error("an error occurred : " + te.getMessage());
+            LOG.error("an error occurred: " + te.getMessage());
             throw new RuntimeException(te);
         }
         return status;
@@ -106,9 +109,8 @@ public class TweetService {
         Status status = null;
         try {
             status = twitter.createFavorite(statusId);
-            LOG.info("createFavorite() called..");
         } catch (TwitterException te) {
-            LOG.error("an error occurred : " + te.getMessage());
+            LOG.error("an error occurred: " + te.getMessage());
             throw new RuntimeException(te);
         }
         return status;
@@ -121,7 +123,7 @@ public class TweetService {
         try {
             status = twitter.destroyFavorite(statusId);
         } catch (TwitterException te) {
-            LOG.error("an error occurred : " + te.getMessage());
+            LOG.error("an error occurred: " + te.getMessage());
             throw new RuntimeException(te);
         }
         return status;
@@ -133,7 +135,7 @@ public class TweetService {
         try {
             status = twitter.retweetStatus(statusId);
         } catch (TwitterException te) {
-            LOG.error("an error occurred : " + te.getMessage());
+            LOG.error("an error occurred: " + te.getMessage());
             throw new RuntimeException(te);
         }
         return status;
@@ -147,7 +149,7 @@ public class TweetService {
         try {
             status = twitter.updateStatus(statusUpdate);
         } catch (TwitterException te) {
-            LOG.error("an error occurred : " + te.getMessage());
+            LOG.error("an error occurred: " + te.getMessage());
             throw new RuntimeException(te);
         }
         return status;

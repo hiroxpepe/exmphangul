@@ -62,6 +62,9 @@ public class TweetController {
     @Inject
     private final OAuthValue authValue = null;
 
+    ///////////////////////////////////////////////////////////////////////////
+    // public methods
+    
     @RequestMapping(value="/main", method=RequestMethod.GET)
     public String getForm(
         @RequestParam(value="locale", defaultValue="") String locale,
@@ -248,7 +251,7 @@ public class TweetController {
         @CookieValue(value="__exmphangul_user_id", defaultValue="") String userId,
         @CookieValue(value="__exmphangul_screen_name", defaultValue="") String screenName
     ) {        
-        LOG.info("called.");
+        LOG.debug("called.");
         
         debugOut(oauthToken, oauthTokenSecret, userId, screenName);
         
@@ -300,7 +303,7 @@ public class TweetController {
         @CookieValue(value="__exmphangul_user_id", defaultValue="") String userId,
         @CookieValue(value="__exmphangul_screen_name", defaultValue="") String screenName
     ) {        
-        LOG.info("called.");
+        LOG.debug("called.");
         
         debugOut(oauthToken, oauthTokenSecret, userId, screenName);
         
@@ -430,6 +433,9 @@ public class TweetController {
         return "error";
     }
 
+    ///////////////////////////////////////////////////////////////////////////
+    // private methods
+    
     // check the parameter 
     private boolean isValidParameterOfGet(String oauthToken, String oauthTokenSecret, String userId, String screenName) {
         if ((oauthToken == null || oauthToken.equals("")) ||
@@ -453,7 +459,7 @@ public class TweetController {
 
     private Result doAuthenticationIsInvalid() {
         String msg = "is not a valid authentication.";
-        LOG.info(msg);
+        LOG.warn(msg);
         Result result = (Result) context.getBean("result", true, msg);
         return result;
     }
@@ -466,10 +472,10 @@ public class TweetController {
     }
     
     private void debugOut(String oauthToken, String oauthTokenSecret, String userId, String screenName) {
-        LOG.info("oauth_token: " + oauthToken);
-        LOG.info("oauth_token_secret: " + oauthTokenSecret);
-        LOG.info("user_id: " + userId);
-        LOG.info("screen_name: " + screenName);
+        LOG.debug("oauth_token: " + oauthToken);
+        LOG.debug("oauth_token_secret: " + oauthTokenSecret);
+        LOG.debug("user_id: " + userId);
+        LOG.debug("screen_name: " + screenName);
     }
     
 }

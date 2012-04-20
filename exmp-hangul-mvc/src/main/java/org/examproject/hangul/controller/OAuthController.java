@@ -48,12 +48,15 @@ public class OAuthController {
 
     @Inject
     private final OAuthValue authValue = null;
+    
+    ///////////////////////////////////////////////////////////////////////////
+    // public methods
 
     @RequestMapping(value="/oauth", method=RequestMethod.GET)
     public String doOAuth(
         Model model
     ) {
-        LOG.info("in.");
+        LOG.debug("in.");
 
         OAuthService service = new OAuthService();
         
@@ -63,7 +66,8 @@ public class OAuthController {
             authValue
         );
         
-        LOG.info("out.");
+        LOG.debug("out.");
+        LOG.debug("redirect: " + redirectTo);
         
         return "redirect:" + redirectTo;
     }
@@ -73,7 +77,7 @@ public class OAuthController {
         HttpServletResponse response,
         Model model
     ) {
-        LOG.info("in.");
+        LOG.debug("in.");
 
         // TODO: check for authentication?
         String destUrl = request.getParameter("dest");        
@@ -100,13 +104,16 @@ public class OAuthController {
         storeTokenToCookie(
             response,
             accessorValue,
-            86400
+            604800
         );
         
-        LOG.info("out.");
+        LOG.debug("out.");
         
         return "redirect:/main.html";
     }
+    
+    ///////////////////////////////////////////////////////////////////////////
+    // private methods
     
     private static void storeTokenToCookie(
         HttpServletResponse response,
