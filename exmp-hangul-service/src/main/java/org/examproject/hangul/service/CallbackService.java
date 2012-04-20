@@ -49,7 +49,7 @@ public class CallbackService {
     ///////////////////////////////////////////////////////////////////////////
     // public methods
     
-    public OAuthAccessorValue execute(
+    public OAuthAccessorValue getOAuthAccessorValue(
         String requestUrl,
         String requestToken,
         String verifire,

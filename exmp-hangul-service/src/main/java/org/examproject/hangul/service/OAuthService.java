@@ -43,7 +43,7 @@ public class OAuthService {
     ///////////////////////////////////////////////////////////////////////////
     // public methods
     
-    public String execute(
+    public String getRedirectTo(
         String destUrl,
         String requestUrl,
         OAuthValue authValue

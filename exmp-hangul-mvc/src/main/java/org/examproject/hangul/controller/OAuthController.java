@@ -65,7 +65,7 @@ public class OAuthController {
 
         OAuthService service = new OAuthService();
         
-        String redirectTo = service.execute(
+        String redirectTo = service.getRedirectTo(
             request.getParameter("dest"),
             request.getRequestURL().toString(),
             authValue
@@ -101,7 +101,7 @@ public class OAuthController {
         }
         
         CallbackService service = new CallbackService();
-        OAuthAccessorValue accessorValue = service.execute(
+        OAuthAccessorValue accessorValue = service.getOAuthAccessorValue(
             request.getRequestURL().toString(),
             requestToken,
             verifire,
