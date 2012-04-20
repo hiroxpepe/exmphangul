@@ -5,7 +5,10 @@
     <div class="menu-bar">
         <div class="menu-bar-left">
             <span>
-                <a href="<c:url value="/" />"><fmt:message key="index.title" /></a>
+                <a href="<c:url value="/" />"><fmt:message key="menu.index" /></a>
+            </span>
+            <span>
+                <a href="<c:url value="/login.html" />"><fmt:message key="menu.login" /></a>
             </span>
         </div>
         <div class="menu-bar-right">

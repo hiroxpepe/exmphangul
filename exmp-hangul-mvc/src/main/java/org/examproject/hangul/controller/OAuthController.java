@@ -117,7 +117,7 @@ public class OAuthController {
         
         LOG.debug("out.");
         
-        return "redirect:/main.html";
+        return "redirect:/index.html";
     }
     
     ///////////////////////////////////////////////////////////////////////////

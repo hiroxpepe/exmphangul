@@ -74,10 +74,65 @@ public class TweetController {
     // public methods
     
     @RequestMapping(
-        value="/main",
+        value="/index",
         method=RequestMethod.GET
     )
     public String getForm(
+        @RequestParam(value="locale", defaultValue="")
+        String locale,
+        @CookieValue(value="__exmphangul_request_token", defaultValue="")
+        String requestToken,
+        @CookieValue(value="__exmphangul_access_token", defaultValue="")
+        String oauthToken,
+        @CookieValue(value="__exmphangul_token_secret", defaultValue="")
+        String oauthTokenSecret,
+        @CookieValue(value="__exmphangul_user_id", defaultValue="")
+        String userId,
+        @CookieValue(value="__exmphangul_screen_name", defaultValue="")
+        String screenName,
+        Model model
+     ) {
+        LOG.debug("called.");
+        
+        debugOut(oauthToken, oauthTokenSecret, userId, screenName);
+        
+        try {            
+            // get the current local.
+            if (locale.equals("")) {
+                Locale loc = Locale.getDefault();
+                locale = loc.getLanguage();
+            }
+
+            // set the user id to form-object.
+            TweetForm tweetForm = new TweetForm();
+            tweetForm.setUserId(userId);
+            
+            // set the value of local.
+            tweetForm.setLocale(locale);
+
+            // set object to model.
+            model.addAttribute(tweetForm);
+
+            // normally, move to this view.
+            return null;
+        
+        } catch(Exception e) {
+            LOG.fatal(e.getMessage());
+            AjaxResponse response = (AjaxResponse) context.getBean(
+                AJAX_RESPONSE_BEAN_ID,
+                true,
+                e.getMessage()
+            );
+            model.addAttribute(response);
+            return "error";
+        } 
+    }
+    
+    @RequestMapping(
+        value="/login",
+        method=RequestMethod.GET
+    )
+    public String doLogin(
         @RequestParam(value="locale", defaultValue="")
         String locale,
         @CookieValue(value="__exmphangul_request_token", defaultValue="")
@@ -106,7 +161,7 @@ public class TweetController {
                     msg
                 );
                 model.addAttribute(response);
-                return "redirect:/index.html" + "?locale=" + locale;
+                return "redirect:/login.html" + "?locale=" + locale;
             }
             
             // get the current local.
