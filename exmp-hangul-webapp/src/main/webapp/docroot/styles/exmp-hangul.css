@@ -324,9 +324,16 @@ div.alphabet {
         }
         
 /* ****************************************************************************
- * define the appearance of the tweet command content.
+ * define the appearance of the entry content.
  */
-div.tweet-command-block {
-    padding: 0.5em 0.5em 0.5em 0.5em;
-    text-align: right;
+div.content-wrapper {
+    margin: 0.25em 0.25em 0.25em 0.25em;
+    padding: 0.25em 0.25em 1em 0.25em;
+    background: white;
+    border: 1px solid silver;
+    border-radius: 5px;
 }
+    div.tweet-command-block {
+        padding: 0.5em 0.5em 0em 0.5em;
+        text-align: right;
+    }

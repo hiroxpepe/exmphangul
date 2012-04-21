@@ -7,7 +7,8 @@
     <form:form modelAttribute="tweetForm">
         <form:hidden id="user_id" path="userId" />
         <form:hidden id="locale" path="locale" />
-        <div>
+        
+        <div id="hangul-content-wrapper" class="content-wrapper">
             <div class="block">
                 <fmt:message key="index.label.hangul" />
             </div>
@@ -25,12 +26,14 @@
                     />
                 </div>
             </c:if>    
-                
+        </div>
+            
+        <div id="alphabet-content-wrapper" class="content-wrapper">
             <div class="block">
                 <fmt:message key="index.label.alphabet" />
             </div>
             <div class="block">
-                <textarea id="roman" cols=40 rows=4></textarea>
+                <textarea id="alphabet" cols=40 rows=4></textarea>
             </div>
         </div>
     </form:form>

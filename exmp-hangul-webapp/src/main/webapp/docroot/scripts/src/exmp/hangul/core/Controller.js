@@ -60,14 +60,20 @@ exmp.hangul.core.Controller = window; {
         var controller = exmp.hangul.core.Controller;
         var closure = exmp.hangul.functor.event.KeyupEventClosure;
         
-        $("#roman").keyup(function(event) {            
+        // set the control's event handler.
+        
+        $("#alphabet").keyup(function(event) {            
             closure.execute({
-                value: $("#roman").val()
+                value: $("#alphabet").val()
             });
         });
         
         $("#tweet-button").click(function() { 
             controller._doTweetButtonOnClick();
         });
+        
+         // and, do a some initialize.
+        $("#alphabet-content-wrapper").draggable();
+        $("#alphabet-table-content-wrapper").draggable();
     }
 }
