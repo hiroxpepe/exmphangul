@@ -8,9 +8,11 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <meta http-equiv="Content-Language" content="en">
         <link rel="shortcut icon" href="<c:url value="/docroot/images/icon.ico" />" />
+        <link rel="stylesheet" type="text/css" href="<c:url value="/docroot/styles/jquery-ui.custom.css" />" />
         <link rel="stylesheet" type="text/css" href="<c:url value="/docroot/styles/exmp-hangul.css" />" />
         <script language="javascript" type="text/javascript" src="<c:url value="/docroot/scripts/jquery.js" />"></script>
         <script language="javascript" type="text/javascript" src="<c:url value="/docroot/scripts/jquery-ui.custom.min.js" />"></script>
+        <script language="javascript" type="text/javascript" src="<c:url value="/docroot/scripts/jquery.json.js" />"></script>
         <script language="javascript" type="text/javascript" src="<c:url value="/docroot/scripts/utf.js" />"></script>
         <script language="javascript" type="text/javascript" src="<c:url value="/docroot/scripts/exmp-hangul.min.js" />"></script>
         

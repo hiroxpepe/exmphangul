@@ -1,6 +1,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<div id="alphabet-table-content-wrapper" class="block alphabet content-wrapper">
+<div id="alphabet-grid" 
+    class="block alphabet content-wrapper">
     <div>
         <div>
             <fmt:message key="index.label.consonant" />

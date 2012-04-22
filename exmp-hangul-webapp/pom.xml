@@ -133,7 +133,7 @@
                             <goal>compress</goal>
                         </goals>
                         <configuration>
-                            <linebreakpos>-1</linebreakpos>
+                            <linebreakpos>0</linebreakpos>
                             <encoding>UTF-8</encoding>
                             <nosuffix>true</nosuffix>
                             <aggregations>

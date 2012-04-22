@@ -15,40 +15,24 @@
 ///////////////////////////////////////////////////////////////////////////////
 /**
  * a functor class of the application.
- * send HTTP request for tweet post.
+ * update the HTML table of the entry list.
  * 
  * @author hiroxpepe
  */
-exmp.hangul.functor.request.TweetClosure = {
+exmp.hangul.functor.dhtml.TweetListUpdateClosure = {
     
     ///////////////////////////////////////////////////////////////////////////
     // public methods
     
     execute: function(obj) {
-        console.log("tweet begin.");
+        console.log("exmp.hangul.functor.dhtml.TweetListUpdateClosure#execute");
         
-        new $.ajax({
-            url: "tweet.html",
-            type: "POST",
-            data: {
-                tweet: obj.content,
-                user_id: obj.userId
-            },
-            dataType: "json",
-            success: function(data, dataType) {
-                if (data.isError) {
-                    console.log("application error occurred.");
-                    return;
-                }
-                // todo for update.
-                
-                $("#hangul").val("");
-                
-                console.log("tweet complete.");
-            },
-            error: function(XMLHttpRequest, textStatus, errorThrown) {
-                console.log("http request error occurred.");
-            }
-        });
+        var transformer = exmp.hangul.functor.htmltag.TweetListTransformer;
+        
+        $("#tweet-list-block").html(
+            transformer.transform(
+                obj
+            )
+        );
     }
 }

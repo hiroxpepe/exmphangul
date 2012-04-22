@@ -4,16 +4,23 @@
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
 
 <div class="block index-content">
-    <form:form modelAttribute="tweetForm">
-        <form:hidden id="user_id" path="userId" />
+        
+    <%-- insert the alphabet table --%>
+    <tiles:insertTemplate 
+        template="/WEB-INF/views/_alphabetGrid.jsp"
+    />
+    
+    <form:form  id="tweet-form" modelAttribute="tweetForm">
+        <form:hidden id="user-id" path="userId" />
         <form:hidden id="locale" path="locale" />
         
-        <div id="hangul-content-wrapper" class="content-wrapper">
+        <div id="input-content-wrapper" class="content-wrapper">
+            
             <div class="block">
                 <fmt:message key="index.label.hangul" />
             </div>
             <div class="block">
-                <textarea id="hangul" cols=40 rows=4></textarea>
+                <textarea id="hangul"></textarea>
             </div>
             
             <c:if test="${not empty tweetForm.userId}">
@@ -25,22 +32,22 @@
                         value="<fmt:message key="button.tweet" />"
                     />
                 </div>
-            </c:if>    
-        </div>
+            </c:if>
             
-        <div id="alphabet-content-wrapper" class="content-wrapper">
             <div class="block">
                 <fmt:message key="index.label.alphabet" />
             </div>
             <div class="block">
-                <textarea id="alphabet" cols=40 rows=4></textarea>
+                <textarea id="alphabet"></textarea>
             </div>
         </div>
-    </form:form>
             
-    <%-- insert the alphabet table --%>
-    <tiles:insertTemplate 
-        template="/WEB-INF/views/_alphabet.jsp"
-    />
-    
+        <c:if test="${not empty tweetForm.userId}">
+            <%-- insert the tab content template. --%>
+            <tiles:insertTemplate 
+            template="/WEB-INF/views/_tabContent.jsp"
+            />
+        </c:if>
+        
+    </form:form>
 </div>

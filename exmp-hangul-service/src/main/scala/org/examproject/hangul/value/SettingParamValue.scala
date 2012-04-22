@@ -12,34 +12,19 @@
  * limitations under the License.
  */
 
-package org.examproject.hangul.value;
+package org.examproject.hangul.value
+
+import reflect.BeanProperty
 
 /**
  * @author hiroxpepe
  */
-public enum TweetCookie {
+class SettingParamValue (
     
-    REQUEST_TOKEN("__exmphangul_request_token"),
+    @BeanProperty
+    val responseListMode: String,
     
-    ACCESS_TOKEN("__exmphangul_access_token"),
+    @BeanProperty
+    val userListName: String
     
-    TOKEN_SECRET("__exmphangul_token_secret"),
-    
-    USER_ID("__exmphangul_user_id"),
-    
-    SCREEN_NAME("__exmphangul_screen_name"),
-    
-    USER_LIST_NAME("__exmphangul_user_list_name"),
-            
-    RESPONSE_LIST_MODE("__exmphangul_response_list_mode");
-    
-    TweetCookie(String name) {
-        this.name = name;
-    }
-    
-    private String name;
-     
-    public String getName() {
-        return name;
-    }
-}
+) {}

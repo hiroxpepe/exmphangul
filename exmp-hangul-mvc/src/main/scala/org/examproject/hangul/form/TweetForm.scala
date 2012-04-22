@@ -43,6 +43,12 @@ class TweetForm {
 
     @BeanProperty
     var screenName: String = _
+    
+    @BeanProperty
+    var responseListMode: String = _
+    
+    @BeanProperty
+    var userListName: String = _
 
     def clear() {
         content = "";
@@ -51,6 +57,8 @@ class TweetForm {
         oauthTokenSecret = "";
         userId = "";
         screenName = "";
+        responseListMode = "";
+        userListName = "";
     }
     
 }

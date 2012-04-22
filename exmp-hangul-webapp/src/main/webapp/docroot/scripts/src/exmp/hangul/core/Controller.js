@@ -37,20 +37,72 @@ exmp.hangul.core.Controller = window; {
     ///////////////////////////////////////////////////////////////////////////
     // event handler methods
     
+    /**
+     * an event handler that called when 
+     * the button of tweet is clicked.
+     */
     exmp.hangul.core.Controller._doTweetButtonOnClick = function() {
         
-        var closure = exmp.hangul.functor.request.TweetClosure;
+        var updateClosure = exmp.hangul.functor.request.TweetUpdateClosure;
         
         // not reply or simple reply
-        closure.execute({
+        updateClosure.execute({
             content: $("#hangul").val(),
-            userId: $("#user_id").val()
+            userId: $("#user-id").val()
         });
         return;
     }
     
+    /**
+     * an event handler that called when 
+     * the button of setting is clicked.
+     */
+    exmp.hangul.core.Controller._doSettingButtonOnClick = function() {
+        
+        var settingClosure = exmp.hangul.functor.request.SettingClosure;
+        var formFactory = exmp.hangul.functor.value.TweetFormFactory;
+        
+        settingClosure.execute(
+            formFactory.create()
+        );
+    }
+    
     ///////////////////////////////////////////////////////////////////////////
     // private methods
+    
+    /**
+     * initializes a div of the tabs area.
+     */
+    exmp.hangul.core.Controller._initializeTabsDiv = function() {
+        
+        $("div.tab-content div.tab").hide();
+        $("div.tab-content div.tab:first").show();
+        $("div.tab-content ul li:first").addClass("active");
+        $("div.tab-content ul li a").click(function(){
+            $("div.tab-content ul li").removeClass("active");
+            $(this).parent().addClass("active");
+            var currentTab = $(this).attr("href");
+            $("div.tab-content div.tab").hide();
+            $(currentTab).show();
+            return false;
+        });
+    }
+    
+    /**
+     * initializes a div of entry list.
+     * an http request of ajax for get the tweet data.
+     */
+    exmp.hangul.core.Controller._initializeTweetListDiv = function() {
+        
+        var listClosure = exmp.hangul.functor.request.TweetListClosure;
+        var pageUrl = location.href;
+        
+        if (!(pageUrl.indexOf("index.html") == -1)) {
+            listClosure.execute({
+                userId: $("#user-id").val()
+            });
+        }
+    }
     
     /**
      * initialize a component of the view class.
@@ -59,6 +111,12 @@ exmp.hangul.core.Controller = window; {
         
         var controller = exmp.hangul.core.Controller;
         var closure = exmp.hangul.functor.event.KeyupEventClosure;
+        
+        // calls for the initialization methods.
+        
+        controller._initializeTabsDiv();
+        
+        controller._initializeTweetListDiv();
         
         // set the control's event handler.
         
@@ -72,8 +130,14 @@ exmp.hangul.core.Controller = window; {
             controller._doTweetButtonOnClick();
         });
         
-         // and, do a some initialize.
-        $("#alphabet-content-wrapper").draggable();
-        $("#alphabet-table-content-wrapper").draggable();
+        $("#setting-button").click(function() {
+            controller._doSettingButtonOnClick();
+        });
+        
+        // and do a some initialize.
+        
+        $("#alphabet-grid").dialog({
+            width: 380
+        });
     }
 }
