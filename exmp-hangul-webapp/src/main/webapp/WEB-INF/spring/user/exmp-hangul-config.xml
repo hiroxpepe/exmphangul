@@ -18,8 +18,8 @@
         <constructor-arg name="requestTokenUrl" value="http://twitter.com/oauth/request_token" />
         <constructor-arg name="authorizeUrl" value="http://twitter.com/oauth/authorize" />
         <constructor-arg name="accessTokenUrl" value="http://twitter.com/oauth/access_token" />
-        <constructor-arg name="consumerKey" value="" />
-        <constructor-arg name="consumerSecret" value="" />
+        <constructor-arg name="consumerKey" value="KqdOwgzsgYVODX9BoE4Alw" />
+        <constructor-arg name="consumerSecret" value="RERyZK5Ivq8IejY7RwCZxL8p6lT3LATBIes68nseMM" />
         <constructor-arg name="callbackUrlPath" value="callback.html" />
     </bean>
     
