@@ -45,7 +45,7 @@ exmp.hangul.core.Controller = window; {
         
         var updateClosure = exmp.hangul.functor.request.TweetUpdateClosure;
         
-        // not reply or simple reply
+        // update the tweet status.
         updateClosure.execute({
             content: $("#hangul").val(),
             userId: $("#user-id").val()
@@ -137,7 +137,7 @@ exmp.hangul.core.Controller = window; {
         // and do a some initialize.
         
         $("#alphabet-grid").dialog({
-            width: 380
+            width: auto
         });
     }
 }
