@@ -81,8 +81,8 @@ exmp.hangul.functor.value.LetterIdArrayTransformer = {
     // private methods
     
     _getLetterId: function(value) {
-        console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-        console.log("_getLetterId begin.");
+        //console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+        //console.log("_getLetterId begin.");
         
         var initialId = null;
         var peakId = null;
@@ -102,10 +102,10 @@ exmp.hangul.functor.value.LetterIdArrayTransformer = {
                 initialId = initialIndex2;
                 _initialStr = initialStr2;
                 value = value.substr(2);
-                console.log("-----------------------");
-                console.log("initialId: " + initialId);
-                console.log("peakId: " + peakId);
-                console.log("finalId: " + finalId);
+                //console.log("-----------------------");
+                //console.log("initialId: " + initialId);
+                //console.log("peakId: " + peakId);
+                //console.log("finalId: " + finalId);
             }
         }
         
@@ -116,17 +116,17 @@ exmp.hangul.functor.value.LetterIdArrayTransformer = {
                 initialId = initialIndex1;
                 _initialStr = initialStr1;
                 value = value.substr(1);
-                console.log("-----------------------");
-                console.log("initialId: " + initialId);
-                console.log("peakId: " + peakId);
-                console.log("finalId: " + finalId);
+                //console.log("-----------------------");
+                //console.log("initialId: " + initialId);
+                //console.log("peakId: " + peakId);
+                //console.log("finalId: " + finalId);
             }
         }
         
         // if not found the initial word complemented to 11.
         if (initialId == null) {
-            console.log("initial word is not found.");
-            console.log("initial word is complemented to 11.");
+            //console.log("initial word is not found.");
+            //console.log("initial word is complemented to 11.");
             initialId = "11";
             _initialStr = "";
         }
@@ -141,10 +141,10 @@ exmp.hangul.functor.value.LetterIdArrayTransformer = {
                 peakId = peakIndex3;
                 _peakIdStr = peakStr3;
                 value = value.substr(3);
-                console.log("-----------------------");
-                console.log("initialId: " + initialId);
-                console.log("peakId: " + peakId);
-                console.log("finalId: " + finalId);
+                //console.log("-----------------------");
+                //console.log("initialId: " + initialId);
+                //console.log("peakId: " + peakId);
+                //console.log("finalId: " + finalId);
             }
         }
         
@@ -155,10 +155,10 @@ exmp.hangul.functor.value.LetterIdArrayTransformer = {
                 peakId = peakIndex2;
                 _peakIdStr = peakStr2;
                 value = value.substr(2);
-                console.log("-----------------------");
-                console.log("initialId: " + initialId);
-                console.log("peakId: " + peakId);
-                console.log("finalId: " + finalId);
+                //console.log("-----------------------");
+                //console.log("initialId: " + initialId);
+                //console.log("peakId: " + peakId);
+                //console.log("finalId: " + finalId);
             }
         }
         
@@ -169,10 +169,10 @@ exmp.hangul.functor.value.LetterIdArrayTransformer = {
                 peakId = peakIndex1;
                 _peakIdStr = peakStr1;
                 value = value.substr(1);
-                console.log("-----------------------");
-                console.log("initialId: " + initialId);
-                console.log("peakId: " + peakId);
-                console.log("finalId: " + finalId);
+                //console.log("-----------------------");
+                //console.log("initialId: " + initialId);
+                //console.log("peakId: " + peakId);
+                //console.log("finalId: " + finalId);
             }
         }
         
@@ -186,10 +186,10 @@ exmp.hangul.functor.value.LetterIdArrayTransformer = {
                 finalId = finalIndex2;
                 _finalIdStr = finalStr2;
                 value = value.substr(2);
-                console.log("-----------------------");
-                console.log("initialId: " + initialId);
-                console.log("peakId: " + peakId);
-                console.log("finalId: " + finalId);
+                //console.log("-----------------------");
+                //console.log("initialId: " + initialId);
+                //console.log("peakId: " + peakId);
+                //console.log("finalId: " + finalId);
             }
         }
         
@@ -200,24 +200,24 @@ exmp.hangul.functor.value.LetterIdArrayTransformer = {
                 finalId = finalIndex1;
                 _finalIdStr = finalStr1;
                 value = value.substr(1);
-                console.log("-----------------------");
-                console.log("initialId: " + initialId);
-                console.log("peakId: " + peakId);
-                console.log("finalId: " + finalId);
+                //console.log("-----------------------");
+                //console.log("initialId: " + initialId);
+                //console.log("peakId: " + peakId);
+                //console.log("finalId: " + finalId);
             }
         }
         
         this._remains = value;
-        console.log("=============================");
-        console.log("remains: " + value);
+        //console.log("=============================");
+        //console.log("remains: " + value);
         
         // add
         var _originalString = _initialStr + _peakIdStr + _finalIdStr;
-        console.log("originalString: " + _originalString);
-        console.log("=============================");
+        //console.log("originalString: " + _originalString);
+        //console.log("=============================");
                 
-        console.log("_getLetterId end.");
-        console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+        //console.log("_getLetterId end.");
+        //console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
         
         return {
             originalString: _originalString,

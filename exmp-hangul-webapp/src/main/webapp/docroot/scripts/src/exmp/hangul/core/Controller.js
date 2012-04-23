@@ -110,7 +110,9 @@ exmp.hangul.core.Controller = window; {
     exmp.hangul.core.Controller._initializeComponent = function() {
         
         var controller = exmp.hangul.core.Controller;
-        var closure = exmp.hangul.functor.event.KeyupEventClosure;
+        var eventClosure = exmp.hangul.functor.event.KeyupEventClosure;
+        
+        var colorClosure = exmp.hangul.functor.event.KeyupColorClosure;
         
         // calls for the initialization methods.
         
@@ -121,9 +123,14 @@ exmp.hangul.core.Controller = window; {
         // set the control's event handler.
         
         $("#alphabet").keyup(function(event) {            
-            closure.execute({
+            eventClosure.execute({
                 value: $("#alphabet").val()
             });
+            
+            // show color.
+            colorClosure.execute(
+                event
+            );
         });
         
         $("#tweet-button").click(function() { 

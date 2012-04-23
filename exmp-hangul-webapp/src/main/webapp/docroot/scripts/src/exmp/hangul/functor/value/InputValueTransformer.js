@@ -15,20 +15,38 @@
 ///////////////////////////////////////////////////////////////////////////////
 /**
  * a functor class of the application.
- * set the event handler of keyup.
+ * get the input char string.
  * 
  * @author hiroxpepe
  */
-exmp.hangul.functor.event.KeyupEventCodeClosure = {
+exmp.hangul.functor.value.InputValueTransformer = {
+    
+    _array: ["", "", ""],
     
     ///////////////////////////////////////////////////////////////////////////
     // public methods
     
-    execute: function(obj) {
-        console.log("exmp.hangul.functor.event.KeyupEventCodeClosure#execute");
-         
-        console.log("event.keyCode: "  + obj.keyCode);
-        console.log("event.shiftKey: " + obj.shiftKey);
-        console.log("event.ctrlKey: "  + obj.ctrlKey);
+    transform: function(obj) {
+        console.log("exmp.hangul.functor.value.InputValueTransformer#transform");
+        
+        // reset array.
+        if (obj.value === " ") {
+            for (var i = 0; i < this._array.length; i++) {
+                this._array[i] = "";
+            }
+            return null;
+        }
+        
+        // shift the value..
+        this._array[0] = this._array[1]
+        this._array[1] = this._array[2]
+        this._array[2] = obj.value;
+              
+        var ret = "";
+        for (var i = 0; i < this._array.length; i++) {
+            ret += this._array[i];
+        }
+        
+        return ret;
     }
 }

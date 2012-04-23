@@ -33,7 +33,7 @@ exmp.hangul.functor.event.KeyupEventClosure = {
      
         // get the sentence.
         var sentence = obj.value;
-        console.log("sentence: " + sentence);
+        //console.log("sentence: " + sentence);
         
         // divide to array.
         var array = sentenceDivideTransformer.transform({
@@ -43,14 +43,14 @@ exmp.hangul.functor.event.KeyupEventClosure = {
         // get the word as object.
         var text = "";
         for (var index in array) {
-            console.log("word: " + array[index]);
+            //console.log("word: " + array[index]);
 
             var oneWord = array[index];
             
             // make a space.
             var sp = oneWord;
             if (sp == "") {
-                console.log("word is a space.");
+                //console.log("word is a space.");
                 text = text + " ";
                 continue;
             }
@@ -60,10 +60,7 @@ exmp.hangul.functor.event.KeyupEventClosure = {
                 value: oneWord
             });
             if (idObjList == null) {
-                //console.log("xxxxxxxxxxxxxxxxxxxxxxxxxx");
                 //console.log("not match word: " + oneWord);
-                // TODO: add DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD
-                //text = text + oneWord;
                 continue;
             }
             
@@ -80,9 +77,8 @@ exmp.hangul.functor.event.KeyupEventClosure = {
                         idObj
                     );
                     if (code == null) {
-                        //console.log("xxxxxxxxxxxxxxxxxxxxxxxxxx");
                         //console.log("not match word: " + oneWord);
-                        // TODO: add DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD
+                        // TODO: add
                         text = text + idObj.originalString;
                         continue;
                     }
