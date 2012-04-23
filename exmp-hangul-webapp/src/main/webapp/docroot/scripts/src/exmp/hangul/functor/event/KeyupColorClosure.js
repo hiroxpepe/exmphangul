@@ -23,17 +23,24 @@ exmp.hangul.functor.event.KeyupColorClosure = {
     
     _tmp: "",
     
+    _letterArray: [
+        "g","kk","n","d","tt","r","m","b","pp","s",
+        "ss","ng","j","jj","ch","k","t","p","h",
+        "a","ae","ya","yae","eo","e","yeo","ye","o","wa","wae",
+        "oe","yo","u","wo","we","wi","yu","eu","ui","i"
+    ],
+    
     ///////////////////////////////////////////////////////////////////////////
     // public methods
     
     execute: function(obj) {
-        console.log("exmp.hangul.functor.event.KeyupEventCodeClosure#execute");
+        console.log("exmp.hangul.functor.event.KeyupColorClosure#execute");
         //console.log("event.keyCode: " + obj.keyCode);
         
         var valueTransformer = exmp.hangul.functor.value.InputValueTransformer
         
         var value = valueTransformer.transform({
-            value: this._getStr(obj.keyCode)
+            value: this._getChar(obj.keyCode)
         });
         
         if (value != null) {
@@ -48,16 +55,24 @@ exmp.hangul.functor.event.KeyupColorClosure = {
             this._tmp = value;
             
             // reset. TODO: need char table..
-            //valueTransformer.transform({
-            //    value: " "
-            //});
+            for (var i = 0; i < this._letterArray.length; i++) {
+                var letter = this._letterArray[i];
+                if (value == letter) {
+                    //console.log("value: " + value);
+                    //console.log("letter: " + letter);
+                    valueTransformer.transform({
+                        value: " "
+                    });
+                    break;
+                }
+            }
         }
     },
     
     ///////////////////////////////////////////////////////////////////////////
     // private methods
     
-    _getStr: function(code) {
+    _getChar: function(code) {
         if (code == 65) return "a";
         if (code == 66) return "b";
         if (code == 67) return "c";
@@ -88,4 +103,5 @@ exmp.hangul.functor.event.KeyupColorClosure = {
         
         return null;
     }
+
 }
