@@ -28,12 +28,12 @@ exmp.hangul.functor.event.KeyupEventClosure = {
         console.log("exmp.hangul.functor.event.KeyupEventClosure#execute");
         
         var sentenceDivideTransformer = exmp.hangul.functor.value.SentenceDivideTransformer;
-        var letterIdTransformer = exmp.hangul.functor.value.LetterIdArrayTransformer;
+        var letterIdArrayTransformer = exmp.hangul.functor.value.LetterIdArrayTransformer;
         var decodedValueTransformer = exmp.hangul.functor.value.DecodedValueTransformer;
      
         // get the sentence.
         var sentence = obj.value;
-        console.log("sentence: " + sentence);
+        //console.log("sentence: " + sentence);
         
         // divide to array.
         var array = sentenceDivideTransformer.transform({
@@ -43,31 +43,31 @@ exmp.hangul.functor.event.KeyupEventClosure = {
         // get the word as object.
         var text = "";
         for (var index in array) {
-            console.log("word: " + array[index]);
+            //console.log("word: " + array[index]);
 
             var oneWord = array[index];
             
             // make a space.
             var sp = oneWord;
             if (sp == "") {
-                console.log("word is a space.");
+                //console.log("word is a space.");
                 text = text + " ";
                 continue;
             }
 
             // get the letter id value as a object.
-            var letterIdObj = letterIdTransformer.transform({
+            var idObjList = letterIdArrayTransformer.transform({
                 value: oneWord
             });
-            if (letterIdObj == null) {
-                console.log("not match word: " + oneWord);
+            if (idObjList == null) {
+                //console.log("not match word: " + oneWord);
                 continue;
             }
             
             // loop..
-            for (var i in letterIdObj) {
+            for (var i in idObjList) {
                 
-                var idObj = letterIdObj[i];
+                var idObj = idObjList[i];
                 if (idObj.remains != null) {
                     text = text + idObj.remains;
                 }
@@ -77,7 +77,9 @@ exmp.hangul.functor.event.KeyupEventClosure = {
                         idObj
                     );
                     if (code == null) {
-                        console.log("not match word: " + oneWord);
+                        //console.log("not match word: " + oneWord);
+                        // TODO: add
+                        text = text + idObj.originalString;
                         continue;
                     }
 

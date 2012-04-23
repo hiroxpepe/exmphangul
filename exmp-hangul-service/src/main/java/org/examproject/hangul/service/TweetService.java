@@ -43,6 +43,10 @@ public class TweetService {
         TweetService.class
     );
     
+    private static final int WAIT_COUNT = 30;
+    
+    private static final int WAIT_MSEC = 1000;
+    
     private final TweetAuthValue authValue;
     
     private final SettingParamValue paramValue;
@@ -50,9 +54,13 @@ public class TweetService {
     ///////////////////////////////////////////////////////////////////////////
     // constructor
     
-    public TweetService(TweetAuthValue authValue){
-        this.authValue = authValue;
-        this.paramValue = new SettingParamValue("", "");
+    public TweetService(
+        TweetAuthValue authValue
+    ){
+        this(
+            authValue,
+            new SettingParamValue("", "")
+        );
     }
     
     public TweetService(
@@ -66,75 +74,126 @@ public class TweetService {
     ///////////////////////////////////////////////////////////////////////////
     // public methods
     
-    public List<TweetDto> getTweetDtoList() {
+    public List<TweetDto> getList(String content) {
         LOG.debug("called.");
         
-        // map the value.
-        ResponseList responseList = getResponseList();
-        List<TweetDto> tweetDtoList = new ArrayList<TweetDto>();
-        for (Object response : responseList) {
-           Status responseStatus = (Status) response;
-           TweetDto tweetDto = new TweetDto();
-           tweetDto.setUserProfileImageURL(responseStatus.getUser().getProfileImageURL().toString());
-           tweetDto.setUserName(responseStatus.getUser().getScreenName());
-           tweetDto.setText(responseStatus.getText());
-           tweetDto.setStatusId(String.valueOf(responseStatus.getId()));
-           tweetDto.setIsFavorited(responseStatus.isFavorited());
-           tweetDtoList.add(tweetDto);
+        ResponseList<Status> responseList = null;
+        List<TweetDto> tweetDtoList = null;
+        try {
+            // TODO: a temporary..
+            for (int i = 0; i < WAIT_COUNT; i++) {
+                responseList = getResponseList();
+                // when the content is null, simply get a list.
+                if (content.length() == 0) {
+                    break;
+                }
+                // search from the list.
+                boolean isFound = false;
+                for (int j = 0; j < responseList.size(); j++) {
+                    Status status = responseList.get(j);
+                    // when the content is equal to the get text.
+                    if (status.getText().equals(content)) {
+                        isFound = true;
+                        break;
+                    
+                    }
+                }
+                if (isFound) {
+                    break;
+                } else {
+                    // wait for the update..?
+                    Thread.sleep(WAIT_MSEC);
+                    LOG.debug("wait count: " + String.valueOf(i + 1));
+                }
+            }
+
+            // map the value.
+            tweetDtoList = new ArrayList<TweetDto>();
+            for (Status status : responseList) {
+                TweetDto tweetDto = new TweetDto();
+                tweetDto.setUserProfileImageURL(status.getUser().getProfileImageURL().toString());
+                tweetDto.setUserName(status.getUser().getScreenName());
+                tweetDto.setText(status.getText());
+                tweetDto.setStatusId(String.valueOf(status.getId()));
+                tweetDto.setIsFavorited(status.isFavorited());
+                tweetDtoList.add(tweetDto);
+            }
+            return tweetDtoList;
+        } catch(Exception e) {
+            LOG.error("an error occurred: " + e.getMessage());
+            throw new RuntimeException(e);
         }
-        return tweetDtoList;
     }
     
-    public void update(String content) {
+    public List<TweetDto> update(String content) {
         LOG.debug("called.");
-        
-        // TODO: on error.
-        updateStatus(content);
+        try {
+            updateStatus(content);
+            return getList(
+                content
+            );
+        } catch(Exception e) {
+            LOG.error("an error occurred: " + e.getMessage());
+            throw new RuntimeException(e);
+        }
     }
     
     public void favor(long statusId) {
         LOG.debug("called.");
-        
-        // TODO: on error.
-        createFavorite(statusId);
+        try {
+            createFavorite(statusId);
+        } catch(Exception e) {
+            LOG.error("an error occurred: " + e.getMessage());
+            throw new RuntimeException(e);
+        }
     }
     
     public void retweet(long statusId) {
         LOG.debug("called.");
-        
-        // TODO: on error.
-        retweetStatus(statusId);
+        try {
+            retweetStatus(statusId);
+        } catch(Exception e) {
+            LOG.error("an error occurred: " + e.getMessage());
+            throw new RuntimeException(e);
+        }
     }
     
-    public void reply(String content, long statusId) {
+    public List<TweetDto> reply(String content, long statusId) {
         LOG.debug("called.");
-        
-        // TODO: on error.
-        replyStatus(content, statusId);
+        try {
+            replyStatus(content, statusId);
+            return getList(
+                content
+            );
+        } catch(Exception e) {
+            LOG.error("an error occurred: " + e.getMessage());
+            throw new RuntimeException(e);
+        }
     }
     
     public List<String> getUserListNameList() {
         LOG.debug("called.");
-        
-        // TODO: on error.
-        List<String> userListNameList = new ArrayList<String>();
-        PagableResponseList<UserList> userList = getUserList();
-        for (UserList list : userList) {
-            if (list.isPublic()) {
+        try {
+            List<String> userListNameList = new ArrayList<String>();
+            PagableResponseList<UserList> userList = getUserList();
+            for (UserList list : userList) {
                 LOG.debug("list FullName: " + list.getFullName());
                 userListNameList.add(list.getFullName());
             }
+            return userListNameList;
+        } catch(Exception e) {
+            LOG.error("an error occurred: " + e.getMessage());
+            throw new RuntimeException(e);
         }
-        return userListNameList;
     }
     
     ///////////////////////////////////////////////////////////////////////////
     // private methods
     
     private Status updateStatus(String content) {
-        Twitter twitter = getTwitter();
         Status status = null;
         try {
+            Twitter twitter = getTwitter();
             status = twitter.updateStatus(content);
         } catch (TwitterException te) {
             LOG.error("an error occurred: " + te.getMessage());
@@ -144,9 +203,9 @@ public class TweetService {
     }
     
     private Status createFavorite(long statusId) {
-        Twitter twitter = getTwitter();
         Status status = null;
         try {
+            Twitter twitter = getTwitter();
             status = twitter.createFavorite(statusId);
         } catch (TwitterException te) {
             LOG.error("an error occurred: " + te.getMessage());
@@ -155,11 +214,11 @@ public class TweetService {
         return status;
     }
     
-    // TODO: not yet..?
     private Status destroyFavorite(long statusId) {
-        Twitter twitter = getTwitter();
+        // TODO: not yet..?
         Status status = null;
         try {
+            Twitter twitter = getTwitter();
             status = twitter.destroyFavorite(statusId);
         } catch (TwitterException te) {
             LOG.error("an error occurred: " + te.getMessage());
@@ -169,9 +228,9 @@ public class TweetService {
     }
     
     private Status retweetStatus(long statusId) {
-        Twitter twitter = getTwitter();
         Status status = null;        
         try {
+            Twitter twitter = getTwitter();
             status = twitter.retweetStatus(statusId);
         } catch (TwitterException te) {
             LOG.error("an error occurred: " + te.getMessage());
@@ -181,11 +240,11 @@ public class TweetService {
     }
     
     private Status replyStatus(String content, long statusId) {
-        Twitter twitter = getTwitter();
         Status status = null;
         StatusUpdate statusUpdate = new StatusUpdate(content);
         statusUpdate.setInReplyToStatusId(statusId);
         try {
+            Twitter twitter = getTwitter();
             status = twitter.updateStatus(statusUpdate);
         } catch (TwitterException te) {
             LOG.error("an error occurred: " + te.getMessage());
@@ -196,8 +255,8 @@ public class TweetService {
     
     private PagableResponseList<UserList> getUserList() {
         long cursol = -1;
-        Twitter twitter = getTwitter();
         try {
+            Twitter twitter = getTwitter();
             return twitter.getUserLists(twitter.getScreenName(), cursol);
         } catch (TwitterException te) {
             throw new RuntimeException(te);
@@ -205,46 +264,46 @@ public class TweetService {
     }
     
     private ResponseList<Status> getResponseList() {
+        LOG.debug("called.");
         
         long cursol = -1;
 	int listId = 0;
         Paging paging = new Paging(1);
-        
-        Twitter twitter = getTwitter();
-        
         try {
             // TODO: polymorphism to here? -> plugin.
             
             // home
             if (paramValue.getResponseListMode().equals("home")) {
+                Twitter twitter = getTwitter();
                 return twitter.getHomeTimeline();
             }
             
             // user
             if (paramValue.getResponseListMode().equals("user")) {
+                Twitter twitter = getTwitter();
                 return twitter.getUserTimeline();
             }
             
             // list
             if (paramValue.getResponseListMode().equals("list")) {
-                if (paramValue.getUserListName().length() != 0) {      
+                if (paramValue.getUserListName().length() != 0) {
+                    Twitter twitter = getTwitter();
                     PagableResponseList<UserList> lists = twitter.getUserLists(
                         twitter.getScreenName(),
                         cursol
                     );
                     for (UserList list : lists) {
-                        if (list.isPublic()) {
-                            String listFullName = list.getFullName();
-                            if (listFullName.equals(paramValue.getUserListName())) {
-                                listId = list.getId();
-                                return twitter.getUserListStatuses(listId, paging);
-                            }
+                        String listFullName = list.getFullName();
+                        if (listFullName.equals(paramValue.getUserListName())) {
+                            listId = list.getId();
+                            return twitter.getUserListStatuses(listId, paging);
                         }
                     }
                 }
             }
             
             // default..
+            Twitter twitter = getTwitter();
             return twitter.getHomeTimeline();
             
         } catch (TwitterException te) {
@@ -260,11 +319,10 @@ public class TweetService {
             authValue.getConsumerKey(),
             authValue.getConsumerSecret()
         );
-        AccessToken accessToken = new AccessToken(
+        twitter.setOAuthAccessToken(new AccessToken(
             authValue.getOauthToken(),
             authValue.getOauthTokenSecret()
-        );
-        twitter.setOAuthAccessToken(accessToken);
+        ));
         return twitter;
     }
     

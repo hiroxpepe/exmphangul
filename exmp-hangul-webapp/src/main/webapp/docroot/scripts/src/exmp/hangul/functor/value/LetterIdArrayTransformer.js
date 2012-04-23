@@ -53,11 +53,15 @@ exmp.hangul.functor.value.LetterIdArrayTransformer = {
                 return LetterIdArray;
             }
             
+            // the first word is processed.
             if (i == 0) {
                 text = value;
             }
+            // other is the rest 
+            // that after the word has been processed.
             else {
                 text = this._remains;
+                // processing until the text is null.
                 if (text == "") {
                     break;
                 }
@@ -69,6 +73,7 @@ exmp.hangul.functor.value.LetterIdArrayTransformer = {
             return LetterIdArray;
         }
         
+        // else.
         return null;
     },
     
@@ -76,10 +81,16 @@ exmp.hangul.functor.value.LetterIdArrayTransformer = {
     // private methods
     
     _getLetterId: function(value) {
+        //console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+        //console.log("_getLetterId begin.");
         
         var initialId = null;
         var peakId = null;
         var finalId = null;
+        
+        var _initialStr = "";
+        var _peakIdStr = "";
+        var _finalIdStr = "";
         
         ///////////////////////////////////////////////////////////////////////
         // find the initial word.
@@ -89,8 +100,12 @@ exmp.hangul.functor.value.LetterIdArrayTransformer = {
         for (var initialIndex2 in this._initialArray) {
             if (initialStr2 == this._initialArray[initialIndex2]) {
                 initialId = initialIndex2;
+                _initialStr = initialStr2;
                 value = value.substr(2);
-                console.log("initialId: " + initialId);
+                //console.log("-----------------------");
+                //console.log("initialId: " + initialId);
+                //console.log("peakId: " + peakId);
+                //console.log("finalId: " + finalId);
             }
         }
         
@@ -99,16 +114,21 @@ exmp.hangul.functor.value.LetterIdArrayTransformer = {
         for (var initialIndex1 in this._initialArray) {
             if (initialStr1 == this._initialArray[initialIndex1]) {
                 initialId = initialIndex1;
+                _initialStr = initialStr1;
                 value = value.substr(1);
-                console.log("initialId: " + initialId);
+                //console.log("-----------------------");
+                //console.log("initialId: " + initialId);
+                //console.log("peakId: " + peakId);
+                //console.log("finalId: " + finalId);
             }
         }
         
         // if not found the initial word complemented to 11.
         if (initialId == null) {
-            console.log("initial word is not found.");
-            console.log("initial word is complemented to 11.");
-            initialId = 11;
+            //console.log("initial word is not found.");
+            //console.log("initial word is complemented to 11.");
+            initialId = "11";
+            _initialStr = "";
         }
         
         ///////////////////////////////////////////////////////////////////////
@@ -119,8 +139,12 @@ exmp.hangul.functor.value.LetterIdArrayTransformer = {
         for (var peakIndex3 in this._peakArray) {
             if (peakStr3 == this._peakArray[peakIndex3]) {
                 peakId = peakIndex3;
+                _peakIdStr = peakStr3;
                 value = value.substr(3);
-                console.log("peakId: " + peakId);
+                //console.log("-----------------------");
+                //console.log("initialId: " + initialId);
+                //console.log("peakId: " + peakId);
+                //console.log("finalId: " + finalId);
             }
         }
         
@@ -129,8 +153,12 @@ exmp.hangul.functor.value.LetterIdArrayTransformer = {
         for (var peakIndex2 in this._peakArray) {
             if (peakStr2 == this._peakArray[peakIndex2]) {
                 peakId = peakIndex2;
+                _peakIdStr = peakStr2;
                 value = value.substr(2);
-                console.log("peakId: " + peakId);
+                //console.log("-----------------------");
+                //console.log("initialId: " + initialId);
+                //console.log("peakId: " + peakId);
+                //console.log("finalId: " + finalId);
             }
         }
         
@@ -139,8 +167,12 @@ exmp.hangul.functor.value.LetterIdArrayTransformer = {
         for (var peakIndex1 in this._peakArray) {
             if (peakStr1 == this._peakArray[peakIndex1]) {
                 peakId = peakIndex1;
+                _peakIdStr = peakStr1;
                 value = value.substr(1);
-                console.log("peakId: " + peakId);
+                //console.log("-----------------------");
+                //console.log("initialId: " + initialId);
+                //console.log("peakId: " + peakId);
+                //console.log("finalId: " + finalId);
             }
         }
         
@@ -152,8 +184,12 @@ exmp.hangul.functor.value.LetterIdArrayTransformer = {
         for (var finalIndex2 in this._finalArray) {
             if (finalStr2 == this._finalArray[finalIndex2]) {
                 finalId = finalIndex2;
+                _finalIdStr = finalStr2;
                 value = value.substr(2);
-                console.log("finalId: " + finalId);
+                //console.log("-----------------------");
+                //console.log("initialId: " + initialId);
+                //console.log("peakId: " + peakId);
+                //console.log("finalId: " + finalId);
             }
         }
         
@@ -162,15 +198,29 @@ exmp.hangul.functor.value.LetterIdArrayTransformer = {
         for (var finalIndex1 in this._finalArray) {
             if (finalStr1 == this._finalArray[finalIndex1]) {
                 finalId = finalIndex1;
+                _finalIdStr = finalStr1;
                 value = value.substr(1);
-                console.log("finalId: " + finalId);
+                //console.log("-----------------------");
+                //console.log("initialId: " + initialId);
+                //console.log("peakId: " + peakId);
+                //console.log("finalId: " + finalId);
             }
         }
         
         this._remains = value;
-        console.log("_remains: " + value);
+        //console.log("=============================");
+        //console.log("remains: " + value);
+        
+        // add
+        var _originalString = _initialStr + _peakIdStr + _finalIdStr;
+        //console.log("originalString: " + _originalString);
+        //console.log("=============================");
+                
+        //console.log("_getLetterId end.");
+        //console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
         
         return {
+            originalString: _originalString,
             initialId: initialId,
             peakId: peakId,
             finalId: finalId,

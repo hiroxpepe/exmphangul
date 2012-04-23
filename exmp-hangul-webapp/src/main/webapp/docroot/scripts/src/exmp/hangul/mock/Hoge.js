@@ -24,6 +24,6 @@ exmp.hangul.mock.Hoge = function(name, age) {
 }
 exmp.hangul.mock.Hoge.prototype = {
     say : function () {
-        window.alert("my name " + this.name + " age is " + this.age);
+        console.log("my name " + this.name + " age is " + this.age);
     }
 }

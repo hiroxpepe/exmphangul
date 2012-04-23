@@ -29,6 +29,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CookieValue;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -254,28 +255,20 @@ public class TweetController {
                     userListName
                 )
             );
-
-            // TODO: on error..
-            service.update(
-                content
-            );
-
-            // get the response object.
-            AjaxResponse response = getResponse(
-                service
-            );
             
-            // return the response object.
-            return response;
+            // update the cpntent.
+            return update(
+                content,
+                service 
+            );
         
         } catch(Exception e) {
             LOG.fatal(e.getMessage());
-            AjaxResponse response = (AjaxResponse) context.getBean(
+            return (AjaxResponse) context.getBean(
                 AJAX_RESPONSE_BEAN_ID,
                 true,
                 e.getMessage()
             );
-            return response;
         }
     }
     
@@ -334,22 +327,18 @@ public class TweetController {
                 )
             );
             
-            // get the response object.
-            AjaxResponse response = getResponse(
+            // return the response object.
+            return list(
                 service
             );
-            
-            // return the response object.
-            return response;
         
         } catch(Exception e) {
             LOG.fatal(e.getMessage());
-            AjaxResponse response = (AjaxResponse) context.getBean(
+            return (AjaxResponse) context.getBean(
                 AJAX_RESPONSE_BEAN_ID,
                 true,
                 e.getMessage()
             );
-            return response;
         }
     }
     
@@ -410,7 +399,7 @@ public class TweetController {
                 )
             );
 
-            // TODO: on error..
+            // favor the id.
             service.favor(
                 Long.parseLong(statusId)
             );
@@ -419,17 +408,16 @@ public class TweetController {
             return (AjaxResponse) context.getBean(
                 AJAX_RESPONSE_BEAN_ID,
                 false,
-                "favor."
+                "favor complete."
             );
         
         } catch (Exception e) {
             LOG.fatal(e.getMessage());
-            AjaxResponse response = (AjaxResponse) context.getBean(
+            return (AjaxResponse) context.getBean(
                 AJAX_RESPONSE_BEAN_ID,
                 true,
                 e.getMessage()
             );
-            return response;
         }
     }
     
@@ -490,7 +478,7 @@ public class TweetController {
                 )
             );
             
-            // TODO: on error..
+            // retweet the id.
             service.retweet(
                 Long.parseLong(statusId)
             );
@@ -499,17 +487,16 @@ public class TweetController {
             return (AjaxResponse) context.getBean(
                 AJAX_RESPONSE_BEAN_ID,
                 false,
-                "retweet."
+                "retweet complete."
             );
         
         } catch(Exception e) {
             LOG.fatal(e.getMessage());
-            AjaxResponse response = (AjaxResponse) context.getBean(
+            return (AjaxResponse) context.getBean(
                 AJAX_RESPONSE_BEAN_ID,
                 true,
                 e.getMessage()
             );
-            return response;
         }
     }
     
@@ -572,28 +559,26 @@ public class TweetController {
                 )
             );
 
-            // TODO: on error..
+            // reply the cpntent.
             service.reply(
                 content,
                 Long.parseLong(statusId)
             );
             
-            // get the response object.
-            AjaxResponse response = getResponse(
-                service
-            );
-            
             // return the response object.
-            return response;
+            return (AjaxResponse) context.getBean(
+                AJAX_RESPONSE_BEAN_ID,
+                false,
+                "reply complete."
+            );
         
         } catch(Exception e) {
             LOG.fatal(e.getMessage());
-            AjaxResponse response = (AjaxResponse) context.getBean(
+            return (AjaxResponse) context.getBean(
                 AJAX_RESPONSE_BEAN_ID,
                 true,
                 e.getMessage()
             );
-            return response;
         }
     }
     
@@ -634,14 +619,67 @@ public class TweetController {
     ) {
         return "error";
     }
+    
+    ///////////////////////////////////////////////////////////////////////////
+    /**
+     * if an error is occured, this method will be called.
+     */
+    @ExceptionHandler
+    @ResponseBody
+    public AjaxResponse handleException(
+        Exception e
+    ) {
+        LOG.debug("called");
+        LOG.fatal(e.getMessage());
+        return (AjaxResponse) context.getBean(
+            AJAX_RESPONSE_BEAN_ID,
+            true,
+            e.getMessage()
+        );
+    } 
 
     ///////////////////////////////////////////////////////////////////////////
     // private methods
     
-    private AjaxResponse getResponse(TweetService service) {
-        
+    private AjaxResponse list(
+        TweetService service
+    ) {
         // get the timeline.
-        List<TweetDto> tweetDtoList = service.getTweetDtoList();
+        List<TweetDto> tweetDtoList = service.getList("");
+        List<TweetModel> tweetModelList = new ArrayList<TweetModel>();
+        for (TweetDto tweetDto : tweetDtoList) {
+            TweetModel tweetModel = context.getBean(TweetModel.class);
+            // map the form-object to the dto-object.
+            mapper.map(
+                tweetDto,
+                tweetModel
+            );
+            tweetModelList.add(tweetModel);
+        }
+        
+        // create the response object.
+        AjaxResponse response = new AjaxResponse(
+            tweetModelList
+        );
+        
+        // add the twitter userList names.
+        response.setUserListNameList(
+            service.getUserListNameList()
+        );
+        
+        return response;
+    }
+    
+    private AjaxResponse update(
+        String content,
+        TweetService service
+    ) {
+        // updata and get the timeline.
+        List<TweetDto> tweetDtoList = service.update(
+            content
+        );
+        
+        // map the object.
         List<TweetModel> tweetModelList = new ArrayList<TweetModel>();
         for (TweetDto tweetDto : tweetDtoList) {
             TweetModel tweetModel = context.getBean(TweetModel.class);

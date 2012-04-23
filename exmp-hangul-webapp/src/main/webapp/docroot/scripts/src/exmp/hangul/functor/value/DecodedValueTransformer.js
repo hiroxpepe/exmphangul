@@ -28,14 +28,14 @@ exmp.hangul.functor.value.DecodedValueTransformer = {
         console.log("exmp.hangul.functor.value.DecodedValueTransformer#transform");
         
         if (obj.initialId == null) {
-            console.log("obj.initialId is null.");
+            //console.log("obj.initialId is null.");
             return null;
         }
         
         var initialId = obj.initialId;
         
         if (obj.peakId == null) {
-            console.log("obj.peakId is null.");
+            //console.log("obj.peakId is null.");
             return null;
         }
         
@@ -49,13 +49,13 @@ exmp.hangul.functor.value.DecodedValueTransformer = {
             finalId = obj.finalId;
         }
         
-        console.log("initialId: " + initialId);
-        console.log("peakId:" + peakId);
-        console.log("finalId:" + finalId);
+        //console.log("initialId: " + initialId);
+        //console.log("peakId:" + peakId);
+        //console.log("finalId:" + finalId);
         
         // get the UTF-16 code.
         var code = 0xAC00 + (initialId * 21 * 28) + (peakId * 28) + (finalId * 1);
-        console.log("code:" + code);
+        //console.log("code:" + code);
         
         return code;
     }
