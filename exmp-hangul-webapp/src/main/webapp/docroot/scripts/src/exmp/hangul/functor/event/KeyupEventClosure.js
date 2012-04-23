@@ -28,7 +28,7 @@ exmp.hangul.functor.event.KeyupEventClosure = {
         console.log("exmp.hangul.functor.event.KeyupEventClosure#execute");
         
         var sentenceDivideTransformer = exmp.hangul.functor.value.SentenceDivideTransformer;
-        var letterIdTransformer = exmp.hangul.functor.value.LetterIdArrayTransformer;
+        var letterIdArrayTransformer = exmp.hangul.functor.value.LetterIdArrayTransformer;
         var decodedValueTransformer = exmp.hangul.functor.value.DecodedValueTransformer;
      
         // get the sentence.
@@ -56,18 +56,21 @@ exmp.hangul.functor.event.KeyupEventClosure = {
             }
 
             // get the letter id value as a object.
-            var letterIdObj = letterIdTransformer.transform({
+            var idObjList = letterIdArrayTransformer.transform({
                 value: oneWord
             });
-            if (letterIdObj == null) {
-                console.log("not match word: " + oneWord);
+            if (idObjList == null) {
+                //console.log("xxxxxxxxxxxxxxxxxxxxxxxxxx");
+                //console.log("not match word: " + oneWord);
+                // TODO: add DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD
+                //text = text + oneWord;
                 continue;
             }
             
             // loop..
-            for (var i in letterIdObj) {
+            for (var i in idObjList) {
                 
-                var idObj = letterIdObj[i];
+                var idObj = idObjList[i];
                 if (idObj.remains != null) {
                     text = text + idObj.remains;
                 }
@@ -77,7 +80,10 @@ exmp.hangul.functor.event.KeyupEventClosure = {
                         idObj
                     );
                     if (code == null) {
-                        console.log("not match word: " + oneWord);
+                        //console.log("xxxxxxxxxxxxxxxxxxxxxxxxxx");
+                        //console.log("not match word: " + oneWord);
+                        // TODO: add DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD
+                        text = text + idObj.originalString;
                         continue;
                     }
 
