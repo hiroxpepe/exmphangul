@@ -137,7 +137,7 @@ exmp.hangul.core.Controller = window; {
         // and do a some initialize.
         
         $("#alphabet-grid").dialog({
-            width: auto
+            width: 380
         });
     }
 }
