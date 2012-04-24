@@ -5,7 +5,7 @@
 <div class="tab-content">
     
     <ul>
-        <li><a href="#tab1"><fmt:message key="index.label.list" /></a></li>
+        <li><a href="#tab1"><fmt:message key="index.label.entry" /></a></li>
         <li><a href="#tab2"><fmt:message key="index.label.setting" /></a></li>
     </ul>
     
@@ -20,18 +20,32 @@
             <table class="setting-table">
                 <tr>
                     <td class="label-td">
-                        <label for="response_list_mode">List Mode</label>
+                        <label for="response_list_mode">
+                            <fmt:message key="index.label.setting.list.mode" />
+                        </label>
                     </td>
                     <td class="input-td">
-                        <form:input id="response-list-mode" path="responseListMode" />
+                        <%--<form:input id="response-list-mode" path="responseListMode" />--%>
+                        <form:select 
+                            id="response-list-mode"
+                            path="responseListMode"
+                            items="${responseListModeList}"
+                        />
                     </td>
                 </tr>
                 <tr>
                     <td class="label-td">
-                        <label for="user_list_name">List Name</label>
+                        <label for="user_list_name">
+                            <fmt:message key="index.label.setting.list.name" />
+                        </label>
                     </td>
                     <td class="input-td">
-                        <form:input id="user-list-name" path="userListName" />
+                        <%--<form:input id="user-list-name" path="userListName" />--%>
+                        <form:select 
+                            id="user-list-name"
+                            path="userListName"
+                            items="${userListNameList}"
+                        />
                     </td>
                 </tr>
             </table>

@@ -15,12 +15,14 @@
         <form:hidden id="locale" path="locale" />
         
         <div id="input-content-wrapper" class="content-wrapper">
+            <input type="hidden" id="reply-status-id" value="">
+            <input type="hidden" id="reply-user-name" value="">
             
             <div class="block">
                 <fmt:message key="index.label.hangul" />
             </div>
             <div class="block">
-                <textarea id="hangul"></textarea>
+                <textarea id="tweet"></textarea>
             </div>
             
             <c:if test="${not empty tweetForm.userId}">

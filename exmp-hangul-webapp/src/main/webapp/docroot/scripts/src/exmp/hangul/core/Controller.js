@@ -44,13 +44,29 @@ exmp.hangul.core.Controller = window; {
     exmp.hangul.core.Controller._doTweetButtonOnClick = function() {
         
         var updateClosure = exmp.hangul.functor.request.TweetUpdateClosure;
+        var replyClosure = exmp.hangul.functor.request.TweetReplyClosure;
         
+        ///////////////////////////////////////////////////
         // update the tweet status.
-        updateClosure.execute({
-            content: $("#hangul").val(),
-            userId: $("#user-id").val()
-        });
-        return;
+        
+        // not reply or simple reply
+        if (($("#reply-status-id").val() == "") && ($("#reply-user-name").val() == "")) {
+            updateClosure.execute({
+                content: $("#tweet").val(),
+                userId: $("#user-id").val()
+            });
+            return;
+        }
+        
+        // reply to selected status
+        if (($("#reply-status-id").val()) && ($("#reply-user-name").val())) {
+            replyClosure.execute({
+                content: $("#tweet").val(),
+                userId: $("#user-id").val(),
+                statusId: $("#reply-status-id").val()
+            })
+            return;
+        }
     }
     
     /**
@@ -105,13 +121,22 @@ exmp.hangul.core.Controller = window; {
     }
     
     /**
+     * initializes a response list mode select of form.
+     */
+    exmp.hangul.core.Controller._initializeResponseListModeSelect = function() {
+        $("#response-list-mode").append($('<option value="home">home</option>'));
+        $("#response-list-mode").append($('<option value="user">user</option>'));
+        $("#response-list-mode").append($('<option value="list">list</option>'));
+        //$("#response-list-mode").val("home");
+    }
+    
+    /**
      * initialize a component of the view class.
      */
     exmp.hangul.core.Controller._initializeComponent = function() {
         
         var controller = exmp.hangul.core.Controller;
-        var eventClosure = exmp.hangul.functor.event.KeyupEventClosure;
-        
+        var eventClosure = exmp.hangul.functor.event.KeyupEventClosure; 
         var colorClosure = exmp.hangul.functor.event.KeyupColorClosure;
         
         // calls for the initialization methods.
@@ -120,7 +145,20 @@ exmp.hangul.core.Controller = window; {
         
         controller._initializeTweetListDiv();
         
+        controller._initializeResponseListModeSelect();
+        
         // set the control's event handler.
+        
+        $("#tweet").keyup(function(event) {
+            // clear reply param.
+            // TODO: search user name?
+            if ($("#tweet").val() == "") {
+                $("#reply-status-id").val("")
+                $("#reply-user-name").val("")
+                console.log("reply-status-id: ");
+                console.log("reply-user-name: ");
+            }
+        });
         
         $("#alphabet").keyup(function(event) {            
             eventClosure.execute({

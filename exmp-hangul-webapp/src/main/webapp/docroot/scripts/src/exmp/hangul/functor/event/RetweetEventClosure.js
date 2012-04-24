@@ -15,38 +15,26 @@
 ///////////////////////////////////////////////////////////////////////////////
 /**
  * a functor class of the application.
- * build the event handler.
+ * set the event handler of the retweet tweet.
  * 
  * @author hiroxpepe
  */
-exmp.hangul.functor.event.EventBuildClosure = {
+exmp.hangul.functor.event.RetweetEventClosure = {
     
     ///////////////////////////////////////////////////////////////////////////
     // public methods
     
     execute: function(obj) {
+        console.log("exmp.hangul.functor.event.RetweetEventClosure#execute");
         
-        var replyEventClosure = exmp.hangul.functor.event.ReplyEventClosure;
-        var retweetEventClosure = exmp.hangul.functor.event.RetweetEventClosure;
-        var favorEventClosure = exmp.hangul.functor.event.FavorEventClosure;
-        
-        for (var i = 0; i < obj.tweetModelList.length; i++) {
-            var statusId = obj.tweetModelList[i].statusId;
-            
-            // set the event handler for reply.
-            replyEventClosure.execute({
-                statusId: statusId
+        var retweetClosure = exmp.hangul.functor.request.TweetRetweetClosure;
+               
+        // dynamically generate an event handler.
+        $("#action-retweet-" + obj.statusId).click(function() {
+            retweetClosure.execute({
+                userId: $("#user-id").val(),
+                statusId: obj.statusId
             });
-            
-            // set the event handler for retweet.
-            retweetEventClosure.execute({
-                statusId: statusId
-            });
-            
-            // set the event handler for favor.
-            favorEventClosure.execute({
-                statusId: statusId
-            });
-        }
+        });
     }
 }

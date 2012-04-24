@@ -56,7 +56,7 @@ exmp.hangul.functor.request.TweetUpdateClosure = {
                     data
                 );
                 
-                $("#hangul").val("");
+                $("#tweet").val("");
                 
                 console.log("tweet update complete.");
             },

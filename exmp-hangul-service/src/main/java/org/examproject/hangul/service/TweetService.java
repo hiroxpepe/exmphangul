@@ -43,9 +43,9 @@ public class TweetService {
         TweetService.class
     );
     
-    private static final int WAIT_COUNT = 30;
+    private static final int WAIT_COUNT = 5;
     
-    private static final int WAIT_MSEC = 1000;
+    private static final int WAIT_MSEC = 1800;
     
     private final TweetAuthValue authValue;
     

@@ -92,6 +92,6 @@ exmp.hangul.functor.event.KeyupEventClosure = {
             }
         }
         
-        $("#hangul").val(text);
+        $("#tweet").val(text);
     }
 }

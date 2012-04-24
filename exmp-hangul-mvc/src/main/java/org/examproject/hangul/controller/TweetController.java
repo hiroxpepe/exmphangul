@@ -560,16 +560,10 @@ public class TweetController {
             );
 
             // reply the cpntent.
-            service.reply(
+            return reply(
                 content,
-                Long.parseLong(statusId)
-            );
-            
-            // return the response object.
-            return (AjaxResponse) context.getBean(
-                AJAX_RESPONSE_BEAN_ID,
-                false,
-                "reply complete."
+                Long.parseLong(statusId),
+                service
             );
         
         } catch(Exception e) {
@@ -677,6 +671,42 @@ public class TweetController {
         // updata and get the timeline.
         List<TweetDto> tweetDtoList = service.update(
             content
+        );
+        
+        // map the object.
+        List<TweetModel> tweetModelList = new ArrayList<TweetModel>();
+        for (TweetDto tweetDto : tweetDtoList) {
+            TweetModel tweetModel = context.getBean(TweetModel.class);
+            // map the form-object to the dto-object.
+            mapper.map(
+                tweetDto,
+                tweetModel
+            );
+            tweetModelList.add(tweetModel);
+        }
+        
+        // create the response object.
+        AjaxResponse response = new AjaxResponse(
+            tweetModelList
+        );
+        
+        // add the twitter userList names.
+        response.setUserListNameList(
+            service.getUserListNameList()
+        );
+        
+        return response;
+    }
+    
+    private AjaxResponse reply(
+        String content,
+        Long statusId,
+        TweetService service
+    ) {
+        // reply and get the timeline.
+        List<TweetDto> tweetDtoList = service.reply(
+            content,
+            statusId
         );
         
         // map the object.

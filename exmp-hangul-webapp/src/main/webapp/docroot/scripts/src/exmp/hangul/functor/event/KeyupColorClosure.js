@@ -99,7 +99,11 @@ exmp.hangul.functor.event.KeyupColorClosure = {
         if (code == 88) return "x";
         if (code == 89) return "y";
         if (code == 90) return "z";
+        
+        //space
         if (code == 32) return " ";
+        // back space
+        if (code == 8) return " ";
         
         return null;
     }

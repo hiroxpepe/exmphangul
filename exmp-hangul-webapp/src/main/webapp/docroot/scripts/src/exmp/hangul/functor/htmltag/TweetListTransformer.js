@@ -28,82 +28,49 @@ exmp.hangul.functor.htmltag.TweetListTransformer = {
     transform: function(obj) {
         console.log("exmp.hangul.functor.htmltag.TweetListTransformer#transform");
         
-        // DDDDDDDDDDDDDDDDDDDDDDDDD
-        for (var h = 0; h < obj.userListNameList.length; h++) {
-            console.log(obj.userListNameList[h]);
+        // set the user list name for the select.
+        if (obj.userListNameList != null) {
+            for (var h = 0; h < obj.userListNameList.length; h++) {
+                //console.log(obj.userListNameList[h]);
+                var listName = obj.userListNameList[h];
+                $("#user-list-name").append(
+                    $("<option value='" + listName +"'>" + listName + "</option>")
+                );
+                // TODO: set the value in this.?
+            }
         }
         
         // dynamically generate an html table.
         var table = "<table class='tweet-list-table'>";
-        for (var i = 0; i < obj.tweetModelList.length; i++) {
-            
-            // get the value
-            var image = obj.tweetModelList[i].userProfileImageURL;
-            var name = obj.tweetModelList[i].userName;
-            var text = obj.tweetModelList[i].text;
-            var statusId = obj.tweetModelList[i].statusId;
-            var isFavorited = obj.tweetModelList[i].isFavorited;
-            
-            // get the icon path for action command.
-            var favoriteImg = this._getFavoriteImg(isFavorited);
-            var retweetImg = this._getRetweetImg();
-            var replyImg = this._getReplyImg();
-            
-            // create an html tag and set the entry code.
-            table +=
-                "<tr class='tweet-list-tr'>" +
-                    "<td class='tweet-icon-td'>" + 
-                        "<div class='tweet-icon'><img src='" + image + "' width='48' height='48' border='0'></div>" +
-                    "</td>" +
-                    "<td class='tweet-list-td' >" +
-                        "<b>" + name + "</b> <span id='id-" + statusId + "'>" + text + "</span>" + 
-                    "</td>" +
-                    "<td class='tweet-action-td'>" +
-                    
-                        "<table>" +
-                           "<tr>" + 
-                               "<td>" + 
-                                   "<div class='action-favorite' id='action-favorite-" + statusId + "' status-id='" + statusId + "' user-name='" + name + "'>" +
-                                       /* "<img src='" + favoriteImg + "' width='16' height='16' border='0' />"  + */
-                                   "</div>" +
-                               "</td>" + 
-                           "</tr>" +
-                           "<tr>" + 
-                               "<td>" + 
-                                   "<div class='action-retweet' id='action-retweet-" + statusId + "' status-id='" + statusId + "' user-name='" + name + "'>" +
-                                       /* "<img src='" + retweetImg + "' width='16' height='16' border='0' />"  + */
-                                   "</div>" +
-                               "</td>" +
-                           "</tr>" +
-                           "<tr>" + 
-                               "<td>" + 
-                                   "<div class='action-reply' id='action_reply-" + statusId + "' status-id='" + statusId + "' user-name='" + name + "'>" +
-                                       /* "<img src='" + replyImg + "' width='16' height='16' border='0' />"  + */
-                                   "</div>" +
-                               "</td>" + 
-                           "</tr>" +
-                        "</table>" +                       
-                        
-                    "</td>" +
-                "</tr>";
+        if (obj.tweetModelList != null) {
+            for (var i = 0; i < obj.tweetModelList.length; i++) {
+
+                // get the value
+                var image = obj.tweetModelList[i].userProfileImageURL;
+                var name = obj.tweetModelList[i].userName;
+                var text = obj.tweetModelList[i].text;
+                var statusId = obj.tweetModelList[i].statusId;
+                var isFavorited = obj.tweetModelList[i].isFavorited;
+
+                // create an html tag and set the entry code.
+                table +=
+                    "<tr class='tweet-list-tr'>" +
+                        "<td class='tweet-icon-td'>" + 
+                            "<div class='tweet-icon'><img src='" + image + "' width='48' height='48' border='0'></div>" +
+                        "</td>" +
+                        "<td class='tweet-list-td' >" +
+                            "<div>" + 
+                                "<span><b>" + name + "</b></span>" + 
+                                "<span id='action-reply-" + statusId + "' class='action-reply' status-id='" + statusId + "' user-name='" + name + "'>Reply</span>" +
+                                "<span id='action-retweet-" + statusId + "' class='action-retweet' status-id='" + statusId + "' user-name='" + name + "'>Retweet</span>" +
+                                "<span id='action-favorite-" + statusId + "' class='action-favorite' status-id='" + statusId + "' user-name='" + name + "'>Favorite</span>" +
+                            "</div>" + 
+                            "<span id='id-" + statusId + "'>" + text + "</span>" + 
+                        "</td>" +
+                    "</tr>";
+            }
+            table += "</table>";
         }
-        table += "</table>";
         return table;
-    },
-    
-    _getFavoriteImg: function(isFavorited) {
-        if (isFavorited) {
-            return "../docroot/images/favorite_true.png";
-        }
-        return "../docroot/images/favorite_false.png";
-    },
-
-    _getRetweetImg: function() {
-        return "../docroot/images/retweet.png";
-
-    },
-
-    _getReplyImg: function() {
-        return "../docroot/images/reply.png";
     }
 }

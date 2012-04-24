@@ -15,38 +15,26 @@
 ///////////////////////////////////////////////////////////////////////////////
 /**
  * a functor class of the application.
- * build the event handler.
+ * set the event handler of the favor tweet.
  * 
  * @author hiroxpepe
  */
-exmp.hangul.functor.event.EventBuildClosure = {
+exmp.hangul.functor.event.FavorEventClosure = {
     
     ///////////////////////////////////////////////////////////////////////////
     // public methods
     
     execute: function(obj) {
+        console.log("exmp.hangul.functor.event.FavorEventClosure#execute");
         
-        var replyEventClosure = exmp.hangul.functor.event.ReplyEventClosure;
-        var retweetEventClosure = exmp.hangul.functor.event.RetweetEventClosure;
-        var favorEventClosure = exmp.hangul.functor.event.FavorEventClosure;
-        
-        for (var i = 0; i < obj.tweetModelList.length; i++) {
-            var statusId = obj.tweetModelList[i].statusId;
-            
-            // set the event handler for reply.
-            replyEventClosure.execute({
-                statusId: statusId
+        var favorClosure = exmp.hangul.functor.request.TweetFavorClosure;
+               
+        // dynamically generate an event handler.
+        $("#action-favor-" + obj.statusId).click(function() {
+            favorClosure.execute({
+                userId: $("#user-id").val(),
+                statusId: obj.statusId
             });
-            
-            // set the event handler for retweet.
-            retweetEventClosure.execute({
-                statusId: statusId
-            });
-            
-            // set the event handler for favor.
-            favorEventClosure.execute({
-                statusId: statusId
-            });
-        }
+        });
     }
 }

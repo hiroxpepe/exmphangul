@@ -284,8 +284,51 @@ input.command-button {
     }
 
 /* ****************************************************************************
+ * define the appearance of a command anchor.
+ */
+a.command-anchor {
+    padding: 0.5em 2.5em 0.5em 2.5em;
+    cursor: pointer;
+    text-decoration: none;
+    color: white;
+    background: lightslategray;
+    border: 1px solid #aaaaaa;
+    border-radius: 5px;
+}
+a.command-anchor:active {
+    text-decoration: none;
+    color: white;
+}
+a.command-anchor:visited {
+    text-decoration: none;
+    color: white;
+}
+a.command-anchor:hover {
+    text-decoration: none;
+    color: white;
+    background: darkgray;
+    border: 1px solid #d2b48c;
+    border-radius: 4px;
+}
+    
+/* ****************************************************************************
  * additional configuration
  *****************************************************************************/
+
+/* ****************************************************************************
+ * define the appearance of the login content.
+ */
+div.login-content {
+    margin: 3em 4em 3em 4em;
+    padding: 3em 1em 3em 1em;
+    text-align: center;
+    border: 1px solid silver;
+    border-radius: 5px;
+}
+    p.login-description {
+        font-size: 80%;
+        color: lightslategray;
+    }
 
 /* ****************************************************************************
  * define the appearance of the index content.
@@ -365,10 +408,6 @@ div.tab-content {
 div.setting-content {
     padding: 1em;
 }
-    div.setting-content input {
-        border: 1px solid silver;
-        border-radius: 2px;
-    }
     table.setting-table {
         width: 100%;
     }
@@ -380,6 +419,10 @@ div.setting-content {
         table.setting-table td.input-td {
             width: 80%;
         }
+            table.setting-table td.input-td input {
+                border: 1px solid silver;
+                border-radius: 2px;
+            }
     div.setting-command-block {
         padding: 0.5em 0 0.5em 0;
         text-align: right;
@@ -429,20 +472,30 @@ div.tweet-list-content {
                 font-size: 80%;
                 border-bottom: 1px solid wheat;
             }
-            table.tweet-list-table td.tweet-action-td {                
-                padding-top: 0.5em;
-                padding-bottom: 0.5em;      
-                vertical-align: top;
-                border-bottom: 1px solid wheat;
-            }
-                table.tweet-list-table td.tweet-action-td div.tweet-action {
-                    width: 1.2em;
-                    height: 1.2em;
-                    text-align: center;
-                    border: 1px solid wheat;
-                    border-radius: 2px;
+                table.tweet-list-table td.tweet-list-td span.action-reply {
+                    padding-left: 1em;
                     cursor: pointer;
+                    color: tan;
                 }
+                    table.tweet-list-table td.tweet-list-td span.action-reply:hover {
+                        font-weight: bold;
+                    }
+                table.tweet-list-table td.tweet-list-td span.action-retweet {
+                    padding-left: 1em;
+                    cursor: pointer;
+                    color: tan;
+                }
+                    table.tweet-list-table td.tweet-list-td span.action-retweet:hover {
+                        font-weight: bold;
+                    }
+                table.tweet-list-table td.tweet-list-td span.action-favorite {
+                    padding-left: 1em;
+                    cursor: pointer;
+                    color: tan;
+                }
+                    table.tweet-list-table td.tweet-list-td span.action-favorite:hover {
+                        font-weight: bold;
+                    }
         table.tweet-list-table a {
             text-decoration: none;
             color: black;
