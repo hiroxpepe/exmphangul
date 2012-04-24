@@ -51,7 +51,7 @@ exmp.hangul.functor.htmltag.TweetListTransformer = {
             
             // create an html tag and set the entry code.
             table +=
-                "<tr>" +
+                "<tr class='tweet-list-tr'>" +
                     "<td class='tweet-icon-td'>" + 
                         "<div class='tweet-icon'><img src='" + image + "' width='48' height='48' border='0'></div>" +
                     "</td>" +

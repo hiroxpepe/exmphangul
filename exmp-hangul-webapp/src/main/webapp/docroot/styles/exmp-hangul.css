@@ -308,6 +308,10 @@ div.content-wrapper {
     border: 1px solid silver;
     border-radius: 5px;
 }
+    div.content-wrapper textarea {
+        border: 1px solid silver;
+        border-radius: 2px;
+    }
     div.tweet-command-block {
         padding: 0.5em 0.5em 0em 0.5em;
         text-align: right;
@@ -361,6 +365,10 @@ div.tab-content {
 div.setting-content {
     padding: 1em;
 }
+    div.setting-content input {
+        border: 1px solid silver;
+        border-radius: 2px;
+    }
     table.setting-table {
         width: 100%;
     }
@@ -376,6 +384,82 @@ div.setting-content {
         padding: 0.5em 0 0.5em 0;
         text-align: right;
     }
+    
+/* ****************************************************************************
+ * define the appearance of the entry list table.
+ */
+div.tweet-list-content {
+    padding: 0.5em 1em 2em 1em;
+    text-align:center;
+    position:relative;
+}
+    div.tweet-list-content p {
+        /* 31px * 31px icon... */
+        position: absolute;
+        top: 270%;
+        left: 50%;
+        margin-top: -15px;
+        margin-left: -15px;
+        /* why...? */ 
+    }
+    table.tweet-list-table {
+        border-collapse: collapse;
+        border-spacing: 0;
+    } 
+        table.tweet-list-table tr.tweet-list-tr {
+        }
+            table.tweet-list-table td.tweet-icon-td {
+                padding-top: 0.5em;
+                padding-bottom: 0.5em;              
+                vertical-align: top;
+                border-bottom: 1px solid wheat;
+            }
+                table.tweet-list-table td.tweet-icon-td div.tweet-icon {
+                }
+                table.tweet-list-table td.tweet-icon-td div.tweet-icon img {
+                    border-radius: 2px;
+                    cursor: pointer;
+                }   
+            table.tweet-list-table td.tweet-list-td {                
+                padding-top: 0.5em;
+                padding-bottom: 0.5em;  
+                padding-left: 0.5em;
+                padding-right: 0.5em;
+                vertical-align: top;
+                font-size: 80%;
+                border-bottom: 1px solid wheat;
+            }
+            table.tweet-list-table td.tweet-action-td {                
+                padding-top: 0.5em;
+                padding-bottom: 0.5em;      
+                vertical-align: top;
+                border-bottom: 1px solid wheat;
+            }
+                table.tweet-list-table td.tweet-action-td div.tweet-action {
+                    width: 1.2em;
+                    height: 1.2em;
+                    text-align: center;
+                    border: 1px solid wheat;
+                    border-radius: 2px;
+                    cursor: pointer;
+                }
+        table.tweet-list-table a {
+            text-decoration: none;
+            color: black;
+        }
+        table.tweet-list-table a:active {
+            text-decoration: none;
+            color: black;
+        }
+        table.tweet-list-table a:visited {
+            text-decoration: none;
+            color: black;
+        }
+        table.tweet-list-table a:hover {
+            text-decoration: none;
+            font-weight: bold;
+            color: black;
+        }
     
 /* ****************************************************************************
  * define the appearance of the alphabet grid content.
