@@ -27,8 +27,10 @@ exmp.tweet.functor.event.EventBuildClosure = {
     execute: function(obj) {
         
         var replyEventClosure = exmp.tweet.functor.event.ReplyEventClosure;
+        var deleteEventClosure = exmp.tweet.functor.event.DeleteEventClosure;
         var retweetEventClosure = exmp.tweet.functor.event.RetweetEventClosure;
-        var favorEventClosure = exmp.tweet.functor.event.FavorEventClosure;
+        var favoriteEventClosure = exmp.tweet.functor.event.FavoriteEventClosure;
+        var tweetListEffectClosure = exmp.tweet.functor.event.TweetListEffectClosure;
         
         for (var i = 0; i < obj.tweetModelList.length; i++) {
             var statusId = obj.tweetModelList[i].statusId;
@@ -38,13 +40,23 @@ exmp.tweet.functor.event.EventBuildClosure = {
                 statusId: statusId
             });
             
+            // set the event handler for delete.
+            deleteEventClosure.execute({
+                statusId: statusId
+            });
+            
             // set the event handler for retweet.
             retweetEventClosure.execute({
                 statusId: statusId
             });
             
             // set the event handler for favor.
-            favorEventClosure.execute({
+            favoriteEventClosure.execute({
+                statusId: statusId
+            });
+            
+            // set the event handler for tweet list effect.
+            tweetListEffectClosure.execute({
                 statusId: statusId
             });
         }

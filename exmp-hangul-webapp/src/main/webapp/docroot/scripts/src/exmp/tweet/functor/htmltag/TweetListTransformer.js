@@ -26,7 +26,7 @@ exmp.tweet.functor.htmltag.TweetListTransformer = {
     // public methods
     
     transform: function(obj) {
-        console.log("exmp.tweet.functor.htmltag.TweetListTransformer#transform");
+        //console.log("exmp.tweet.functor.htmltag.TweetListTransformer#transform");
         
         // set the user list name for the select.
         if (obj.userListNameList != null) {
@@ -56,21 +56,63 @@ exmp.tweet.functor.htmltag.TweetListTransformer = {
                 table +=
                     "<tr class='tweet-list-tr'>" +
                         "<td class='tweet-icon-td'>" + 
-                            "<div class='tweet-icon'><img src='" + image + "' width='48' height='48' border='0'></div>" +
+                            "<div class='tweet-icon'>" + 
+                                "<img src='" + image + "' width='48' height='48' border='0'>" +
+                            "</div>" +
                         "</td>" +
-                        "<td class='tweet-list-td' >" +
+                        "<td id='tweet-list-td-" + statusId + "' class='tweet-list-td' >" +
                             "<div>" + 
                                 "<span><b>" + name + "</b></span>" + 
-                                "<span id='action-reply-" + statusId + "' class='action-reply' status-id='" + statusId + "' user-name='" + name + "'>Reply</span>" +
-                                "<span id='action-retweet-" + statusId + "' class='action-retweet' status-id='" + statusId + "' user-name='" + name + "'>Retweet</span>" +
-                                "<span id='action-favorite-" + statusId + "' class='action-favorite' status-id='" + statusId + "' user-name='" + name + "'>Favorite</span>" +
+                                this._getReplySpan(name, statusId) +
+                                this._getDeleteSpan(name, statusId) +
+                                this._getRetweetSpan(name, statusId) +
+                                this._getFavoriteSpan(name, statusId, isFavorited) +                                    
                             "</div>" + 
                             "<span id='id-" + statusId + "'>" + text + "</span>" + 
                         "</td>" +
                     "</tr>";
             }
             table += "</table>";
-        }
+        }        
         return table;
+        
+    },
+    
+    ///////////////////////////////////////////////////////////////////////////
+    // private methods
+    
+    _getReplySpan: function(name, statusId) {
+        return "<span id='action-reply-" + statusId + 
+                   "' class='action-reply' status-id='" + statusId + 
+                   "' user-name='" + name + "'>Reply</span>";
+    },
+    
+    _getDeleteSpan: function(name, statusId) {
+        if (name != $("#screen-name").val()) {
+            return "";
+        }
+        return "<span id='action-delete-" + statusId + 
+                   "' class='action-delete' status-id='" + statusId + 
+                   "' user-name='" + name + "'>Delete</span>";
+    },
+    
+    _getRetweetSpan: function(name, statusId) {
+        if (name == $("#screen-name").val()) {
+            return "";
+        }
+        return "<span id='action-retweet-" + statusId + 
+                   "' class='action-retweet' status-id='" + statusId + 
+                   "' user-name='" + name + "'>Retweet</span>";
+    },
+    
+    _getFavoriteSpan: function(name, statusId, isFavorited) {
+        var str = "Favorite";
+        if (isFavorited) {
+            str = "Favorited";
+        }
+        return "<span id='action-favorite-" + statusId + 
+                   "' class='action-favorite' status-id='" + statusId + 
+                   "' user-name='" + name + "'>" + str + "</span>";
     }
+
 }

@@ -116,6 +116,7 @@ public class TweetService {
                 tweetDto.setText(status.getText());
                 tweetDto.setStatusId(String.valueOf(status.getId()));
                 tweetDto.setIsFavorited(status.isFavorited());
+                tweetDto.setIsRetweetedByMe(status.isRetweetedByMe());
                 tweetDtoList.add(tweetDto);
             }
             return tweetDtoList;
@@ -138,20 +139,15 @@ public class TweetService {
         }
     }
     
-    public void favor(long statusId) {
+    public List<TweetDto> delete(long statusId) {
         LOG.debug("called.");
         try {
-            createFavorite(statusId);
-        } catch(Exception e) {
-            LOG.error("an error occurred: " + e.getMessage());
-            throw new RuntimeException(e);
-        }
-    }
-    
-    public void retweet(long statusId) {
-        LOG.debug("called.");
-        try {
-            retweetStatus(statusId);
+            destroyStatus(statusId);
+            // wait for the delete..
+            Thread.sleep(WAIT_MSEC);
+            return getList(
+                ""
+            );
         } catch(Exception e) {
             LOG.error("an error occurred: " + e.getMessage());
             throw new RuntimeException(e);
@@ -165,6 +161,31 @@ public class TweetService {
             return getList(
                 content
             );
+        } catch(Exception e) {
+            LOG.error("an error occurred: " + e.getMessage());
+            throw new RuntimeException(e);
+        }
+    }
+    
+    public List<TweetDto> favorite(long statusId) {
+        LOG.debug("called.");
+        try {
+            createOrDeleteFavorite(statusId);
+            // wait for the favorite..
+            Thread.sleep(WAIT_MSEC);
+            return getList(
+                ""
+            );
+        } catch(Exception e) {
+            LOG.error("an error occurred: " + e.getMessage());
+            throw new RuntimeException(e);
+        }
+    }
+    
+    public void retweet(long statusId) {
+        LOG.debug("called.");
+        try {
+            retweetStatus(statusId);
         } catch(Exception e) {
             LOG.error("an error occurred: " + e.getMessage());
             throw new RuntimeException(e);
@@ -202,36 +223,11 @@ public class TweetService {
         return status;
     }
     
-    private Status createFavorite(long statusId) {
+    private Status destroyStatus(long statusId) {
         Status status = null;
         try {
             Twitter twitter = getTwitter();
-            status = twitter.createFavorite(statusId);
-        } catch (TwitterException te) {
-            LOG.error("an error occurred: " + te.getMessage());
-            throw new RuntimeException(te);
-        }
-        return status;
-    }
-    
-    private Status destroyFavorite(long statusId) {
-        // TODO: not yet..?
-        Status status = null;
-        try {
-            Twitter twitter = getTwitter();
-            status = twitter.destroyFavorite(statusId);
-        } catch (TwitterException te) {
-            LOG.error("an error occurred: " + te.getMessage());
-            throw new RuntimeException(te);
-        }
-        return status;
-    }
-    
-    private Status retweetStatus(long statusId) {
-        Status status = null;        
-        try {
-            Twitter twitter = getTwitter();
-            status = twitter.retweetStatus(statusId);
+            status = twitter.destroyStatus(statusId);
         } catch (TwitterException te) {
             LOG.error("an error occurred: " + te.getMessage());
             throw new RuntimeException(te);
@@ -246,6 +242,43 @@ public class TweetService {
         try {
             Twitter twitter = getTwitter();
             status = twitter.updateStatus(statusUpdate);
+        } catch (TwitterException te) {
+            LOG.error("an error occurred: " + te.getMessage());
+            throw new RuntimeException(te);
+        }
+        return status;
+    }
+    
+    private Status createOrDeleteFavorite(long statusId) {
+        Status status = null;
+        try {
+            Twitter twitter = getTwitter();
+            status = twitter.createFavorite(statusId);
+            return status;
+        } catch (TwitterException te) {
+            // if the message included 'You have already favorited this status'.
+            String message = te.getMessage();
+            // TODO: what is good in this?
+            if (message.indexOf("You have already favorited this status") != -1) {
+                try {
+                    Twitter twitter = getTwitter();
+                    status = twitter.destroyFavorite(statusId);
+                    return status;
+                } catch (TwitterException te1) {
+                    LOG.error("an error occurred: " + te1.getMessage());
+                    throw new RuntimeException(te1);
+                }
+            }
+            LOG.error("an error occurred: " + te.getMessage());
+            throw new RuntimeException(te);
+        }
+    }
+    
+    private Status retweetStatus(long statusId) {
+        Status status = null;        
+        try {
+            Twitter twitter = getTwitter();
+            status = twitter.retweetStatus(statusId);
         } catch (TwitterException te) {
             LOG.error("an error occurred: " + te.getMessage());
             throw new RuntimeException(te);

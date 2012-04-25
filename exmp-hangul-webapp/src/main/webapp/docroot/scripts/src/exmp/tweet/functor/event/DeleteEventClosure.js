@@ -15,27 +15,26 @@
 ///////////////////////////////////////////////////////////////////////////////
 /**
  * a functor class of the application.
- * set the event handler of the reply tweet.
+ * set the event handler of the delete tweet.
  * 
  * @author hiroxpepe
  */
-exmp.tweet.functor.event.ReplyEventClosure = {
+exmp.tweet.functor.event.DeleteEventClosure = {
     
     ///////////////////////////////////////////////////////////////////////////
     // public methods
     
     execute: function(obj) {
-        //console.log("exmp.tweet.functor.event.ReplyEventClosure#execute");
+        //console.log("exmp.tweet.functor.event.DeleteEventClosure#execute");
+        
+        var deleteClosure = exmp.tweet.functor.request.TweetDeleteClosure;
         
         // dynamically generate an event handler.
-        $("#action-reply-" + obj.statusId).click(function() {
-             var userName = $("#action-reply-" + obj.statusId).attr("user-name");
-             $("#reply-status-id").val(obj.statusId);
-             $("#reply-user-name").val(userName);
-             $("#tweet").val("@" + userName + " ");
-             
-             console.log("reply-status-id: " + obj.statusId);
-             console.log("reply-user-name: " + userName);
+        $("#action-delete-" + obj.statusId).click(function() {
+            deleteClosure.execute({
+                userId: $("#user-id").val(),
+                statusId: obj.statusId
+            });
         });
     }
 }

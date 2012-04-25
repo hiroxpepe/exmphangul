@@ -25,9 +25,9 @@ exmp.tweet.functor.event.RetweetEventClosure = {
     // public methods
     
     execute: function(obj) {
-        console.log("exmp.tweet.functor.event.RetweetEventClosure#execute");
+        //console.log("exmp.tweet.functor.event.RetweetEventClosure#execute");
         
-        var retweetClosure = exmp.hangul.functor.request.TweetRetweetClosure;
+        var retweetClosure = exmp.tweet.functor.request.TweetRetweetClosure;
         
         // dynamically generate an event handler.
         $("#action-retweet-" + obj.statusId).click(function() {

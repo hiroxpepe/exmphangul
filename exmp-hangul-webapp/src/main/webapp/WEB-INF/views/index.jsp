@@ -12,6 +12,7 @@
     
     <form:form  id="tweet-form" modelAttribute="tweetForm">
         <form:hidden id="user-id" path="userId" />
+        <form:hidden id="screen-name" path="screenName" />
         <form:hidden id="locale" path="locale" />
         
         <div id="input-content-wrapper" class="content-wrapper">

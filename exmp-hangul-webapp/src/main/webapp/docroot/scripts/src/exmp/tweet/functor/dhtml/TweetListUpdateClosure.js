@@ -25,7 +25,7 @@ exmp.tweet.functor.dhtml.TweetListUpdateClosure = {
     // public methods
     
     execute: function(obj) {
-        console.log("exmp.tweet.functor.dhtml.TweetListUpdateClosure#execute");
+        //console.log("exmp.tweet.functor.dhtml.TweetListUpdateClosure#execute");
         
         var transformer = exmp.tweet.functor.htmltag.TweetListTransformer;
         

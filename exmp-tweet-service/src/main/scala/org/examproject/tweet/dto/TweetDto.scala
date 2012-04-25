@@ -37,4 +37,7 @@ class TweetDto {
     @BeanProperty
     var isFavorited: Boolean = false
     
+    @BeanProperty
+    var isRetweetedByMe: Boolean = false
+    
 }

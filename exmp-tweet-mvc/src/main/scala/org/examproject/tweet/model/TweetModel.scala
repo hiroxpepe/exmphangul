@@ -36,5 +36,8 @@ class TweetModel {
 
     @BeanProperty
     var isFavorited: Boolean = false
+    
+    @BeanProperty
+    var isRetweetedByMe: Boolean = false
 
 }

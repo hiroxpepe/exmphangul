@@ -15,20 +15,23 @@
 ///////////////////////////////////////////////////////////////////////////////
 /**
  * a functor class of the application.
- * send HTTP request for favorite action.
+ * send HTTP request for delete action.
  * 
  * @author hiroxpepe
  */
-exmp.tweet.functor.request.TweetFavorClosure = {
+exmp.tweet.functor.request.TweetDeleteClosure = {
     
     ///////////////////////////////////////////////////////////////////////////
     // public methods
     
     execute: function(obj) {
-        console.log("tweet favor begin.");
+        console.log("tweet delete begin.");
+        
+        var listUpdateClosure = exmp.tweet.functor.dhtml.TweetListUpdateClosure;
+        var eventBuildClosure = exmp.tweet.functor.event.EventBuildClosure;
         
         new $.ajax({
-            url: "favor.html",
+            url: "delete.html",
             type: "POST",
             data: {
                 user_id: obj.userId,
@@ -43,7 +46,17 @@ exmp.tweet.functor.request.TweetFavorClosure = {
                     return;
                 }
                 
-                console.log("tweet favor complete.");
+                // update the HTML table of the tweet list.
+                listUpdateClosure.execute(
+                    data
+                );
+                
+                // build the event of the tweet list.
+                eventBuildClosure.execute(
+                    data
+                );
+                
+                console.log("tweet delete complete.");
             },
             
             // callback function of the error.

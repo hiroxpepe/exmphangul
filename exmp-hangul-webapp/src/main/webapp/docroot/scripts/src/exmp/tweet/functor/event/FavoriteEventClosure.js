@@ -15,23 +15,23 @@
 ///////////////////////////////////////////////////////////////////////////////
 /**
  * a functor class of the application.
- * set the event handler of the favor tweet.
+ * set the event handler of the favorite tweet.
  * 
  * @author hiroxpepe
  */
-exmp.tweet.functor.event.FavorEventClosure = {
+exmp.tweet.functor.event.FavoriteEventClosure = {
     
     ///////////////////////////////////////////////////////////////////////////
     // public methods
     
     execute: function(obj) {
-        console.log("exmp.tweet.functor.event.FavorEventClosure#execute");
+        //console.log("exmp.tweet.functor.event.FavoriteEventClosure#execute");
         
-        var favorClosure = exmp.hangul.functor.request.TweetFavorClosure;
+        var favoriteClosure = exmp.tweet.functor.request.TweetFavoriteClosure;
         
         // dynamically generate an event handler.
-        $("#action-favor-" + obj.statusId).click(function() {
-            favorClosure.execute({
+        $("#action-favorite-" + obj.statusId).click(function() {
+            favoriteClosure.execute({
                 userId: $("#user-id").val(),
                 statusId: obj.statusId
             });

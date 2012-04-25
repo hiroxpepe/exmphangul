@@ -460,7 +460,7 @@ div.tweet-list-content {
                 table.tweet-list-table td.tweet-icon-td div.tweet-icon {
                 }
                 table.tweet-list-table td.tweet-icon-td div.tweet-icon img {
-                    border-radius: 2px;
+                    border-radius: 4px;
                     cursor: pointer;
                 }   
             table.tweet-list-table td.tweet-list-td {                
@@ -468,6 +468,7 @@ div.tweet-list-content {
                 padding-bottom: 0.5em;  
                 padding-left: 0.5em;
                 padding-right: 0.5em;
+                cursor: pointer;
                 vertical-align: top;
                 font-size: 80%;
                 border-bottom: 1px solid wheat;
@@ -475,15 +476,23 @@ div.tweet-list-content {
                 table.tweet-list-table td.tweet-list-td span.action-reply {
                     padding-left: 1em;
                     cursor: pointer;
-                    color: tan;
+                    color: lightyellow;
                 }
                     table.tweet-list-table td.tweet-list-td span.action-reply:hover {
+                        font-weight: bold;
+                    }
+                table.tweet-list-table td.tweet-list-td span.action-delete {
+                    padding-left: 1em;
+                    cursor: pointer;
+                    color: lightyellow;
+                }
+                    table.tweet-list-table td.tweet-list-td span.action-delete:hover {
                         font-weight: bold;
                     }
                 table.tweet-list-table td.tweet-list-td span.action-retweet {
                     padding-left: 1em;
                     cursor: pointer;
-                    color: tan;
+                    color: lightyellow;
                 }
                     table.tweet-list-table td.tweet-list-td span.action-retweet:hover {
                         font-weight: bold;
@@ -491,7 +500,7 @@ div.tweet-list-content {
                 table.tweet-list-table td.tweet-list-td span.action-favorite {
                     padding-left: 1em;
                     cursor: pointer;
-                    color: tan;
+                    color: lightyellow;
                 }
                     table.tweet-list-table td.tweet-list-td span.action-favorite:hover {
                         font-weight: bold;

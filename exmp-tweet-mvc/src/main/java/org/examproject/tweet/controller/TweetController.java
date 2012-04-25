@@ -200,6 +200,76 @@ public class TweetController {
     }
     
     @RequestMapping(
+        value="/list",
+        method=RequestMethod.GET,
+        headers="Accept=application/json"
+    )
+    public @ResponseBody AjaxResponse doList(
+        @RequestParam(value="user_id", defaultValue="")
+        String requestUserId,
+        @CookieValue(value="__exmphangul_request_token", defaultValue="")
+        String requestToken,
+        @CookieValue(value="__exmphangul_access_token", defaultValue="")
+        String oauthToken,
+        @CookieValue(value="__exmphangul_token_secret", defaultValue="")
+        String oauthTokenSecret,
+        @CookieValue(value="__exmphangul_user_id", defaultValue="")
+        String userId,
+        @CookieValue(value="__exmphangul_screen_name", defaultValue="")
+        String screenName,
+        @CookieValue(value="__exmphangul_response_list_mode", defaultValue="")
+        String responseListMode,
+        @CookieValue(value="__exmphangul_user_list_name", defaultValue="")
+        String userListName
+    ) {        
+        LOG.debug("called.");
+        debugOut(oauthToken, oauthTokenSecret, userId, screenName);
+        
+        try {
+            if (!isValidParameterOfTweet(oauthToken, oauthTokenSecret, "mock")) {
+                doAuthenticationIsInvalid();
+            }
+
+            // check the user id.
+            if (!requestUserId.equals(userId)) {
+                return doUserIdIsInvalid();
+            }
+            
+            // get the service object.
+            TweetService service = (TweetService) context.getBean(
+                TWEET_SERVICE_BEAN_ID,
+                // get the authentication value object.
+                (TweetAuthValue) context.getBean(
+                    TWEET_AUTH_VALUE_BEAN_ID,
+                    authValue.getConsumerKey(),
+                    authValue.getConsumerSecret(),
+                    oauthToken,
+                    oauthTokenSecret
+                ),
+                // get the setting value object.
+                (SettingParamValue) context.getBean(
+                    SETTING_PARAM_VALUE_BEAN_ID,
+                    responseListMode,
+                    userListName
+                )
+            );
+            
+            // return the response object.
+            return list(
+                service
+            );
+        
+        } catch(Exception e) {
+            LOG.fatal(e.getMessage());
+            return (AjaxResponse) context.getBean(
+                AJAX_RESPONSE_BEAN_ID,
+                true,
+                e.getMessage()
+            );
+        }
+    }
+    
+    @RequestMapping(
         value="/update",
         method=RequestMethod.POST,
         headers="Accept=application/json"
@@ -232,7 +302,7 @@ public class TweetController {
                 return doAuthenticationIsInvalid();
             }
 
-            // a check the user id.
+            // check the user id.
             if (!requestUserId.equals(userId)) {
                 return doUserIdIsInvalid();
             }
@@ -273,13 +343,15 @@ public class TweetController {
     }
     
     @RequestMapping(
-        value="/list",
-        method=RequestMethod.GET,
+        value="/delete",
+        method=RequestMethod.POST,
         headers="Accept=application/json"
     )
-    public @ResponseBody AjaxResponse doList(
+    public @ResponseBody AjaxResponse doDelete(
         @RequestParam(value="user_id", defaultValue="")
         String requestUserId,
+        @RequestParam(value="status_id", defaultValue="")
+        String statusId,
         @CookieValue(value="__exmphangul_request_token", defaultValue="")
         String requestToken,
         @CookieValue(value="__exmphangul_access_token", defaultValue="")
@@ -303,7 +375,7 @@ public class TweetController {
                 doAuthenticationIsInvalid();
             }
 
-            // a check the user id.
+            // check the user id.
             if (!requestUserId.equals(userId)) {
                 return doUserIdIsInvalid();
             }
@@ -326,168 +398,11 @@ public class TweetController {
                     userListName
                 )
             );
-            
-            // return the response object.
-            return list(
+
+            // delete the cpntent.
+            return delete(
+                Long.parseLong(statusId),
                 service
-            );
-        
-        } catch(Exception e) {
-            LOG.fatal(e.getMessage());
-            return (AjaxResponse) context.getBean(
-                AJAX_RESPONSE_BEAN_ID,
-                true,
-                e.getMessage()
-            );
-        }
-    }
-    
-    @RequestMapping(
-        value="/favor",
-        method=RequestMethod.POST,
-        headers="Accept=application/json"
-    )
-    public @ResponseBody AjaxResponse doFavor(
-        @RequestParam(value="user_id", defaultValue="")
-        String requestUserId,
-        @RequestParam(value="status_id", defaultValue="")
-        String statusId,
-        @CookieValue(value="__exmphangul_request_token", defaultValue="")
-        String requestToken,
-        @CookieValue(value="__exmphangul_access_token", defaultValue="")
-        String oauthToken,
-        @CookieValue(value="__exmphangul_token_secret", defaultValue="")
-        String oauthTokenSecret,
-        @CookieValue(value="__exmphangul_user_id", defaultValue="")
-        String userId,
-        @CookieValue(value="__exmphangul_screen_name", defaultValue="")
-        String screenName,
-        @CookieValue(value="__exmphangul_response_list_mode", defaultValue="")
-        String responseListMode,
-        @CookieValue(value="__exmphangul_user_list_name", defaultValue="")
-        String userListName
-    ) {        
-        LOG.debug("called.");
-        debugOut(oauthToken, oauthTokenSecret, userId, screenName);
-        
-        try {
-            if (!isValidParameterOfTweet(oauthToken, oauthTokenSecret, "mock")) {
-                doAuthenticationIsInvalid();
-            }
-
-            // a check the user id.
-            if (!requestUserId.equals(userId)) {
-                return doUserIdIsInvalid();
-            }
-            
-            // get the service object.
-            TweetService service = (TweetService) context.getBean(
-                TWEET_SERVICE_BEAN_ID,
-                // get the authentication value object.
-                (TweetAuthValue) context.getBean(
-                    TWEET_AUTH_VALUE_BEAN_ID,
-                    authValue.getConsumerKey(),
-                    authValue.getConsumerSecret(),
-                    oauthToken,
-                    oauthTokenSecret
-                ),
-                // get the setting value object.
-                (SettingParamValue) context.getBean(
-                    SETTING_PARAM_VALUE_BEAN_ID,
-                    responseListMode,
-                    userListName
-                )
-            );
-
-            // favor the id.
-            service.favor(
-                Long.parseLong(statusId)
-            );
-            
-            // return the response object.
-            return (AjaxResponse) context.getBean(
-                AJAX_RESPONSE_BEAN_ID,
-                false,
-                "favor complete."
-            );
-        
-        } catch (Exception e) {
-            LOG.fatal(e.getMessage());
-            return (AjaxResponse) context.getBean(
-                AJAX_RESPONSE_BEAN_ID,
-                true,
-                e.getMessage()
-            );
-        }
-    }
-    
-    @RequestMapping(
-        value="/retweet",
-        method=RequestMethod.POST,
-        headers="Accept=application/json"
-    )
-    public @ResponseBody AjaxResponse doRetweet(
-        @RequestParam(value="user_id", defaultValue="")
-        String requestUserId,
-        @RequestParam(value="status_id", defaultValue="")
-        String statusId,
-        @CookieValue(value="__exmphangul_request_token", defaultValue="")
-        String requestToken,
-        @CookieValue(value="__exmphangul_access_token", defaultValue="")
-        String oauthToken,
-        @CookieValue(value="__exmphangul_token_secret", defaultValue="")
-        String oauthTokenSecret,
-        @CookieValue(value="__exmphangul_user_id", defaultValue="")
-        String userId,
-        @CookieValue(value="__exmphangul_screen_name", defaultValue="")
-        String screenName,
-        @CookieValue(value="__exmphangul_response_list_mode", defaultValue="")
-        String responseListMode,
-        @CookieValue(value="__exmphangul_user_list_name", defaultValue="")
-        String userListName
-    ) {        
-        LOG.debug("called.");    
-        debugOut(oauthToken, oauthTokenSecret, userId, screenName);
-        
-        try {
-            if (!isValidParameterOfTweet(oauthToken, oauthTokenSecret, "mock")) {
-                doAuthenticationIsInvalid();
-            }
-
-            // a check the user id.
-            if (!requestUserId.equals(userId)) {
-                return doUserIdIsInvalid();
-            }
-
-            // get the service object.
-            TweetService service = (TweetService) context.getBean(
-                TWEET_SERVICE_BEAN_ID,
-                // get the authentication value object.
-                (TweetAuthValue) context.getBean(
-                    TWEET_AUTH_VALUE_BEAN_ID,
-                    authValue.getConsumerKey(),
-                    authValue.getConsumerSecret(),
-                    oauthToken,
-                    oauthTokenSecret
-                ),
-                // get the setting value object.
-                (SettingParamValue) context.getBean(
-                    SETTING_PARAM_VALUE_BEAN_ID,
-                    responseListMode,
-                    userListName
-                )
-            );
-            
-            // retweet the id.
-            service.retweet(
-                Long.parseLong(statusId)
-            );
-            
-            // return the response object.
-            return (AjaxResponse) context.getBean(
-                AJAX_RESPONSE_BEAN_ID,
-                false,
-                "retweet complete."
             );
         
         } catch(Exception e) {
@@ -535,7 +450,7 @@ public class TweetController {
                 doAuthenticationIsInvalid();
             }
 
-            // a check the user id.
+            // check the user id.
             if (!requestUserId.equals(userId)) {
                 return doUserIdIsInvalid();
             }
@@ -564,6 +479,158 @@ public class TweetController {
                 content,
                 Long.parseLong(statusId),
                 service
+            );
+        
+        } catch(Exception e) {
+            LOG.fatal(e.getMessage());
+            return (AjaxResponse) context.getBean(
+                AJAX_RESPONSE_BEAN_ID,
+                true,
+                e.getMessage()
+            );
+        }
+    }
+    
+    @RequestMapping(
+        value="/favorite",
+        method=RequestMethod.POST,
+        headers="Accept=application/json"
+    )
+    public @ResponseBody AjaxResponse doFavorite(
+        @RequestParam(value="user_id", defaultValue="")
+        String requestUserId,
+        @RequestParam(value="status_id", defaultValue="")
+        String statusId,
+        @CookieValue(value="__exmphangul_request_token", defaultValue="")
+        String requestToken,
+        @CookieValue(value="__exmphangul_access_token", defaultValue="")
+        String oauthToken,
+        @CookieValue(value="__exmphangul_token_secret", defaultValue="")
+        String oauthTokenSecret,
+        @CookieValue(value="__exmphangul_user_id", defaultValue="")
+        String userId,
+        @CookieValue(value="__exmphangul_screen_name", defaultValue="")
+        String screenName,
+        @CookieValue(value="__exmphangul_response_list_mode", defaultValue="")
+        String responseListMode,
+        @CookieValue(value="__exmphangul_user_list_name", defaultValue="")
+        String userListName
+    ) {        
+        LOG.debug("called.");
+        debugOut(oauthToken, oauthTokenSecret, userId, screenName);
+        
+        try {
+            if (!isValidParameterOfTweet(oauthToken, oauthTokenSecret, "mock")) {
+                doAuthenticationIsInvalid();
+            }
+
+            // check the user id.
+            if (!requestUserId.equals(userId)) {
+                return doUserIdIsInvalid();
+            }
+            
+            // get the service object.
+            TweetService service = (TweetService) context.getBean(
+                TWEET_SERVICE_BEAN_ID,
+                // get the authentication value object.
+                (TweetAuthValue) context.getBean(
+                    TWEET_AUTH_VALUE_BEAN_ID,
+                    authValue.getConsumerKey(),
+                    authValue.getConsumerSecret(),
+                    oauthToken,
+                    oauthTokenSecret
+                ),
+                // get the setting value object.
+                (SettingParamValue) context.getBean(
+                    SETTING_PARAM_VALUE_BEAN_ID,
+                    responseListMode,
+                    userListName
+                )
+            );
+
+            // favorite the statusId.
+            return favorite(
+                Long.parseLong(statusId),
+                service
+            );
+        
+        } catch (Exception e) {
+            LOG.fatal(e.getMessage());
+            return (AjaxResponse) context.getBean(
+                AJAX_RESPONSE_BEAN_ID,
+                true,
+                e.getMessage()
+            );
+        }
+    }
+    
+    @RequestMapping(
+        value="/retweet",
+        method=RequestMethod.POST,
+        headers="Accept=application/json"
+    )
+    public @ResponseBody AjaxResponse doRetweet(
+        @RequestParam(value="user_id", defaultValue="")
+        String requestUserId,
+        @RequestParam(value="status_id", defaultValue="")
+        String statusId,
+        @CookieValue(value="__exmphangul_request_token", defaultValue="")
+        String requestToken,
+        @CookieValue(value="__exmphangul_access_token", defaultValue="")
+        String oauthToken,
+        @CookieValue(value="__exmphangul_token_secret", defaultValue="")
+        String oauthTokenSecret,
+        @CookieValue(value="__exmphangul_user_id", defaultValue="")
+        String userId,
+        @CookieValue(value="__exmphangul_screen_name", defaultValue="")
+        String screenName,
+        @CookieValue(value="__exmphangul_response_list_mode", defaultValue="")
+        String responseListMode,
+        @CookieValue(value="__exmphangul_user_list_name", defaultValue="")
+        String userListName
+    ) {        
+        LOG.debug("called.");    
+        debugOut(oauthToken, oauthTokenSecret, userId, screenName);
+        
+        try {
+            if (!isValidParameterOfTweet(oauthToken, oauthTokenSecret, "mock")) {
+                doAuthenticationIsInvalid();
+            }
+
+            // check the user id.
+            if (!requestUserId.equals(userId)) {
+                return doUserIdIsInvalid();
+            }
+
+            // get the service object.
+            TweetService service = (TweetService) context.getBean(
+                TWEET_SERVICE_BEAN_ID,
+                // get the authentication value object.
+                (TweetAuthValue) context.getBean(
+                    TWEET_AUTH_VALUE_BEAN_ID,
+                    authValue.getConsumerKey(),
+                    authValue.getConsumerSecret(),
+                    oauthToken,
+                    oauthTokenSecret
+                ),
+                // get the setting value object.
+                (SettingParamValue) context.getBean(
+                    SETTING_PARAM_VALUE_BEAN_ID,
+                    responseListMode,
+                    userListName
+                )
+            );
+            
+            // retweet the id.
+            service.retweet(
+                Long.parseLong(statusId)
+            );
+            
+            // return the response object.
+            return (AjaxResponse) context.getBean(
+                AJAX_RESPONSE_BEAN_ID,
+                false,
+                "retweet complete."
             );
         
         } catch(Exception e) {
@@ -698,6 +765,40 @@ public class TweetController {
         return response;
     }
     
+    private AjaxResponse delete(
+        Long statusId,
+        TweetService service
+    ) {
+        // delete and get the timeline.
+        List<TweetDto> tweetDtoList = service.delete(
+            statusId
+        );
+        
+        // map the object.
+        List<TweetModel> tweetModelList = new ArrayList<TweetModel>();
+        for (TweetDto tweetDto : tweetDtoList) {
+            TweetModel tweetModel = context.getBean(TweetModel.class);
+            // map the form-object to the dto-object.
+            mapper.map(
+                tweetDto,
+                tweetModel
+            );
+            tweetModelList.add(tweetModel);
+        }
+        
+        // create the response object.
+        AjaxResponse response = new AjaxResponse(
+            tweetModelList
+        );
+        
+        // add the twitter userList names.
+        response.setUserListNameList(
+            service.getUserListNameList()
+        );
+        
+        return response;
+    }
+    
     private AjaxResponse reply(
         String content,
         Long statusId,
@@ -706,6 +807,40 @@ public class TweetController {
         // reply and get the timeline.
         List<TweetDto> tweetDtoList = service.reply(
             content,
+            statusId
+        );
+        
+        // map the object.
+        List<TweetModel> tweetModelList = new ArrayList<TweetModel>();
+        for (TweetDto tweetDto : tweetDtoList) {
+            TweetModel tweetModel = context.getBean(TweetModel.class);
+            // map the form-object to the dto-object.
+            mapper.map(
+                tweetDto,
+                tweetModel
+            );
+            tweetModelList.add(tweetModel);
+        }
+        
+        // create the response object.
+        AjaxResponse response = new AjaxResponse(
+            tweetModelList
+        );
+        
+        // add the twitter userList names.
+        response.setUserListNameList(
+            service.getUserListNameList()
+        );
+        
+        return response;
+    }
+    
+    private AjaxResponse favorite(
+        Long statusId,
+        TweetService service
+    ) {
+        // delete and get the timeline.
+        List<TweetDto> tweetDtoList = service.favorite(
             statusId
         );
         
