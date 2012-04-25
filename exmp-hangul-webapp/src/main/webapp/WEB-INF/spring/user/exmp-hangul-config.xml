@@ -14,7 +14,7 @@
         http://www.springframework.org/schema/context
         http://www.springframework.org/schema/context/spring-context-3.1.xsd">
     
-    <bean id="oAuthValue" class="org.examproject.hangul.value.OAuthValue">
+    <bean id="oAuthValue" class="org.examproject.tweet.value.OAuthValue">
         <constructor-arg name="requestTokenUrl" value="http://twitter.com/oauth/request_token" />
         <constructor-arg name="authorizeUrl" value="http://twitter.com/oauth/authorize" />
         <constructor-arg name="accessTokenUrl" value="http://twitter.com/oauth/access_token" />
@@ -24,37 +24,37 @@
     </bean>
     
     <bean name="tweetForm"
-        class="org.examproject.hangul.form.TweetForm"
+        class="org.examproject.tweet.form.TweetForm"
         scope="session">
     </bean>
     
     <bean name="tweetModel"
-        class="org.examproject.hangul.model.TweetModel"
+        class="org.examproject.tweet.model.TweetModel"
         scope="prototype">
     </bean>
     
     <bean name="ajaxResponse"
-        class="org.examproject.hangul.response.AjaxResponse"
+        class="org.examproject.tweet.response.AjaxResponse"
         scope="prototype">
     </bean>
     
     <bean name="tweetDto"
-        class="org.examproject.hangul.dto.TweetDto"
+        class="org.examproject.tweet.dto.TweetDto"
         scope="prototype">
     </bean>
     
     <bean name="tweetAuthValue"
-        class="org.examproject.hangul.value.TweetAuthValue"
+        class="org.examproject.tweet.value.TweetAuthValue"
         scope="prototype">
     </bean>
     
     <bean name="settingParamValue"
-        class="org.examproject.hangul.value.SettingParamValue"
+        class="org.examproject.tweet.value.SettingParamValue"
         scope="prototype">
     </bean>
     
     <bean name="tweetService"
-        class="org.examproject.hangul.service.TweetService"
+        class="org.examproject.tweet.service.TweetService"
         scope="prototype">
     </bean>
     

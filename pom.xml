@@ -16,8 +16,8 @@
     
     <modules>
         <module>exmp-hangul-webapp</module>
-        <module>exmp-hangul-mvc</module>
-        <module>exmp-hangul-service</module>
+        <module>exmp-tweet-mvc</module>
+        <module>exmp-tweet-service</module>
     </modules>
     
     <build>
