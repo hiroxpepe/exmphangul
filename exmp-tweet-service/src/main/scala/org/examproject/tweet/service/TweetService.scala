@@ -26,7 +26,7 @@ trait TweetService {
 
     def getList(content: String): List[TweetDto]
     
-    def update(content: String):  List[TweetDto]
+    def update(content: String): List[TweetDto]
     
     def delete(statusId: Long): List[TweetDto]
     
@@ -38,4 +38,5 @@ trait TweetService {
     
     def getUserListNameList(): List[String]
 
+    def getCurrent(): TweetDto
 }

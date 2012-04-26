@@ -10,39 +10,22 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */
+ */ 
 
-package org.examproject.tweet.dto
+package org.examproject.tweet.repository
 
-import java.util.Date
+import java.lang.Long
+import java.util.List
 
-import reflect.BeanProperty
+import org.springframework.data.jpa.repository.JpaRepository
+import org.springframework.data.jpa.repository.Query
+
+import org.examproject.tweet.entity.Tweet
 
 /**
  * @author hiroxpepe
  */
-class TweetDto {
-
-    @BeanProperty
-    var userProfileImageURL: String = _
-
-    @BeanProperty
-    var userName: String = _
-
-    @BeanProperty
-    var text: String = _
+trait TweetRepository extends JpaRepository[Tweet, Long] {
     
-    // must string class!!
-    @BeanProperty
-    var statusId: String = _
-    
-    @BeanProperty
-    var created: Date = _
-    
-    @BeanProperty
-    var isFavorited: Boolean = false
-    
-    @BeanProperty
-    var isRetweetedByMe: Boolean = false
-    
+    def findById(id: Long): Tweet
 }

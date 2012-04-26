@@ -52,6 +52,8 @@ public class SimpleTweetService implements TweetService {
     
     private final SettingParamValue paramValue;
     
+    private TweetDto tweetDto;
+    
     ///////////////////////////////////////////////////////////////////////////
     // constructor
     
@@ -124,6 +126,7 @@ public class SimpleTweetService implements TweetService {
                 tweetDto.setUserName(status.getUser().getScreenName());
                 tweetDto.setText(status.getText());
                 tweetDto.setStatusId(String.valueOf(status.getId()));
+                tweetDto.setCreated(status.getCreatedAt());
                 tweetDto.setIsFavorited(status.isFavorited());
                 tweetDto.setIsRetweetedByMe(status.isRetweetedByMe());
                 tweetDtoList.add(tweetDto);
@@ -221,6 +224,11 @@ public class SimpleTweetService implements TweetService {
             LOG.error("an error occurred: " + e.getMessage());
             throw new RuntimeException(e);
         }
+    }
+    
+    @Override
+    public TweetDto getCurrent() {
+        return tweetDto;
     }
     
     ///////////////////////////////////////////////////////////////////////////
