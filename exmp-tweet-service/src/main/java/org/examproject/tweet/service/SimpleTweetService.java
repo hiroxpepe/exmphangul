@@ -31,16 +31,17 @@ import twitter4j.UserList;
 import twitter4j.auth.AccessToken;
 
 import org.examproject.tweet.dto.TweetDto;
+import org.examproject.tweet.service.TweetService;
 import org.examproject.tweet.value.SettingParamValue;
 import org.examproject.tweet.value.TweetAuthValue;
 
 /**
  * @author hiroxpepe
  */
-public class TweetService {
+public class SimpleTweetService implements TweetService {
  
     private static final Log LOG = LogFactory.getLog(
-        TweetService.class
+        SimpleTweetService.class
     );
     
     private static final int WAIT_COUNT = 5;
@@ -54,7 +55,14 @@ public class TweetService {
     ///////////////////////////////////////////////////////////////////////////
     // constructor
     
-    public TweetService(
+    public SimpleTweetService(){
+        this(
+            new TweetAuthValue("", "", "", ""),
+            new SettingParamValue("", "")
+        );
+    }
+    
+    public SimpleTweetService(
         TweetAuthValue authValue
     ){
         this(
@@ -63,7 +71,7 @@ public class TweetService {
         );
     }
     
-    public TweetService(
+    public SimpleTweetService(
         TweetAuthValue authValue,
         SettingParamValue paramValue
     ){
@@ -74,6 +82,7 @@ public class TweetService {
     ///////////////////////////////////////////////////////////////////////////
     // public methods
     
+    @Override
     public List<TweetDto> getList(String content) {
         LOG.debug("called.");
         
@@ -126,6 +135,7 @@ public class TweetService {
         }
     }
     
+    @Override
     public List<TweetDto> update(String content) {
         LOG.debug("called.");
         try {
@@ -139,7 +149,8 @@ public class TweetService {
         }
     }
     
-    public List<TweetDto> delete(long statusId) {
+    @Override
+    public List<TweetDto> delete(Long statusId) {
         LOG.debug("called.");
         try {
             destroyStatus(statusId);
@@ -154,7 +165,8 @@ public class TweetService {
         }
     }
     
-    public List<TweetDto> reply(String content, long statusId) {
+    @Override
+    public List<TweetDto> reply(String content, Long statusId) {
         LOG.debug("called.");
         try {
             replyStatus(content, statusId);
@@ -167,7 +179,8 @@ public class TweetService {
         }
     }
     
-    public List<TweetDto> favorite(long statusId) {
+    @Override
+    public List<TweetDto> favorite(Long statusId) {
         LOG.debug("called.");
         try {
             createOrDeleteFavorite(statusId);
@@ -182,7 +195,8 @@ public class TweetService {
         }
     }
     
-    public void retweet(long statusId) {
+    @Override
+    public void retweet(Long statusId) {
         LOG.debug("called.");
         try {
             retweetStatus(statusId);
@@ -192,6 +206,7 @@ public class TweetService {
         }
     }
     
+    @Override
     public List<String> getUserListNameList() {
         LOG.debug("called.");
         try {

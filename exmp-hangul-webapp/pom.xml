@@ -30,6 +30,13 @@
             <version>${exmp.version}</version>
         </dependency>
         
+        <!-- exmp-tweet-aspect -->
+        <dependency>
+            <groupId>org.examproject</groupId>
+            <artifactId>exmp-tweet-aspect</artifactId>
+            <version>${exmp.version}</version>
+        </dependency>
+        
         <!--//////////////////////////////////////////////////////////////////////////-->
         <!-- OSS LIB -->
         
