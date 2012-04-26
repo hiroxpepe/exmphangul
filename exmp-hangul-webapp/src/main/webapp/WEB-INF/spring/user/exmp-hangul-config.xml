@@ -64,4 +64,9 @@
         class="org.examproject.tweet.aspect.TweetServiceAspect">
     </bean>
     
+    <bean name="tweet"
+        class="org.examproject.tweet.entity.Tweet"
+        scope="prototype">
+    </bean>
+    
 </beans>

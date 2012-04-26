@@ -30,6 +30,13 @@
             <version>${exmp.version}</version>
         </dependency>
         
+        <!-- exmp-tweet-data-jpa -->
+        <dependency>
+            <groupId>org.examproject</groupId>
+            <artifactId>exmp-tweet-data-jpa</artifactId>
+            <version>${exmp.version}</version>
+        </dependency>
+        
         <!--//////////////////////////////////////////////////////////////////////////-->
         <!-- OSS LIB -->
 

@@ -50,6 +50,10 @@ class Tweet extends Serializable {
     @BeanProperty
     var date: Date = new Date()
     
+    @Column(name="name")
+    @BeanProperty
+    var name: String = _
+    
     @Column(name="text")
     @BeanProperty
     var text: String = _

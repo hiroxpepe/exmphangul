@@ -121,14 +121,7 @@ public class SimpleTweetService implements TweetService {
             // map the value.
             tweetDtoList = new ArrayList<TweetDto>();
             for (Status status : responseList) {
-                TweetDto tweetDto = new TweetDto();
-                tweetDto.setUserProfileImageURL(status.getUser().getProfileImageURL().toString());
-                tweetDto.setUserName(status.getUser().getScreenName());
-                tweetDto.setText(status.getText());
-                tweetDto.setStatusId(String.valueOf(status.getId()));
-                tweetDto.setCreated(status.getCreatedAt());
-                tweetDto.setIsFavorited(status.isFavorited());
-                tweetDto.setIsRetweetedByMe(status.isRetweetedByMe());
+                TweetDto tweetDto = mapStatus(status);
                 tweetDtoList.add(tweetDto);
             }
             return tweetDtoList;
@@ -142,7 +135,9 @@ public class SimpleTweetService implements TweetService {
     public List<TweetDto> update(String content) {
         LOG.debug("called.");
         try {
-            updateStatus(content);
+            tweetDto = mapStatus(
+                updateStatus(content)
+            );
             return getList(
                 content
             );
@@ -156,7 +151,9 @@ public class SimpleTweetService implements TweetService {
     public List<TweetDto> delete(Long statusId) {
         LOG.debug("called.");
         try {
-            destroyStatus(statusId);
+            tweetDto = mapStatus(
+                destroyStatus(statusId)
+            );
             // wait for the delete..
             Thread.sleep(WAIT_MSEC);
             return getList(
@@ -172,7 +169,9 @@ public class SimpleTweetService implements TweetService {
     public List<TweetDto> reply(String content, Long statusId) {
         LOG.debug("called.");
         try {
-            replyStatus(content, statusId);
+            tweetDto = mapStatus(
+                replyStatus(content, statusId)
+            );
             return getList(
                 content
             );
@@ -186,7 +185,9 @@ public class SimpleTweetService implements TweetService {
     public List<TweetDto> favorite(Long statusId) {
         LOG.debug("called.");
         try {
-            createOrDeleteFavorite(statusId);
+            tweetDto = mapStatus(
+                createOrDeleteFavorite(statusId)
+            );
             // wait for the favorite..
             Thread.sleep(WAIT_MSEC);
             return getList(
@@ -202,7 +203,9 @@ public class SimpleTweetService implements TweetService {
     public void retweet(Long statusId) {
         LOG.debug("called.");
         try {
-            retweetStatus(statusId);
+            tweetDto = mapStatus(
+                retweetStatus(statusId)
+            );
         } catch(Exception e) {
             LOG.error("an error occurred: " + e.getMessage());
             throw new RuntimeException(e);
@@ -366,6 +369,18 @@ public class SimpleTweetService implements TweetService {
             // TODO: transition to an error page here?
             throw new RuntimeException(te);
         }
+    }
+    
+    private TweetDto mapStatus(Status status) {
+        TweetDto tweetDto = new TweetDto();
+        tweetDto.setUserProfileImageURL(status.getUser().getProfileImageURL().toString());
+        tweetDto.setUserName(status.getUser().getScreenName());
+        tweetDto.setText(status.getText());
+        tweetDto.setStatusId(String.valueOf(status.getId()));
+        tweetDto.setCreated(status.getCreatedAt());
+        tweetDto.setIsFavorited(status.isFavorited());
+        tweetDto.setIsRetweetedByMe(status.isRetweetedByMe());
+        return tweetDto;
     }
     
     private Twitter getTwitter() {

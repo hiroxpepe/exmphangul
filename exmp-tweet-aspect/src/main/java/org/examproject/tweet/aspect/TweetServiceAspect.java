@@ -14,13 +14,20 @@
 
 package org.examproject.tweet.aspect;
 
+import javax.inject.Inject;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
+import org.springframework.context.ApplicationContext;
 
+import org.examproject.tweet.entity.Tweet;
+import org.examproject.tweet.dto.TweetDto;
+import org.examproject.tweet.repository.TweetRepository;
 import org.examproject.tweet.service.TweetService;
 
 /**
@@ -33,16 +40,36 @@ public class TweetServiceAspect {
         TweetServiceAspect.class
     );
     
+    @Inject
+    private final ApplicationContext context = null;
+    
+    @Inject
+    private final TweetRepository repository = null;
+    
     ///////////////////////////////////////////////////////////////////////////
     // public methods
     
     @Before("execution(* org.examproject.tweet.service.TweetService.update(..))")
     public void updateBefore(JoinPoint jp) {
-        LOG.debug("update() is running!");
-        LOG.debug("hijacked: " + jp.getSignature().getName());
+        LOG.debug("called.");
         
         Object args[] = jp.getArgs();
         String content = (String) args[0];
         LOG.debug("content: " + content);
     }
+    
+    @After("execution(* org.examproject.tweet.service.TweetService.update(..))")
+    public void updateAfter(JoinPoint jp) {
+        LOG.debug("called.");
+        
+        TweetService service = (TweetService) jp.getThis();
+        TweetDto tweetDto = service.getCurrent();
+        Tweet tweet = context.getBean(Tweet.class);
+        tweet.setId(Long.valueOf(tweetDto.getStatusId()));
+        tweet.setDate(tweetDto.getCreated());
+        tweet.setName(tweetDto.getUserName());
+        tweet.setText(tweetDto.getText());
+        repository.save(tweet);
+    }
+    
 }
