@@ -34,9 +34,6 @@ class TagcrowdResponse(
     @BeanProperty
     var message: String = _
     
-    @BeanProperty
-    var userListNameList: List[String] = _
-    
     def this(
         isError: Boolean,
         message: String

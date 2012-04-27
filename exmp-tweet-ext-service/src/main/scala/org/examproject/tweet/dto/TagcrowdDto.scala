@@ -24,9 +24,6 @@ import reflect.BeanProperty
 class TagcrowdDto {
     
     @BeanProperty
-    var userProfileImageURL: String = _
-    
-    @BeanProperty
     var userName: String = _
     
     @BeanProperty
@@ -35,14 +32,5 @@ class TagcrowdDto {
     // must string class!!
     @BeanProperty
     var statusId: String = _
-    
-    @BeanProperty
-    var created: Date = _
-    
-    @BeanProperty
-    var isFavorited: Boolean = false
-    
-    @BeanProperty
-    var isRetweetedByMe: Boolean = false
     
 }

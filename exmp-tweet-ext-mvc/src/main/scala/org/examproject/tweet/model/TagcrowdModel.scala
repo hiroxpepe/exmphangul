@@ -22,22 +22,13 @@ import reflect.BeanProperty
 class TagcrowdModel {
 
     @BeanProperty
-    var userProfileImageURL: String = _
-
-    @BeanProperty
     var userName: String = _
-
-    @BeanProperty
-    var text: String = _
-
-    // must string class !!
-    @BeanProperty
-    var statusId: String = _
-
-    @BeanProperty
-    var isFavorited: Boolean = false
     
     @BeanProperty
-    var isRetweetedByMe: Boolean = false
+    var text: String = _
+    
+    // must string class!!
+    @BeanProperty
+    var statusId: String = _
 
 }

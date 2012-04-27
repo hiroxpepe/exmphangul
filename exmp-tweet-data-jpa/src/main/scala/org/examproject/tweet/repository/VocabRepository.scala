@@ -15,6 +15,7 @@
 package org.examproject.tweet.repository
 
 import java.lang.Long
+import java.util.List
 
 import org.springframework.data.jpa.repository.JpaRepository
 
@@ -24,4 +25,7 @@ import org.examproject.tweet.entity.Vocab
  * @author hiroxpepe
  */
 trait VocabRepository extends JpaRepository[Vocab, Long] {
+    
+    def findByName(name: String): List[Vocab]
+    
 }

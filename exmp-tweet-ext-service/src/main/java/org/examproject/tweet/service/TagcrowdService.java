@@ -14,6 +14,7 @@
 
 package org.examproject.tweet.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
 
@@ -57,7 +58,21 @@ public class TagcrowdService {
     
     public List<TagcrowdDto> getList(String username) {
         LOG.debug("called.");
-        List<TagcrowdDto> tagcrowdDtoList = null;
+        List<TagcrowdDto> tagcrowdDtoList = new ArrayList<TagcrowdDto>();
+        List<Vocab> vocabList = vocabRepository.findByName(username);
+        List<String> tmpStrList = new ArrayList<String>();
+        for (Vocab vocab : vocabList) {
+            Word word = wordRepository.findById(vocab.getWordId());
+            if (tmpStrList.contains(word.getText())) {
+                continue;
+            }
+            TagcrowdDto tagcrowdDto = context.getBean(TagcrowdDto.class);
+            tagcrowdDto.setStatusId(String.valueOf(vocab.getStatusId()));
+            tagcrowdDto.setUserName(vocab.getName());
+            tagcrowdDto.setText(word.getText());
+            tagcrowdDtoList.add(tagcrowdDto);
+            tmpStrList.add(word.getText());
+        }
         try {
             return tagcrowdDtoList;
         } catch(Exception e) {
@@ -93,7 +108,6 @@ public class TagcrowdService {
                             Word wordEntity = context.getBean(Word.class);
                             wordEntity.setText(oneWord);
                             Word newWordEntity = (Word) wordRepository.save(wordEntity);
-                            LOG.debug("new id: " + newWordEntity.getId());
                             wordId = newWordEntity.getId();
                         }
                         // already exist.

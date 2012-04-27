@@ -27,6 +27,8 @@ exmp.tweet.functor.request.TagcrowdClosure = {
     execute: function(obj) {
         console.log("tagcrowd begin.");
         
+        var tagcrowdUpdateClosure = exmp.tweet.functor.dhtml.TagcrowdUpdateClosure;
+        
         // create an ajax object.
         new $.ajax({
             url: "tagcrowd.html",
@@ -46,7 +48,10 @@ exmp.tweet.functor.request.TagcrowdClosure = {
                     return;
                 }
                 
-                // update..
+                // update the HTML table of the tagcrowd.
+                tagcrowdUpdateClosure.execute(
+                    data
+                );
                 
                 console.log("tagcrowd complete.");
             },

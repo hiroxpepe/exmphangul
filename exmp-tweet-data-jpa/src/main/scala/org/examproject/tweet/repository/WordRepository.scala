@@ -26,6 +26,8 @@ import org.examproject.tweet.entity.Word
  */
 trait WordRepository extends JpaRepository[Word, Long] {
     
+    def findById(id: Long): Word
+    
     def findByText(text: String): List[Word]
 
 }
