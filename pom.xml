@@ -18,8 +18,11 @@
         <module>exmp-hangul-webapp</module>
         <module>exmp-tweet-mvc</module>
         <module>exmp-tweet-service</module>
+        <module>exmp-tweet-ext-mvc</module>
+        <module>exmp-tweet-ext-service</module>
         <module>exmp-tweet-aspect</module>
         <module>exmp-tweet-data-jpa</module>
+        <module>exmp-tweet-util</module>
     </modules>
     
     <build>

@@ -39,7 +39,7 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.examproject.tweet.dto.TweetDto;
 import org.examproject.tweet.form.TweetForm;
 import org.examproject.tweet.model.TweetModel;
-import org.examproject.tweet.response.AjaxResponse;
+import org.examproject.tweet.response.TweetResponse;
 import org.examproject.tweet.service.TweetService;
 import org.examproject.tweet.value.OAuthValue;
 import org.examproject.tweet.value.SettingParamValue;
@@ -63,7 +63,7 @@ public class TweetController {
     
     private static final String TWEET_SERVICE_BEAN_ID = "tweetService";
                 
-    private static final String AJAX_RESPONSE_BEAN_ID = "ajaxResponse";
+    private static final String TWEET_RESPONSE_BEAN_ID = "tweetResponse";
     
     @Inject
     private final ApplicationContext context = null;
@@ -128,8 +128,8 @@ public class TweetController {
         
         } catch(Exception e) {
             LOG.fatal(e.getMessage());
-            AjaxResponse response = (AjaxResponse) context.getBean(
-                AJAX_RESPONSE_BEAN_ID,
+            TweetResponse response = (TweetResponse) context.getBean(
+                TWEET_RESPONSE_BEAN_ID,
                 true,
                 e.getMessage()
             );
@@ -189,8 +189,8 @@ public class TweetController {
         
         } catch(Exception e) {
             LOG.fatal(e.getMessage());
-            AjaxResponse response = (AjaxResponse) context.getBean(
-                AJAX_RESPONSE_BEAN_ID,
+            TweetResponse response = (TweetResponse) context.getBean(
+                TWEET_RESPONSE_BEAN_ID,
                 true,
                 e.getMessage()
             );
@@ -204,7 +204,7 @@ public class TweetController {
         method=RequestMethod.GET,
         headers="Accept=application/json"
     )
-    public @ResponseBody AjaxResponse doList(
+    public @ResponseBody TweetResponse doList(
         @RequestParam(value="user_id", defaultValue="")
         String requestUserId,
         @CookieValue(value="__exmphangul_request_token", defaultValue="")
@@ -261,8 +261,8 @@ public class TweetController {
         
         } catch(Exception e) {
             LOG.fatal(e.getMessage());
-            return (AjaxResponse) context.getBean(
-                AJAX_RESPONSE_BEAN_ID,
+            return (TweetResponse) context.getBean(
+                TWEET_RESPONSE_BEAN_ID,
                 true,
                 e.getMessage()
             );
@@ -274,7 +274,7 @@ public class TweetController {
         method=RequestMethod.POST,
         headers="Accept=application/json"
     )
-    public @ResponseBody AjaxResponse doUpdate(
+    public @ResponseBody TweetResponse doUpdate(
         @RequestParam(value="tweet", defaultValue="")
         String content,
         @RequestParam(value="user_id", defaultValue="")
@@ -334,8 +334,8 @@ public class TweetController {
         
         } catch(Exception e) {
             LOG.fatal(e.getMessage());
-            return (AjaxResponse) context.getBean(
-                AJAX_RESPONSE_BEAN_ID,
+            return (TweetResponse) context.getBean(
+                TWEET_RESPONSE_BEAN_ID,
                 true,
                 e.getMessage()
             );
@@ -347,7 +347,7 @@ public class TweetController {
         method=RequestMethod.POST,
         headers="Accept=application/json"
     )
-    public @ResponseBody AjaxResponse doDelete(
+    public @ResponseBody TweetResponse doDelete(
         @RequestParam(value="user_id", defaultValue="")
         String requestUserId,
         @RequestParam(value="status_id", defaultValue="")
@@ -407,8 +407,8 @@ public class TweetController {
         
         } catch(Exception e) {
             LOG.fatal(e.getMessage());
-            return (AjaxResponse) context.getBean(
-                AJAX_RESPONSE_BEAN_ID,
+            return (TweetResponse) context.getBean(
+                TWEET_RESPONSE_BEAN_ID,
                 true,
                 e.getMessage()
             );
@@ -420,7 +420,7 @@ public class TweetController {
         method=RequestMethod.POST,
         headers="Accept=application/json"
     )
-    public @ResponseBody AjaxResponse doReply(
+    public @ResponseBody TweetResponse doReply(
         @RequestParam(value="tweet", defaultValue="")
         String content,
         @RequestParam(value="user_id", defaultValue="")
@@ -483,8 +483,8 @@ public class TweetController {
         
         } catch(Exception e) {
             LOG.fatal(e.getMessage());
-            return (AjaxResponse) context.getBean(
-                AJAX_RESPONSE_BEAN_ID,
+            return (TweetResponse) context.getBean(
+                TWEET_RESPONSE_BEAN_ID,
                 true,
                 e.getMessage()
             );
@@ -496,7 +496,7 @@ public class TweetController {
         method=RequestMethod.POST,
         headers="Accept=application/json"
     )
-    public @ResponseBody AjaxResponse doFavorite(
+    public @ResponseBody TweetResponse doFavorite(
         @RequestParam(value="user_id", defaultValue="")
         String requestUserId,
         @RequestParam(value="status_id", defaultValue="")
@@ -556,8 +556,8 @@ public class TweetController {
         
         } catch (Exception e) {
             LOG.fatal(e.getMessage());
-            return (AjaxResponse) context.getBean(
-                AJAX_RESPONSE_BEAN_ID,
+            return (TweetResponse) context.getBean(
+                TWEET_RESPONSE_BEAN_ID,
                 true,
                 e.getMessage()
             );
@@ -569,7 +569,7 @@ public class TweetController {
         method=RequestMethod.POST,
         headers="Accept=application/json"
     )
-    public @ResponseBody AjaxResponse doRetweet(
+    public @ResponseBody TweetResponse doRetweet(
         @RequestParam(value="user_id", defaultValue="")
         String requestUserId,
         @RequestParam(value="status_id", defaultValue="")
@@ -627,16 +627,16 @@ public class TweetController {
             );
             
             // return the response object.
-            return (AjaxResponse) context.getBean(
-                AJAX_RESPONSE_BEAN_ID,
+            return (TweetResponse) context.getBean(
+                TWEET_RESPONSE_BEAN_ID,
                 false,
                 "retweet complete."
             );
         
         } catch(Exception e) {
             LOG.fatal(e.getMessage());
-            return (AjaxResponse) context.getBean(
-                AJAX_RESPONSE_BEAN_ID,
+            return (TweetResponse) context.getBean(
+                TWEET_RESPONSE_BEAN_ID,
                 true,
                 e.getMessage()
             );
@@ -687,13 +687,13 @@ public class TweetController {
      */
     @ExceptionHandler
     @ResponseBody
-    public AjaxResponse handleException(
+    public TweetResponse handleException(
         Exception e
     ) {
         LOG.debug("called");
         LOG.fatal(e.getMessage());
-        return (AjaxResponse) context.getBean(
-            AJAX_RESPONSE_BEAN_ID,
+        return (TweetResponse) context.getBean(
+            TWEET_RESPONSE_BEAN_ID,
             true,
             e.getMessage()
         );
@@ -702,7 +702,7 @@ public class TweetController {
     ///////////////////////////////////////////////////////////////////////////
     // private methods
     
-    private AjaxResponse list(
+    private TweetResponse list(
         TweetService service
     ) {
         // get the timeline.
@@ -719,7 +719,7 @@ public class TweetController {
         }
         
         // create the response object.
-        AjaxResponse response = new AjaxResponse(
+        TweetResponse response = new TweetResponse(
             tweetModelList
         );
         
@@ -731,7 +731,7 @@ public class TweetController {
         return response;
     }
     
-    private AjaxResponse update(
+    private TweetResponse update(
         String content,
         TweetService service
     ) {
@@ -753,7 +753,7 @@ public class TweetController {
         }
         
         // create the response object.
-        AjaxResponse response = new AjaxResponse(
+        TweetResponse response = new TweetResponse(
             tweetModelList
         );
         
@@ -765,7 +765,7 @@ public class TweetController {
         return response;
     }
     
-    private AjaxResponse delete(
+    private TweetResponse delete(
         Long statusId,
         TweetService service
     ) {
@@ -787,7 +787,7 @@ public class TweetController {
         }
         
         // create the response object.
-        AjaxResponse response = new AjaxResponse(
+        TweetResponse response = new TweetResponse(
             tweetModelList
         );
         
@@ -799,7 +799,7 @@ public class TweetController {
         return response;
     }
     
-    private AjaxResponse reply(
+    private TweetResponse reply(
         String content,
         Long statusId,
         TweetService service
@@ -823,7 +823,7 @@ public class TweetController {
         }
         
         // create the response object.
-        AjaxResponse response = new AjaxResponse(
+        TweetResponse response = new TweetResponse(
             tweetModelList
         );
         
@@ -835,7 +835,7 @@ public class TweetController {
         return response;
     }
     
-    private AjaxResponse favorite(
+    private TweetResponse favorite(
         Long statusId,
         TweetService service
     ) {
@@ -857,7 +857,7 @@ public class TweetController {
         }
         
         // create the response object.
-        AjaxResponse response = new AjaxResponse(
+        TweetResponse response = new TweetResponse(
             tweetModelList
         );
         
@@ -899,22 +899,22 @@ public class TweetController {
         return true;
     }
 
-    private AjaxResponse doAuthenticationIsInvalid() {
+    private TweetResponse doAuthenticationIsInvalid() {
         String msg = "is not a valid authentication.";
         LOG.warn(msg);
-        AjaxResponse response = (AjaxResponse) context.getBean(
-            AJAX_RESPONSE_BEAN_ID,
+        TweetResponse response = (TweetResponse) context.getBean(
+            TWEET_RESPONSE_BEAN_ID,
             true,
             msg
         );
         return response;
     }
     
-    private AjaxResponse doUserIdIsInvalid() {
+    private TweetResponse doUserIdIsInvalid() {
         String msg = "a use the user id is invalid.";
         LOG.warn(msg);
-        AjaxResponse response = (AjaxResponse) context.getBean(
-            AJAX_RESPONSE_BEAN_ID,
+        TweetResponse response = (TweetResponse) context.getBean(
+            TWEET_RESPONSE_BEAN_ID,
             true,
             msg
         );

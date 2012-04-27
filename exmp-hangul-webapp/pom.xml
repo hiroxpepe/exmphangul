@@ -30,6 +30,13 @@
             <version>${exmp.version}</version>
         </dependency>
         
+        <!-- exmp-tweet-ext-mvc -->
+        <dependency>
+            <groupId>org.examproject</groupId>
+            <artifactId>exmp-tweet-ext-mvc</artifactId>
+            <version>${exmp.version}</version>
+        </dependency>
+        
         <!-- exmp-tweet-aspect -->
         <dependency>
             <groupId>org.examproject</groupId>

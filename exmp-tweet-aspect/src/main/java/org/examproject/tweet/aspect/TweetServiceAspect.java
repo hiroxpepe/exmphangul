@@ -22,12 +22,12 @@ import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
-import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.context.ApplicationContext;
 
 import org.examproject.tweet.entity.Tweet;
 import org.examproject.tweet.dto.TweetDto;
 import org.examproject.tweet.repository.TweetRepository;
+import org.examproject.tweet.service.TagcrowdService;
 import org.examproject.tweet.service.TweetService;
 
 /**
@@ -40,11 +40,13 @@ public class TweetServiceAspect {
         TweetServiceAspect.class
     );
     
+    private static final String TAGCROWD_SERVICE_BEAN_ID = "tagcrowdService";
+    
     @Inject
     private final ApplicationContext context = null;
     
     @Inject
-    private final TweetRepository repository = null;
+    private final TweetRepository tweetRepository = null;
     
     ///////////////////////////////////////////////////////////////////////////
     // public methods
@@ -62,14 +64,26 @@ public class TweetServiceAspect {
     public void updateAfter(JoinPoint jp) {
         LOG.debug("called.");
         
-        TweetService service = (TweetService) jp.getThis();
-        TweetDto tweetDto = service.getCurrent();
+        // set tweetService.
+        TweetService tweetService = (TweetService) jp.getThis();
+        // TODO: insert db service object..
+        TweetDto tweetDto = tweetService.getCurrent();
         Tweet tweet = context.getBean(Tweet.class);
         tweet.setId(Long.valueOf(tweetDto.getStatusId()));
         tweet.setDate(tweetDto.getCreated());
         tweet.setName(tweetDto.getUserName());
         tweet.setText(tweetDto.getText());
-        repository.save(tweet);
+        tweetRepository.save(tweet);
+        
+        // do tagcrowdService.
+        TagcrowdService tagcrowdService = (TagcrowdService) context.getBean(
+            TAGCROWD_SERVICE_BEAN_ID
+        );
+        tagcrowdService.update(
+            Long.parseLong(tweetDto.getStatusId()),
+            tweetDto.getText(),
+            tweetDto.getUserName()
+        );
     }
     
 }

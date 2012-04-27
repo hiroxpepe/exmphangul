@@ -111,11 +111,17 @@ exmp.tweet.core.Controller = window; {
     exmp.tweet.core.Controller._initializeTweetListDiv = function() {
         
         var listClosure = exmp.tweet.functor.request.TweetListClosure;
+        var tagcrowdClosure = exmp.tweet.functor.request.TagcrowdClosure;
         var pageUrl = location.href;
         
         if (!(pageUrl.indexOf("index.html") == -1)) {
             listClosure.execute({
                 userId: $("#user-id").val()
+            });
+            
+            // TODO: add, ch user-id ??
+            tagcrowdClosure.execute({
+                tweet: ""
             });
         }
     }

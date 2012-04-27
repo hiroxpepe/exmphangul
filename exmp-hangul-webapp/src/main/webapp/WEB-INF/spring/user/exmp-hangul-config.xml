@@ -35,8 +35,8 @@
         scope="prototype">
     </bean>
     
-    <bean name="ajaxResponse"
-        class="org.examproject.tweet.response.AjaxResponse"
+    <bean name="tweetResponse"
+        class="org.examproject.tweet.response.TweetResponse"
         scope="prototype">
     </bean>
     
@@ -60,12 +60,43 @@
         scope="prototype">
     </bean>
     
+    <!-- extension module -->
+    
     <bean name="serviceAspect"
         class="org.examproject.tweet.aspect.TweetServiceAspect">
     </bean>
     
+    <bean name="tagcrowdModel"
+        class="org.examproject.tweet.model.TagcrowdModel"
+        scope="prototype">
+    </bean>
+    
+    <bean name="tagcrowdResponse"
+        class="org.examproject.tweet.response.TagcrowdResponse"
+        scope="prototype">
+    </bean>
+    
+    <bean name="tagcrowdService"
+        class="org.examproject.tweet.service.TagcrowdService">
+    </bean>
+    
+     <bean name="tagcrowdDto"
+        class="org.examproject.tweet.dto.TagcrowdDto"
+        scope="prototype">
+    </bean>
+    
     <bean name="tweet"
         class="org.examproject.tweet.entity.Tweet"
+        scope="prototype">
+    </bean>
+    
+    <bean name="vocab"
+        class="org.examproject.tweet.entity.Vocab"
+        scope="prototype">
+    </bean>
+    
+    <bean name="word"
+        class="org.examproject.tweet.entity.Word"
         scope="prototype">
     </bean>
     

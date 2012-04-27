@@ -16,16 +16,16 @@ package org.examproject.tweet.response
 
 import java.util.List
 
-import org.examproject.tweet.model.TweetModel
+import org.examproject.tweet.model.TagcrowdModel
 
 import reflect.BeanProperty
 
 /**
  * @author hiroxpepe
  */
-class AjaxResponse(
+class TagcrowdResponse(
     @BeanProperty
-    val tweetModelList: List[TweetModel]
+    val tagcrowdModelList: List[TagcrowdModel]
 ) {
     
     @BeanProperty
