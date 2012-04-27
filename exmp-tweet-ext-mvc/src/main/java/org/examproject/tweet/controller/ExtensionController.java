@@ -21,8 +21,6 @@ import javax.inject.Inject;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.dozer.Mapper;
-import org.examproject.tweet.dto.TagcrowdDto;
-import org.examproject.tweet.model.TagcrowdModel;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -32,6 +30,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import org.examproject.tweet.dto.TagcrowdDto;
+import org.examproject.tweet.model.TagcrowdModel;
 import org.examproject.tweet.response.TagcrowdResponse;
 import org.examproject.tweet.service.TagcrowdService;
 
@@ -110,7 +110,9 @@ public class ExtensionController {
                     tagcrowdDto,
                     tagcrowdModel
                 );
-                tagcrowdModelList.add(tagcrowdModel);
+                tagcrowdModelList.add(
+                    tagcrowdModel
+                );
             }
 
             // return the response object.
