@@ -60,5 +60,12 @@ public class SentenceToWordsTransformerTest {
         expResult4[2] = "fuga";
         String[] result4 = (String[]) instance.transform(input4);
         assertArrayEquals(expResult4, result4);
+        
+        String input5 = " hoge   piyo. ";
+        String[] expResult5 = new String[2];
+        expResult5[0] = "hoge";
+        expResult5[1] = "piyo";
+        String[] result5 = (String[]) instance.transform(input5);
+        assertArrayEquals(expResult5, result5);
     }
 }

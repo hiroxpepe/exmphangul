@@ -16,7 +16,7 @@
 /**
  * a functor class of the application.
  * this class is a transformer that JSON data get by
- * Ajax HTTP requests and convert to HTML tables.
+ * Ajax HTTP requests and convert to HTML tags.
  * 
  * @author hiroxpepe
  */
@@ -29,7 +29,7 @@ exmp.tweet.functor.htmltag.TagcrowdTransformer = {
         console.log("exmp.tweet.functor.htmltag.TagcrowdTransformer#transform");
         
         // dynamically generate an html table.
-        var table = "<table class='tagcrowd-list-table'>";
+        var html = "<div class='tagcrowd-content'>";
         if (obj.tagcrowdModelList != null) {
             for (var i = 0; i < obj.tagcrowdModelList.length; i++) {
                 
@@ -37,18 +37,14 @@ exmp.tweet.functor.htmltag.TagcrowdTransformer = {
                 var statusId = obj.tagcrowdModelList[i].statusId;
                 var text = obj.tagcrowdModelList[i].text;
                 
-                // create an html tag and set the entry code.
-                table +=
-                    "<tr class='tagcrowd-list-tr'>" +
-                        "<td id='tagcrowd-list-td-" + statusId + "' class='tagcrowd-list-td' >" +
-                            "<span id='id-" + statusId + "'>" + text + "</span>" + 
-                        "</td>" +
-                    "</tr>";
+                // create an html tag.
+                html += "<span class='tagcrowd-span'>" +
+                            "<a id='tagcrowd-a-" + statusId + "' class='tagcrowd-a'>" + text + "</a>" + 
+                        "</span>";
             }
-            table += "</table>";
+            html += "</div>";
         }        
-        return table;
-        
+        return html;
     }
     
     ///////////////////////////////////////////////////////////////////////////

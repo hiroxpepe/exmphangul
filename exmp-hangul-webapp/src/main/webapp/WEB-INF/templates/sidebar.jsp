@@ -3,7 +3,7 @@
 
 <div class="block sidebar-content">
     
-    <div id="tagcrowd-list-block" class="tagcrowd-content">
+    <div id="tagcrowd-list-block">
     </div>
     
 </div>

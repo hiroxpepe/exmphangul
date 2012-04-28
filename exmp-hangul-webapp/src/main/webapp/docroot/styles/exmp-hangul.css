@@ -202,7 +202,7 @@ div.menu-content {
 div.sidebar-content {
     padding-top: 1em;
 }
-    div.sidebar-content a {
+    div.sidebar-content > a {
         margin-top: 7pt;
         margin-right: 0pt;
         margin-bottom: 7pt;
@@ -219,20 +219,20 @@ div.sidebar-content {
         border: 1px solid #aaaaaa;
         border-radius: 3px;
     }
-        div.sidebar-content a:hover {
+        div.sidebar-content > a:hover {
             color: white;
             background: darkgray;
             border: 1px solid #d2b48c;
             border-radius: 3px;
         }
-        div.sidebar-content a.feed {
+        div.sidebar-content > a.feed {
             color: white;
             background: sandybrown;
             border: 1px solid #d2b48c;
             border-radius: 3px;
         }
         
-    div.sidebar-content p {
+    div.sidebar-content > p {
         margin-top: 0.25em;
         background-color: transparent;
         border-width: 1px 0px 1px 0px;
@@ -427,6 +427,23 @@ div.setting-content {
         padding: 0.5em 0 0.5em 0;
         text-align: right;
     }
+    
+/* ****************************************************************************
+ * define the appearance of the tagcrowd content.
+ */
+div.tagcrowd-content {
+    padding: 0.5em;
+}
+    span.tagcrowd-span a.tagcrowd-a {
+        margin: 0.25em;
+        text-align: center;
+        cursor: pointer;
+        font-size: 85%;
+        color: lightslategray;
+    }
+        span.tagcrowd-span a.tagcrowd-a:hover {
+            font-weight: bold;
+        }
     
 /* ****************************************************************************
  * define the appearance of the entry list table.

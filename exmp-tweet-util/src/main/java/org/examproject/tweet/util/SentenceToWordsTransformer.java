@@ -24,6 +24,13 @@ public class SentenceToWordsTransformer implements Transformer {
 
     public Object transform(Object input) {
         String str = (String) input;
+        str = StringUtils.replace(str, ".", "");
+        str = StringUtils.replace(str, "!", "");
+        str = StringUtils.replace(str, "?", "");
+        str = StringUtils.replace(str, "~", "");
+        str = StringUtils.replace(str, "ㅋ", "");
+        str = StringUtils.replace(str, "ㅎ", "");
+        str = StringUtils.replace(str, "ㅠ", "");
         return StringUtils.split(str, " ");
     }
     
