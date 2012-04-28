@@ -55,25 +55,25 @@ exmp.tweet.functor.htmltag.TweetListTransformer = {
                 // create an html tag and set the entry code.
                 table +=
                     "<tr class='tweet-list-tr'>" +
-                        "<td class='tweet-icon-td'>" + 
-                            "<div class='tweet-icon'>" + 
+                        "<td class='tweet-icon-td'>" +
+                            "<div class='tweet-icon'>" +
                                 "<img src='" + image + "' width='48' height='48' border='0'>" +
                             "</div>" +
                         "</td>" +
                         "<td id='tweet-list-td-" + statusId + "' class='tweet-list-td' >" +
                             "<div>" + 
-                                "<span><b>" + name + "</b></span>" + 
+                                "<span><b>" + name + "</b></span>" +
                                 this._getReplySpan(name, statusId) +
                                 this._getDeleteSpan(name, statusId) +
                                 this._getRetweetSpan(name, statusId) +
-                                this._getFavoriteSpan(name, statusId, isFavorited) +                                    
-                            "</div>" + 
-                            "<span id='id-" + statusId + "'>" + text + "</span>" + 
+                                this._getFavoriteSpan(name, statusId, isFavorited) +
+                            "</div>" +
+                            "<span id='id-" + statusId + "'>" + text + "</span>" +
                         "</td>" +
                     "</tr>";
             }
             table += "</table>";
-        }        
+        }
         return table;
         
     },
@@ -82,8 +82,8 @@ exmp.tweet.functor.htmltag.TweetListTransformer = {
     // private methods
     
     _getReplySpan: function(name, statusId) {
-        return "<span id='action-reply-" + statusId + 
-                   "' class='action-reply' status-id='" + statusId + 
+        return "<span id='action-reply-" + statusId +
+                   "' class='action-reply' status-id='" + statusId +
                    "' user-name='" + name + "'>Reply</span>";
     },
     
@@ -91,8 +91,8 @@ exmp.tweet.functor.htmltag.TweetListTransformer = {
         if (name != $("#screen-name").val()) {
             return "";
         }
-        return "<span id='action-delete-" + statusId + 
-                   "' class='action-delete' status-id='" + statusId + 
+        return "<span id='action-delete-" + statusId +
+                   "' class='action-delete' status-id='" + statusId +
                    "' user-name='" + name + "'>Delete</span>";
     },
     
@@ -100,8 +100,8 @@ exmp.tweet.functor.htmltag.TweetListTransformer = {
         if (name == $("#screen-name").val()) {
             return "";
         }
-        return "<span id='action-retweet-" + statusId + 
-                   "' class='action-retweet' status-id='" + statusId + 
+        return "<span id='action-retweet-" + statusId +
+                   "' class='action-retweet' status-id='" + statusId +
                    "' user-name='" + name + "'>Retweet</span>";
     },
     
@@ -110,9 +110,9 @@ exmp.tweet.functor.htmltag.TweetListTransformer = {
         if (isFavorited) {
             str = "Favorited";
         }
-        return "<span id='action-favorite-" + statusId + 
-                   "' class='action-favorite' status-id='" + statusId + 
+        return "<span id='action-favorite-" + statusId +
+                   "' class='action-favorite' status-id='" + statusId +
                    "' user-name='" + name + "'>" + str + "</span>";
     }
-
+    
 }

@@ -26,9 +26,9 @@ exmp.tweet.functor.htmltag.TagcrowdTransformer = {
     // public methods
     
     transform: function(obj) {
-        console.log("exmp.tweet.functor.htmltag.TagcrowdTransformer#transform");
+        //console.log("exmp.tweet.functor.htmltag.TagcrowdTransformer#transform");
         
-        // dynamically generate an html table.
+        // dynamically generate an html tags.
         var html = "<div class='tagcrowd-content'>";
         if (obj.tagcrowdModelList != null) {
             for (var i = 0; i < obj.tagcrowdModelList.length; i++) {
@@ -39,15 +39,15 @@ exmp.tweet.functor.htmltag.TagcrowdTransformer = {
                 
                 // create an html tag.
                 html += "<span class='tagcrowd-span'>" +
-                            "<a id='tagcrowd-a-" + statusId + "' class='tagcrowd-a'>" + text + "</a>" + 
+                            "<a id='tagcrowd-a-" + statusId + "' class='tagcrowd-a'>" + text + "</a>" +
                         "</span>";
             }
             html += "</div>";
-        }        
+        }
         return html;
     }
     
     ///////////////////////////////////////////////////////////////////////////
     // private methods
-
+    
 }

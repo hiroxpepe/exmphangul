@@ -25,7 +25,7 @@ exmp.tweet.functor.dhtml.TagcrowdUpdateClosure = {
     // public methods
     
     execute: function(obj) {
-        console.log("exmp.tweet.functor.dhtml.TagcrowdUpdateClosure#execute");
+        //console.log("exmp.tweet.functor.dhtml.TagcrowdUpdateClosure#execute");
         
         var transformer = exmp.tweet.functor.htmltag.TagcrowdTransformer;
         
