@@ -112,7 +112,7 @@ exmp.tweet.functor.dhtml.CalendarClosure = {
         return table;
     },
 
-    make_calendars: function(year, p){
+    _make_calendars: function(year, p){
         p.innerHTML = '';
         p.appendChild(_make_cal_yearly(year));
         for (var m = 0; m < 12; m++){
