@@ -15,10 +15,9 @@
         <script language="javascript" type="text/javascript" src="<c:url value="/docroot/scripts/jquery.json.js" />"></script>
         <script language="javascript" type="text/javascript" src="<c:url value="/docroot/scripts/utf.js" />"></script>
         <script language="javascript" type="text/javascript" src="<c:url value="/docroot/scripts/exmp-hangul.min.js" />"></script>
-        
         <title><fmt:message key="site.title" /></title>
     </head>
-    <body>
+    <body>       
         <div class="container">
             <div class="menu">
                 <tiles:insertAttribute name="menu" />

@@ -96,7 +96,7 @@ div.menu {
  * define the content area of this application.
  */
 div.content {
-    width: 75%;
+    width: 72%;
     min-height: 720px;
     height: auto;
     float: left;
@@ -108,7 +108,7 @@ div.content {
  * define the sidebar area of this application.
  */
 div.sidebar {
-    width: 25%;
+    width: 28%;
     min-height: 720px;
     height: auto;
     float: right;
@@ -540,6 +540,15 @@ div.tweet-list-content {
             color: black;
         }
     
+/* ****************************************************************************
+ * define the appearance of the calendar.
+ */
+ div.calendar-content {
+ }
+    div.calendar-content div.calendar {
+        font-size: 9px;
+    }
+        
 /* ****************************************************************************
  * define the appearance of the alphabet grid content.
  */

@@ -190,5 +190,11 @@ exmp.tweet.core.Controller = window; {
         $("#alphabet-grid").dialog({
             width: 380
         });
+        
+        $('#datepicker').datepicker({
+            onSelect: function(dateText, inst) {
+                console.log("dateText: " + dateText);
+            }
+        });
     }
 }

@@ -3,6 +3,10 @@
 
 <div class="block sidebar-content">
     
+    <div class="calendar-content">
+        <div id="datepicker" class="calendar"></div>
+    </div>
+    
     <div id="tagcrowd-list-block">
     </div>
     

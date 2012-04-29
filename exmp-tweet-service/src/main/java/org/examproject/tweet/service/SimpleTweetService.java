@@ -327,20 +327,27 @@ public class SimpleTweetService implements TweetService {
         
         long cursol = -1;
 	int listId = 0;
-        Paging paging = new Paging(1);
+        int count =50;
+        int pageNumber =1;
+        
+        Paging paging = new Paging(
+            pageNumber,
+            count
+        );
+        
         try {
             // TODO: polymorphism to here? -> plugin.
             
             // home
             if (paramValue.getResponseListMode().equals("home")) {
                 Twitter twitter = getTwitter();
-                return twitter.getHomeTimeline();
+                return twitter.getHomeTimeline(paging);
             }
             
             // user
             if (paramValue.getResponseListMode().equals("user")) {
                 Twitter twitter = getTwitter();
-                return twitter.getUserTimeline();
+                return twitter.getUserTimeline(paging);
             }
             
             // list
