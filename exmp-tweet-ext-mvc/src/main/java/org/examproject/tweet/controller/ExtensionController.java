@@ -30,9 +30,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import org.examproject.tweet.dto.CalendarDto;
 import org.examproject.tweet.dto.TagcrowdDto;
+import org.examproject.tweet.model.CalendarModel;
 import org.examproject.tweet.model.TagcrowdModel;
+import org.examproject.tweet.response.CalendarResponse;
 import org.examproject.tweet.response.TagcrowdResponse;
+import org.examproject.tweet.service.CalendarService;
 import org.examproject.tweet.service.TagcrowdService;
 
 /**
@@ -45,6 +49,10 @@ public class ExtensionController {
     private static final Log LOG = LogFactory.getLog(
         ExtensionController.class
     );
+    
+    private static final String CALENDAR_SERVICE_BEAN_ID = "calendarService";
+                
+    private static final String CALENDAR_RESPONSE_BEAN_ID = "calendarResponse";
     
     private static final String TAGCROWD_SERVICE_BEAN_ID = "tagcrowdService";
                 
@@ -60,11 +68,87 @@ public class ExtensionController {
     // public methods
     
     @RequestMapping(
+        value="/calendar",
+        method=RequestMethod.POST,
+        headers="Accept=application/json"
+    )
+    public @ResponseBody CalendarResponse doCalendar(
+        @RequestParam(value="user_id", defaultValue="")
+        String requestUserId,
+        @RequestParam(value="year", defaultValue="")
+        String year,
+        @RequestParam(value="month", defaultValue="")
+        String month,
+        @CookieValue(value="__exmphangul_request_token", defaultValue="")
+        String requestToken,
+        @CookieValue(value="__exmphangul_access_token", defaultValue="")
+        String oauthToken,
+        @CookieValue(value="__exmphangul_token_secret", defaultValue="")
+        String oauthTokenSecret,
+        @CookieValue(value="__exmphangul_user_id", defaultValue="")
+        String userId,
+        @CookieValue(value="__exmphangul_screen_name", defaultValue="")
+        String screenName,
+        @CookieValue(value="__exmphangul_response_list_mode", defaultValue="")
+        String responseListMode,
+        @CookieValue(value="__exmphangul_user_list_name", defaultValue="")
+        String userListName
+     ) {
+        LOG.debug("called.");     
+        try {
+            // TODO: debug
+            LOG.debug("screenName: " + screenName);
+            LOG.debug("user_id: " + requestUserId);
+            LOG.debug("year: " + year);
+            LOG.debug("month: " + month);
+            
+            // get the service object.
+            CalendarService service = (CalendarService) context.getBean(
+                CALENDAR_SERVICE_BEAN_ID
+            );
+            
+            // get the calendar.
+            List<CalendarDto> calendarDtoList = service.getList(
+                screenName,
+                Integer.valueOf(year),
+                Integer.valueOf(month)
+            );
+
+            // map the object.
+            List<CalendarModel> calendarModelList=  new ArrayList<CalendarModel>();
+            for (CalendarDto calendarDto : calendarDtoList) {
+                CalendarModel calendarModel = context.getBean(CalendarModel.class);
+                // map the form-object to the dto-object.
+                mapper.map(
+                    calendarDto,
+                    calendarModel
+                );
+                calendarModelList.add(
+                    calendarModel
+                );
+            }
+
+            // return the response object.
+            return new CalendarResponse(
+                calendarModelList
+            );
+        
+        } catch(Exception e) {
+            LOG.fatal(e.getMessage());
+            return (CalendarResponse) context.getBean(
+                CALENDAR_RESPONSE_BEAN_ID,
+                true,
+                e.getMessage()
+            );
+        } 
+    }
+    
+    @RequestMapping(
         value="/tagcrowd",
         method=RequestMethod.POST,
         headers="Accept=application/json"
     )
-    public @ResponseBody TagcrowdResponse doReply(
+    public @ResponseBody TagcrowdResponse doTagcrowd(
         @RequestParam(value="tweet", defaultValue="")
         String content,
         @RequestParam(value="user_id", defaultValue="")

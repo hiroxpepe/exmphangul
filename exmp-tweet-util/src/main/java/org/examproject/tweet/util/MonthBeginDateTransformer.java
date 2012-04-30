@@ -12,27 +12,35 @@
  * limitations under the License.
  */
 
-///////////////////////////////////////////////////////////////////////////////
+package org.examproject.tweet.util;
+
+import java.util.Calendar;
+
+import org.apache.commons.collections.Transformer;
+
 /**
- * a functor class of the application.
- * update the HTML table of the entry list.
- * 
  * @author hiroxpepe
  */
-exmp.tweet.functor.dhtml.TagcrowdUpdateClosure = {
-    
+public class MonthBeginDateTransformer implements Transformer {
+
     ///////////////////////////////////////////////////////////////////////////
     // public methods
     
-    execute: function(obj) {
-        //console.log("exmp.tweet.functor.dhtml.TagcrowdUpdateClosure#execute");
-        
-        var transformer = exmp.tweet.functor.htmltag.TagcrowdTransformer;
-        
-        $("#tweet-tagcrowd").html(
-            transformer.transform(
-                obj
-            )
+    public Object transform(Object input) {
+        DateValue dateValue = (DateValue) input;
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(
+            dateValue.getYear(),
+            (dateValue.getMonth() - 1),
+            1,
+            0,
+            0,
+            0
         );
+        return calendar.getTime();
     }
+    
+    ///////////////////////////////////////////////////////////////////////////
+    // private methods
+    
 }

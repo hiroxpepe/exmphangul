@@ -111,7 +111,7 @@ exmp.tweet.core.Controller = window;{
     exmp.tweet.core.Controller._initializeTweetListDiv = function() {
         
         var listClosure = exmp.tweet.functor.request.TweetListClosure;
-        var calendarClosure = exmp.tweet.functor.dhtml.CalendarClosure;
+        var calendarClosure = exmp.tweet.functor.request.CalendarClosure;
         var tagcrowdClosure = exmp.tweet.functor.request.TagcrowdClosure;
         var pageUrl = location.href;
         
@@ -126,9 +126,11 @@ exmp.tweet.core.Controller = window;{
             });
             
             // TODO: arg..
-            calendarClosure.execute(
-                null
-            );
+            calendarClosure.execute({
+                userId: $("#user-id").val(),
+                year: 2012,
+                month: 4
+            });
         }
     }
     

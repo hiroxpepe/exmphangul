@@ -3,11 +3,14 @@
 
 <div class="block sidebar-content">
     
-    <div class="calendar-content">
-        <div id="tweet-calendar" class="calendar"></div>
-    </div>
-    
-    <div id="tagcrowd-block">
-    </div>
+    <%-- <c:if test="${not empty tweetForm.userId}"> --%>
+        <div class="calendar-content">
+            <div id="tweet-calendar" class="calendar"></div>
+        </div>
+
+        <div class="tagcrowd-content">
+            <div id="tweet-tagcrowd"  class="tagcrowd"></div>
+        </div>
+    <%-- </c:if> --%>
     
 </div>

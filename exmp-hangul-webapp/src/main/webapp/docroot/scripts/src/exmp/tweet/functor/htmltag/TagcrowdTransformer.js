@@ -29,7 +29,7 @@ exmp.tweet.functor.htmltag.TagcrowdTransformer = {
         //console.log("exmp.tweet.functor.htmltag.TagcrowdTransformer#transform");
         
         // dynamically generate an html tags.
-        var html = "<div class='tagcrowd-content'>";
+        var html = "<div>";
         if (obj.tagcrowdModelList != null) {
             for (var i = 0; i < obj.tagcrowdModelList.length; i++) {
                 

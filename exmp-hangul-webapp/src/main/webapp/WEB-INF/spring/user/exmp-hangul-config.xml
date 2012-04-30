@@ -66,6 +66,8 @@
         class="org.examproject.tweet.aspect.TweetServiceAspect">
     </bean>
     
+    <!-- tagcrowd -->
+    
     <bean name="tagcrowdModel"
         class="org.examproject.tweet.model.TagcrowdModel"
         scope="prototype">
@@ -84,6 +86,29 @@
         class="org.examproject.tweet.dto.TagcrowdDto"
         scope="prototype">
     </bean>
+    
+    <!-- calendar -->
+    
+    <bean name="calendarModel"
+        class="org.examproject.tweet.model.CalendarModel"
+        scope="prototype">
+    </bean>
+    
+    <bean name="calendarResponse"
+        class="org.examproject.tweet.response.CalendarResponse"
+        scope="prototype">
+    </bean>
+    
+    <bean name="calendarService"
+        class="org.examproject.tweet.service.CalendarService">
+    </bean>
+    
+     <bean name="calendarDto"
+        class="org.examproject.tweet.dto.CalendarDto"
+        scope="prototype">
+    </bean>
+    
+    <!-- tweet -->
     
     <bean name="tweet"
         class="org.examproject.tweet.entity.Tweet"

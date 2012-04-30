@@ -19,17 +19,17 @@
  * 
  * @author hiroxpepe
  */
-exmp.tweet.functor.dhtml.TagcrowdUpdateClosure = {
+exmp.tweet.functor.dhtml.CalendarUpdataClosure = {
     
     ///////////////////////////////////////////////////////////////////////////
     // public methods
     
     execute: function(obj) {
-        //console.log("exmp.tweet.functor.dhtml.TagcrowdUpdateClosure#execute");
+        //console.log("exmp.tweet.functor.dhtml.CalendarUpdataClosure#execute");
         
-        var transformer = exmp.tweet.functor.htmltag.TagcrowdTransformer;
+        var transformer = exmp.tweet.functor.htmltag.CalendarTransformer;
         
-        $("#tweet-tagcrowd").html(
+        $("#tweet-calendar").html(
             transformer.transform(
                 obj
             )

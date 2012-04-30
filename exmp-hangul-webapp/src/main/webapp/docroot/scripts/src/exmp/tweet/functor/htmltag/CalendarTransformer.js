@@ -15,44 +15,55 @@
 ///////////////////////////////////////////////////////////////////////////////
 /**
  * a functor class of the application.
- * update the HTML table of the entry list.
+ * this class is a transformer that JSON data get by
+ * Ajax HTTP requests and convert to HTML tags.
  * 
  * @author hiroxpepe
  */
-exmp.tweet.functor.dhtml.CalendarClosure = {
+exmp.tweet.functor.htmltag.CalendarTransformer = {
     
     _daynames: ['Su','Mo','Tu','We','Th','Fr','Sa'],
     
     ///////////////////////////////////////////////////////////////////////////
     // public methods
     
-    execute: function(obj) {
-        console.log("exmp.tweet.functor.dhtml.CalendarClosure#execute");
-        // set real
-        this._showCalendar(
-            2012,
-            4,
-            document.getElementById('tweet-calendar')
-        );
+    transform: function(obj) {
+        //console.log("exmp.tweet.functor.htmltag.CalendarTransformer#transform");
         
+        // TODO: need null if user new.
+        
+        // dynamically generate an html tags.
+        if (obj.calendarModelList != null) {
+            // set real date.
+            var date = new Date();
+            var year = date.getFullYear();
+            var month = date.getMonth();
+            return this._getCalendar(
+                year,
+                month + 1,
+                $('#tweet-calendar'),
+                obj
+            );
+        }
+        return null;
     },
     
     ///////////////////////////////////////////////////////////////////////////
     // private methods
     
-    // need?
-    _showCalendar: function(year, month, p) {
-        this._createCalendar(
+    _getCalendar: function(year, month, jelem, obj) {
+        return this._getCalendarTag(
             year,
             month,
-            document.getElementById('tweet-calendar')
+            jelem.get(0),
+            obj
         );
     },
     
     _getLeap: function (year){
         return year % 4 ? 0 : year % 100 ? 1 : year % 400 ? 0 : 1;
     },
-
+    
     _createCalendarArray: function(year) {
         var months = [31, 28 + this._getLeap(year), 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
         var result = [];
@@ -65,14 +76,14 @@ exmp.tweet.functor.dhtml.CalendarClosure = {
         }
         return result;
     },
-
-    _createCalendarMonthly: function(year, month) {
+    
+    _createCalendarMonthly: function(year, month, obj) {
         var m = month - 1;
-        var cal = this._createCalendarArray(year);
+        var calendar = this._createCalendarArray(year);
         var table = document.createElement('table');
         // header
         var tr = document.createElement('tr');
-        for (var d = 0; d < 7; d++){
+        for (var d = 0; d < 7; d++) {
             var th = document.createElement('th');
             th.innerHTML = th.className = this._daynames[d];
             tr.appendChild(th);
@@ -80,17 +91,30 @@ exmp.tweet.functor.dhtml.CalendarClosure = {
         var thead = document.createElement('thead');
         thead.appendChild(tr);
         table.appendChild(thead);
-        // body;
+        // body
         var tbody = document.createElement('tbody');
-        for (var d = 0, l = cal[m].length; d < l; d++) {
-            if (d % 7 == 0) tr = document.createElement('tr');
+        for (var d = 0, l = calendar[m].length; d < l; d++) {
+            if (d % 7 == 0) { 
+                tr = document.createElement('tr');
+            }
             var td = document.createElement('td');
-            if (cal[m][d]){
-                td.innerHTML = cal[m][d];
+            if (calendar[m][d]) {
+                //console.log("day: " + d);
+                var dIdx = d;
+                if (obj.calendarModelList[dIdx + 1].isExist == true) {
+                    td.innerHTML = 
+                        "<a href='" + obj.calendarModelList[dIdx + 1].linkUrl + "'>" + 
+                            "<b>" + calendar[m][d] + "</b>" + 
+                        "</a>";
+                } else {
+                    td.innerHTML = calendar[m][d];
+                }
                 td.className = this._daynames[d % 7];
             }
             tr.appendChild(td);
-            if (d % 7 == 6) tbody.appendChild(tr);
+            if (d % 7 == 6) {
+                tbody.appendChild(tr);
+            }
         }
         tbody.appendChild(tr);
         table.className = 'calendar-table';
@@ -100,11 +124,11 @@ exmp.tweet.functor.dhtml.CalendarClosure = {
         table.appendChild(tbody);
         return table;
     },
-
-    _createCalendar: function(year, month, p) {        
-        p.innerHTML = '';
-        var calendarTable = this._createCalendarMonthly(year, month);
-        p.appendChild(calendarTable);
+    
+    _getCalendarTag: function(year, month, element, obj) {
+        element.innerHTML = "";
+        var calendarTable = this._createCalendarMonthly(year, month, obj);
+        element.appendChild(calendarTable);
+        return element.innerHTML;
     }
-
 }

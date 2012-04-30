@@ -15,26 +15,28 @@
 ///////////////////////////////////////////////////////////////////////////////
 /**
  * a functor class of the application.
- * send HTTP request for get the tagcrowd.
+ * send HTTP request for get the calendar.
  * 
  * @author hiroxpepe
  */
-exmp.tweet.functor.request.TagcrowdClosure = {
+exmp.tweet.functor.request.CalendarClosure = {
     
     ///////////////////////////////////////////////////////////////////////////
     // public methods
     
     execute: function(obj) {
-        console.log("tagcrowd begin.");
+        console.log("calendar begin.");
         
-        var tagcrowdUpdateClosure = exmp.tweet.functor.dhtml.TagcrowdUpdateClosure;
+        var calendarUpdateClosure = exmp.tweet.functor.dhtml.CalendarUpdataClosure;
         
         // create an ajax object.
         new $.ajax({
-            url: "tagcrowd.html",
+            url: "calendar.html",
             type: "POST",
             data: {
-                tweet: obj.content
+                user_id: obj.userId,
+                year: obj.year,
+                month: obj.month
             },
             dataType: "json",
             
@@ -47,12 +49,12 @@ exmp.tweet.functor.request.TagcrowdClosure = {
                     return;
                 }
                 
-                // update the HTML table of the tagcrowd.
-                tagcrowdUpdateClosure.execute(
+                // update the HTML table of the calendar.
+                calendarUpdateClosure.execute(
                     data
                 );
                 
-                console.log("tagcrowd complete.");
+                console.log("calendar complete.");
             },
             
             // callback function of the error.

@@ -10,29 +10,30 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */ 
+ */
 
-package org.examproject.tweet.repository
+package org.examproject.tweet.dto
 
-import java.lang.Long
+import java.lang.Integer
 import java.util.Date
-import java.util.List
 
-import org.springframework.data.jpa.repository.JpaRepository
-
-import org.examproject.tweet.entity.Tweet
+import reflect.BeanProperty
 
 /**
  * @author hiroxpepe
  */
-trait TweetRepository extends JpaRepository[Tweet, Long] {
+class CalendarDto {
     
-    def findByNameAndDateBetween(name: String, begin: Date, end: Date): List[Tweet]
+    @BeanProperty
+    var date: Date = _
     
-    def findByDateBetween(begin: Date, end: Date): List[Tweet]
+    @BeanProperty
+    var day: Integer = _
     
-    def findByDateLessThan(end: Date): List[Tweet]
+    @BeanProperty
+    var linkUrl: String = _
     
-    def findByDateGreaterThan(begin: Date): List[Tweet]
+    @BeanProperty
+    var isExist: Boolean = false
     
 }

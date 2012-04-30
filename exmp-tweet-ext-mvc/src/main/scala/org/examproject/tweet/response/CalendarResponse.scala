@@ -10,29 +10,37 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */ 
+ */
 
-package org.examproject.tweet.repository
+package org.examproject.tweet.response
 
-import java.lang.Long
-import java.util.Date
 import java.util.List
 
-import org.springframework.data.jpa.repository.JpaRepository
+import org.examproject.tweet.model.CalendarModel
 
-import org.examproject.tweet.entity.Tweet
+import reflect.BeanProperty
 
 /**
  * @author hiroxpepe
  */
-trait TweetRepository extends JpaRepository[Tweet, Long] {
+class CalendarResponse(
+    @BeanProperty
+    val calendarModelList: List[CalendarModel]
+) {
     
-    def findByNameAndDateBetween(name: String, begin: Date, end: Date): List[Tweet]
+    @BeanProperty
+    var isError: Boolean = false
     
-    def findByDateBetween(begin: Date, end: Date): List[Tweet]
+    @BeanProperty
+    var message: String = _
     
-    def findByDateLessThan(end: Date): List[Tweet]
-    
-    def findByDateGreaterThan(begin: Date): List[Tweet]
+    def this(
+        isError: Boolean,
+        message: String
+    ) = {
+        this(null)
+        this.isError = isError
+        this.message = message
+    }
     
 }
