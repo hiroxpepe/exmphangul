@@ -4,10 +4,10 @@
 <div class="block sidebar-content">
     
     <div class="calendar-content">
-        <div id="datepicker" class="calendar"></div>
+        <div id="tweet-calendar" class="calendar"></div>
     </div>
     
-    <div id="tagcrowd-list-block">
+    <div id="tagcrowd-block">
     </div>
     
 </div>

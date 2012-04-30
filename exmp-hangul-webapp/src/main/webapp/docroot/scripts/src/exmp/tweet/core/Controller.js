@@ -18,7 +18,7 @@
  * 
  * @author hiroxpepe
  */
-exmp.tweet.core.Controller = window; {
+exmp.tweet.core.Controller = window;{
     
     ///////////////////////////////////////////////////////////////////////////
     // public methods
@@ -111,6 +111,7 @@ exmp.tweet.core.Controller = window; {
     exmp.tweet.core.Controller._initializeTweetListDiv = function() {
         
         var listClosure = exmp.tweet.functor.request.TweetListClosure;
+        var calendarClosure = exmp.tweet.functor.dhtml.CalendarClosure;
         var tagcrowdClosure = exmp.tweet.functor.request.TagcrowdClosure;
         var pageUrl = location.href;
         
@@ -123,6 +124,11 @@ exmp.tweet.core.Controller = window; {
             tagcrowdClosure.execute({
                 tweet: ""
             });
+            
+            // TODO: arg..
+            calendarClosure.execute(
+                null
+            );
         }
     }
     
@@ -191,10 +197,10 @@ exmp.tweet.core.Controller = window; {
             width: 380
         });
         
-        $('#datepicker').datepicker({
-            onSelect: function(dateText, inst) {
-                console.log("dateText: " + dateText);
-            }
-        });
+//        $('#datepicker').datepicker({
+//            onSelect: function(dateText, inst) {
+//                console.log("dateText: " + dateText);
+//            }
+//        });
     }
 }

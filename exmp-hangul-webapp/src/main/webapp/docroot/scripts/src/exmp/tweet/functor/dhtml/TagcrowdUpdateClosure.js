@@ -29,7 +29,7 @@ exmp.tweet.functor.dhtml.TagcrowdUpdateClosure = {
         
         var transformer = exmp.tweet.functor.htmltag.TagcrowdTransformer;
         
-        $("#tagcrowd-list-block").html(
+        $("#tagcrowd-block").html(
             transformer.transform(
                 obj
             )

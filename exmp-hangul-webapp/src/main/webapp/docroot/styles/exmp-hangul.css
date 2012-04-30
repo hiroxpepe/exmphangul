@@ -76,7 +76,7 @@ div.container {
  */
 div.header {
     width: 100%;
-    height: 8em;
+    height: 5em;
     text-align: left;
     color: white;
     background: lightslategray;
@@ -96,7 +96,7 @@ div.menu {
  * define the content area of this application.
  */
 div.content {
-    width: 72%;
+    width: 70%;
     min-height: 720px;
     height: auto;
     float: left;
@@ -108,7 +108,7 @@ div.content {
  * define the sidebar area of this application.
  */
 div.sidebar {
-    width: 28%;
+    width: 30%;
     min-height: 720px;
     height: auto;
     float: right;
@@ -152,9 +152,14 @@ div.block {
  * define the appearance of the header content.
  */
 div.header-content {
+    padding-top: 1em;
 }
-    h1.header-title {
-        margin-top: 0.5em;
+    span.header-title {
+        font-size: 170%;
+        font-weight: bold;
+    }
+    span.header-sub-title {
+        font-size: 60%;
     }
 
 /* ****************************************************************************
@@ -348,12 +353,12 @@ div.content-wrapper {
     margin: 0.25em 0.25em 0.25em 0.25em;
     padding: 0.25em 0.25em 1em 0.25em;
     background: white;
-    border: 1px solid silver;
+    border: 1px solid gainsboro;
     border-radius: 5px;
 }
     div.content-wrapper textarea {
-        border: 1px solid silver;
-        border-radius: 2px;
+        border: 1px solid gainsboro;
+        border-radius: 3px;
     }
     div.tweet-command-block {
         padding: 0.5em 0.5em 0em 0.5em;
@@ -427,31 +432,14 @@ div.setting-content {
         padding: 0.5em 0 0.5em 0;
         text-align: right;
     }
-    
+        
 /* ****************************************************************************
- * define the appearance of the tagcrowd content.
- */
-div.tagcrowd-content {
-    padding: 0.5em;
-}
-    span.tagcrowd-span a.tagcrowd-a {
-        margin: 0.25em;
-        text-align: center;
-        cursor: pointer;
-        font-size: 85%;
-        color: lightslategray;
-    }
-        span.tagcrowd-span a.tagcrowd-a:hover {
-            font-weight: bold;
-        }
-    
-/* ****************************************************************************
- * define the appearance of the entry list table.
+ * define the appearance of the tweet list table.
  */
 div.tweet-list-content {
     padding: 0.5em 1em 2em 1em;
-    text-align:center;
-    position:relative;
+    text-align: center;
+    position: relative;
 }
     div.tweet-list-content p {
         /* 31px * 31px icon... */
@@ -544,10 +532,60 @@ div.tweet-list-content {
  * define the appearance of the calendar.
  */
  div.calendar-content {
+    margin: 0.25em 0.25em 0.25em 0.25em;
+    padding: 0.25em 0.25em 0.25em 0.25em;
+    background: white;
+    border: 1px solid gainsboro;
+    border-radius: 6px;
  }
     div.calendar-content div.calendar {
-        font-size: 9px;
     }
+        div.calendar-content div.calendar table.calendar-table {
+            width: 100%;
+            text-align: center;
+            font-size: 70%;
+        }
+        div.calendar-content div.calendar table.calendar-table td, th {
+            width: 2em;
+            text-align: center;
+        }
+        div.calendar-content div.calendar th.Su { 
+            background-color: #ffcccc;
+            border-radius: 2px;
+        }
+        div.calendar-content div.calendar th.Sa { 
+            background-color: #ccccff;
+            border-radius: 2px;
+        }
+        div.calendar-content div.calendar td.Su { 
+            background-color: #ffcccc;
+            border-radius: 2px;
+        }
+        div.calendar-content div.calendar td.Sa { 
+            background-color: #ccccff;
+            border-radius: 2px;
+        }
+        
+/* ****************************************************************************
+ * define the appearance of the tagcrowd content.
+ */
+div.tagcrowd-content {
+    margin: 1.25em 0.25em 0.25em 0.25em;
+    padding: 0.5em;
+    background: white;
+    border: 1px solid gainsboro;
+    border-radius: 6px;
+}
+    span.tagcrowd-span a.tagcrowd-a {
+        margin: 0.25em;
+        text-align: center;
+        cursor: pointer;
+        font-size: 85%;
+        color: lightslategray;
+    }
+        span.tagcrowd-span a.tagcrowd-a:hover {
+            font-weight: bold;
+        }
         
 /* ****************************************************************************
  * define the appearance of the alphabet grid content.
