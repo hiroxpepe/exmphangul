@@ -79,7 +79,7 @@ div.header {
     height: 5em;
     text-align: left;
     color: white;
-    background: lightslategray;
+    background: #777799;
     border-bottom: 1px solid gainsboro;
 }
 
@@ -127,7 +127,7 @@ div.footer {
     text-align: right;
     font-size: 90%;
     color: white;
-    background: lightslategray;
+    background: #777799;
     border-top: 1px solid gainsboro;
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
@@ -157,7 +157,7 @@ div.header-content {
     padding-top: 1em;
 }
     span.header-title {
-        font-size: 170%;
+        font-size: xx-large;
         font-weight: bold;
     }
     span.header-sub-title {
@@ -222,7 +222,7 @@ div.sidebar-content {
         text-align: center;
         text-decoration: none;
         color: white;
-        background: lightslategray;
+        background: #777799;
         border: 1px solid #aaaaaa;
         border-radius: 3px;
     }
@@ -279,7 +279,7 @@ input.command-button {
     height: 25px;
     cursor: pointer;
     color: white;
-    background: lightslategray;
+    background: #777799;
     border: 1px solid #aaaaaa;
     border-radius: 4px;
 }
@@ -298,7 +298,7 @@ a.command-anchor {
     cursor: pointer;
     text-decoration: none;
     color: white;
-    background: lightslategray;
+    background: #777799;
     border: 1px solid #aaaaaa;
     border-radius: 5px;
 }
@@ -334,7 +334,7 @@ div.login-content {
 }
     p.login-description {
         font-size: 80%;
-        color: lightslategray;
+        color: #777799;
     }
 
 /* ****************************************************************************
@@ -469,8 +469,8 @@ div.tweet-list-content {
                 table.tweet-list-table td.tweet-icon-td div.tweet-icon img {
                     border-radius: 4px;
                     cursor: pointer;
-                }   
-            table.tweet-list-table td.tweet-list-td {                
+                }
+            table.tweet-list-table td.tweet-list-td {
                 padding-top: 0.5em;
                 padding-bottom: 0.5em;  
                 padding-left: 0.5em;
@@ -531,10 +531,33 @@ div.tweet-list-content {
         }
     
 /* ****************************************************************************
+ * define the appearance of the profile.
+ */
+ div.profile-content {
+    margin: 0.25em 0.25em 0.25em 0.25em;
+    padding: 0.5em;
+    background: white;
+    border: 1px solid gainsboro;
+    border-radius: 6px;
+ }
+    div.profile-content table td {
+        padding: 0.25em;
+        vertical-align: top;
+    }
+    div.profile-content table td div.show-profile {
+        font-size: 55%;
+        cursor: pointer;
+        color: silver;
+    }
+    div.profile-content img {
+        border-radius: 4px;
+    }
+    
+/* ****************************************************************************
  * define the appearance of the calendar.
  */
  div.calendar-content {
-    margin: 0.25em 0.25em 0.25em 0.25em;
+    margin: 1em 0.25em 0.25em 0.25em;
     padding: 0.25em 0.25em 0.25em 0.25em;
     background: white;
     border: 1px solid gainsboro;
@@ -584,7 +607,7 @@ div.tweet-list-content {
  * define the appearance of the tagcrowd content.
  */
 div.tagcrowd-content {
-    margin: 1.25em 0.25em 0.25em 0.25em;
+    margin: 1em 0.25em 0.25em 0.25em;
     padding: 0.5em;
     background: white;
     border: 1px solid gainsboro;
@@ -595,7 +618,7 @@ div.tagcrowd-content {
         text-align: center;
         cursor: pointer;
         font-size: 85%;
-        color: lightslategray;
+        color: #777799;
     }
         span.tagcrowd-span a.tagcrowd-a:hover {
             font-weight: bold;

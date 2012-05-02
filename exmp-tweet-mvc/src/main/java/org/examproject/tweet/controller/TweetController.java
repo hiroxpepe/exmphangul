@@ -36,8 +36,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.support.SessionStatus;
 
+import org.examproject.tweet.dto.ProfileDto;
 import org.examproject.tweet.dto.TweetDto;
 import org.examproject.tweet.form.TweetForm;
+import org.examproject.tweet.model.ProfileModel;
 import org.examproject.tweet.model.TweetModel;
 import org.examproject.tweet.response.TweetResponse;
 import org.examproject.tweet.service.TweetService;
@@ -119,10 +121,49 @@ public class TweetController {
             tweetForm.setLocale(locale);
             tweetForm.setResponseListMode(responseListMode);
             tweetForm.setUserListName(userListName);
-
+            
             // set the form-object to the model. 
             model.addAttribute(tweetForm);
-
+            
+            ///////////////////////////////////////////////////////////////////
+            // TODO: add to get the profile.
+            
+            if (isValidParameterOfGet(
+                oauthToken,
+                oauthTokenSecret,
+                userId,
+                screenName)
+            ) {
+                // get the service object.
+                TweetService service = (TweetService) context.getBean(
+                    TWEET_SERVICE_BEAN_ID,
+                    // get the authentication value object.
+                    (TweetAuthValue) context.getBean(
+                        TWEET_AUTH_VALUE_BEAN_ID,
+                        authValue.getConsumerKey(),
+                        authValue.getConsumerSecret(),
+                        oauthToken,
+                        oauthTokenSecret
+                    ),
+                    // get the setting value object.
+                    (SettingParamValue) context.getBean(
+                        SETTING_PARAM_VALUE_BEAN_ID,
+                        responseListMode,
+                        userListName
+                    )
+                );
+                
+                // get the dto-object and map to the model-object.
+                ProfileDto profileDto = service.getProfile(screenName);
+                ProfileModel profileModel = context.getBean(ProfileModel.class);
+                mapper.map(
+                    profileDto,
+                    profileModel
+                );
+                
+                // set the profile model.
+                model.addAttribute(profileModel);
+            }
             // normally, move to this view.
             return null;
         

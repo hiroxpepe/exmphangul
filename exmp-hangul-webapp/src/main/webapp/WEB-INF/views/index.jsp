@@ -43,6 +43,18 @@
             <div class="block">
                 <textarea id="alphabet"></textarea>
             </div>
+            
+            <c:if test="${not empty tweetForm.userId}">
+                <div class="block tweet-command-block">
+                    <input 
+                        id="alphabet-grid-button"
+                        class="command-button"
+                        type="button"
+                        value="Alphabet Grid"
+                    />
+                </div>
+            </c:if>
+            
         </div>
             
         <c:if test="${not empty tweetForm.userId}">

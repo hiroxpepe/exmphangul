@@ -116,21 +116,25 @@ exmp.tweet.core.Controller = window;{
         var pageUrl = location.href;
         
         if (!(pageUrl.indexOf("index.html") == -1)) {
-            listClosure.execute({
-                userId: $("#user-id").val()
-            });
-            
-            // TODO: add, ch user-id ??
-            tagcrowdClosure.execute({
-                tweet: ""
-            });
-            
-            // TODO: arg..
-            calendarClosure.execute({
-                userId: $("#user-id").val(),
-                year: 2012,
-                month: 4
-            });
+            if ($("#user-id").val()) {
+                listClosure.execute({
+                    userId: $("#user-id").val()
+                });
+
+                // TODO: add, ch user-id ??
+                tagcrowdClosure.execute({
+                    tweet: ""
+                });
+
+                var date = new Date();
+                var year = date.getFullYear();
+                var month = date.getMonth();
+                calendarClosure.execute({
+                    userId: $("#user-id").val(),
+                    year: year,
+                    month: month + 1
+                });
+            }
         }
     }
     
@@ -195,14 +199,25 @@ exmp.tweet.core.Controller = window;{
         
         // and do a some initialize.
         
-        $("#alphabet-grid").dialog({
-            width: 380
+        // alphabet grid
+        $("#alphabet-grid").dialog({ autoOpen: false });
+        $("#alphabet-grid-button").click(function() {
+            $("#alphabet-grid").dialog({ 
+                autoOpen: true,
+                width: 380 
+            });
         });
         
-//        $('#datepicker').datepicker({
-//            onSelect: function(dateText, inst) {
-//                console.log("dateText: " + dateText);
-//            }
-//        });
+        // profile
+        $("#user-description").hide();
+        $("#user-show-profile").toggle(
+            function () {
+                $("#user-description").show();
+            },
+            function () {
+                $("#user-description").hide();
+            }
+        );
+        
     }
 }

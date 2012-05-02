@@ -27,11 +27,12 @@ import twitter4j.StatusUpdate;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
+import twitter4j.User;
 import twitter4j.UserList;
 import twitter4j.auth.AccessToken;
 
+import org.examproject.tweet.dto.ProfileDto;
 import org.examproject.tweet.dto.TweetDto;
-import org.examproject.tweet.service.TweetService;
 import org.examproject.tweet.value.SettingParamValue;
 import org.examproject.tweet.value.TweetAuthValue;
 
@@ -234,6 +235,19 @@ public class SimpleTweetService implements TweetService {
         return tweetDto;
     }
     
+    @Override
+    public ProfileDto getProfile(
+        String username
+    ) {
+        LOG.debug("called.");
+        try {
+            return getUserProfile(username);
+        } catch(Exception e) {
+            LOG.error("an error occurred: " + e.getMessage());
+            throw new RuntimeException(e);
+        }
+    }
+    
     ///////////////////////////////////////////////////////////////////////////
     // private methods
     
@@ -388,6 +402,20 @@ public class SimpleTweetService implements TweetService {
         tweetDto.setIsFavorited(status.isFavorited());
         tweetDto.setIsRetweetedByMe(status.isRetweetedByMe());
         return tweetDto;
+    }
+    
+    private ProfileDto getUserProfile(String username) {
+        try {
+            Twitter twitter = getTwitter();
+            User user = twitter.showUser(username);
+            ProfileDto profileDto = new ProfileDto();
+            profileDto.setScreenName(user.getScreenName());
+            profileDto.setImageURL(user.getProfileImageURL().toString());
+            profileDto.setDescription(user.getDescription());
+            return profileDto;
+        } catch (TwitterException te) {
+            throw new RuntimeException(te);
+        }
     }
     
     private Twitter getTwitter() {

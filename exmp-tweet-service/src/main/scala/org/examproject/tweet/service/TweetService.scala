@@ -17,6 +17,7 @@ package org.examproject.tweet.service
 import java.lang.Long
 import java.util.List
 
+import org.examproject.tweet.dto.ProfileDto
 import org.examproject.tweet.dto.TweetDto
 
 /**
@@ -39,4 +40,6 @@ trait TweetService {
     def getUserListNameList(): List[String]
 
     def getCurrent(): TweetDto
+    
+    def getProfile(username: String): ProfileDto
 }

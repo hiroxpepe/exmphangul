@@ -22,7 +22,7 @@
  */
 exmp.tweet.functor.htmltag.CalendarTransformer = {
     
-    _daynames: ['Su','Mo','Tu','We','Th','Fr','Sa'],
+    _daynames: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
     
     ///////////////////////////////////////////////////////////////////////////
     // public methods
@@ -60,7 +60,7 @@ exmp.tweet.functor.htmltag.CalendarTransformer = {
         );
     },
     
-    _getLeap: function (year){
+    _getLeap: function(year) {
         return year % 4 ? 0 : year % 100 ? 1 : year % 400 ? 0 : 1;
     },
     
@@ -99,15 +99,17 @@ exmp.tweet.functor.htmltag.CalendarTransformer = {
             }
             var td = document.createElement('td');
             if (calendar[m][d]) {
-                //console.log("day: " + d);
-                var dIdx = d;
-                if (obj.calendarModelList[dIdx + 1].isExist == true) {
+                //console.log("--- d: " + d);
+                var day = calendar[m][d];
+                var link = this._getLinkUrl(day, obj);
+                if (link) {
                     td.innerHTML = 
-                        "<a href='" + obj.calendarModelList[dIdx + 1].linkUrl + "'>" + 
-                            "<b>" + calendar[m][d] + "</b>" + 
+                        "<a href='" + link + "'>" + 
+                            "<b>" + day + "</b>" + 
                         "</a>";
-                } else {
-                    td.innerHTML = calendar[m][d];
+                }
+                else {
+                    td.innerHTML = day;
                 }
                 td.className = this._daynames[d % 7];
             }
@@ -130,5 +132,19 @@ exmp.tweet.functor.htmltag.CalendarTransformer = {
         var calendarTable = this._createCalendarMonthly(year, month, obj);
         element.appendChild(calendarTable);
         return element.innerHTML;
+    },
+    
+    _getLinkUrl: function(day, obj) {
+        for (var i = 0; i < obj.calendarModelList.length; i++) {
+            //console.log("============================================");
+            //console.log("obj.calendarModelList[i].day: " + obj.calendarModelList[i].day);
+            //console.log("obj.calendarModelList[i].linkUrl: " + obj.calendarModelList[i].linkUrl);
+            //console.log("day: " + day);
+            if ((obj.calendarModelList[i].day == day) && (obj.calendarModelList[i].isExist == true)) {
+                //console.log("------------------ hit! ------------------");
+                return obj.calendarModelList[i].linkUrl;
+            }
+        }
+        return null;
     }
 }

@@ -79,7 +79,7 @@ public class CalendarService {
             // create values for the month. 
             for (int i = 0; i < 31; i++) {
                 CalendarDto calendarDto = context.getBean(CalendarDto.class);
-                calendarDto.setDay(i);
+                calendarDto.setDay(i + 1);
                 calendarDtoList.add(calendarDto);
             }
             
@@ -88,7 +88,7 @@ public class CalendarService {
             SimpleDateFormat linkDateFormat = new SimpleDateFormat("/yyyy/MM/dd/");
             for (Tweet tweet : tweetList) {                
                 int dIdx = Integer.parseInt(dateFormat.format(tweet.getDate()));
-                CalendarDto calendarDto = calendarDtoList.get(dIdx);
+                CalendarDto calendarDto = calendarDtoList.get(dIdx - 1);
                 calendarDto.setDate(tweet.getDate());
                 calendarDto.setLinkUrl("/" + username + linkDateFormat.format(tweet.getDate()));
                 calendarDto.setIsExist(true);
