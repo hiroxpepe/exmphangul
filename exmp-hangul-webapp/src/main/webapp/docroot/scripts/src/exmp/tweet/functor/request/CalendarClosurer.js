@@ -31,7 +31,7 @@ exmp.tweet.functor.request.CalendarClosure = {
         
         // create an ajax object.
         new $.ajax({
-            url: "calendar.html",
+            url: "/calendar.html",
             type: "POST",
             data: {
                 user_id: obj.userId,

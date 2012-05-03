@@ -25,6 +25,20 @@
         <!--//////////////////////////////////////////////////////////////////////////-->
         <!-- USER LIB -->
         
+        <!-- exmp-tweet-mvc -->
+        <dependency>
+            <groupId>org.examproject</groupId>
+            <artifactId>exmp-tweet-mvc</artifactId>
+            <version>${exmp.version}</version>
+        </dependency>
+        
+        <!-- exmp-tweet-service -->
+        <dependency>
+            <groupId>org.examproject</groupId>
+            <artifactId>exmp-tweet-service</artifactId>
+            <version>${exmp.version}</version>
+        </dependency>
+        
         <!-- exmp-tweet-ext-service -->
         <dependency>
             <groupId>org.examproject</groupId>

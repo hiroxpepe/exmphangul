@@ -14,7 +14,6 @@
 
 package org.examproject.tweet.service;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -23,26 +22,30 @@ import javax.inject.Inject;
 import org.apache.commons.collections.Transformer;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.dozer.Mapper;
 import org.springframework.context.ApplicationContext;
 
-import org.examproject.tweet.dto.CalendarDto;
+import org.examproject.tweet.dto.TweetDto;
 import org.examproject.tweet.entity.Tweet;
 import org.examproject.tweet.repository.TweetRepository;
 import org.examproject.tweet.util.DateValue;
-import org.examproject.tweet.util.MonthBeginDateTransformer;
-import org.examproject.tweet.util.MonthEndDateTransformer;
+import org.examproject.tweet.util.DayBeginDateTransformer;
+import org.examproject.tweet.util.DayEndDateTransformer;
 
 /**
  * @author hiroxpepe
  */
-public class CalendarService {
+public class PermalinkService {
  
     private static final Log LOG = LogFactory.getLog(
-        CalendarService.class
+        PermalinkService.class
     );
     
     @Inject
     private final ApplicationContext context = null;
+    
+    @Inject
+    private final Mapper mapper = null;
     
     @Inject
     private final TweetRepository tweetRepository = null;
@@ -53,50 +56,44 @@ public class CalendarService {
     ///////////////////////////////////////////////////////////////////////////
     // public methods
     
-    public List<CalendarDto> getList(
-        String username,
+    public List<TweetDto> getList(
+        String userName,
         int year,
-        int month
+        int month,
+        int day
     ) {
         LOG.debug("called.");
         try {
             // create a date conditions.
-            Transformer beginDateTransformer = (Transformer) new MonthBeginDateTransformer();
-            Transformer endDateTransformer = (Transformer) new MonthEndDateTransformer();
-            DateValue dateValue = new DateValue(year, month, 1);
+            Transformer beginDateTransformer = new DayBeginDateTransformer();
+            Transformer endDateTransformer = new DayEndDateTransformer();
+            DateValue dateValue = new DateValue(year, month, day);
             Date begin = (Date) beginDateTransformer.transform(dateValue);
             Date end = (Date) endDateTransformer.transform(dateValue);
             
             // get the tweet list.
-            List<CalendarDto> calendarDtoList = new ArrayList<CalendarDto>();
             List<Tweet> tweetList = tweetRepository.findByNameAndDateBetween(
-                username,
+                userName,
                 begin,
                 end
             );
-            LOG.debug("calendar tweet day count: " + tweetList.size());
+            LOG.debug("permalink tweet count: " + tweetList.size());
             
-            // create values for the month. 
-            for (int i = 0; i < 31; i++) {
-                CalendarDto calendarDto = context.getBean(CalendarDto.class);
-                calendarDto.setDay(i + 1);
-                calendarDtoList.add(calendarDto);
-            }
-            
-            // check the existence of tweet.
-            SimpleDateFormat dateFormat = new SimpleDateFormat("d");
-            SimpleDateFormat linkDateFormat = new SimpleDateFormat("/yyyy/MM/dd");
+            // map the object.
+            List<TweetDto> tweetDtoList = new ArrayList<TweetDto>();
             for (Tweet tweet : tweetList) {
-                int dIdx = Integer.parseInt(dateFormat.format(tweet.getDate()));
-                CalendarDto calendarDto = calendarDtoList.get(dIdx - 1);
-                calendarDto.setDate(tweet.getDate());
-                calendarDto.setLinkUrl(
-                    "/permalink/" + username + 
-                    linkDateFormat.format(tweet.getDate()) + ".html"
+                TweetDto tweetDto = context.getBean(TweetDto.class);
+                // map the entity-object to the dto-object.
+                mapper.map(
+                    tweet,
+                    tweetDto
                 );
-                calendarDto.setIsExist(true);
+                tweetDtoList.add(
+                    tweetDto
+                );
             }
-            return calendarDtoList;
+            
+            return tweetDtoList;
             
         } catch(Exception e) {
             LOG.error("an error occurred: " + e.getMessage());

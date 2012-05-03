@@ -156,6 +156,13 @@ div.block {
 div.header-content {
     padding-top: 1em;
 }
+    span.header-logo {
+        margin-right: 0.25em;
+    }
+        span.header-logo img {
+            border: 1px solid #aaaabb;
+            border-radius: 4px;
+        }
     span.header-title {
         font-size: xx-large;
         font-weight: bold;
@@ -460,7 +467,7 @@ div.tweet-list-content {
         }
             table.tweet-list-table td.tweet-icon-td {
                 padding-top: 0.5em;
-                padding-bottom: 0.5em;              
+                padding-bottom: 0.5em;
                 vertical-align: top;
                 border-bottom: 1px solid wheat;
             }
@@ -535,7 +542,7 @@ div.tweet-list-content {
  */
  div.profile-content {
     margin: 0.25em 0.25em 0.25em 0.25em;
-    padding: 0.5em;
+    padding: 0.25em;
     background: white;
     border: 1px solid gainsboro;
     border-radius: 6px;
@@ -544,10 +551,16 @@ div.tweet-list-content {
         padding: 0.25em;
         vertical-align: top;
     }
+    div.profile-content table td div.profileName {
+        font-size: small;
+    }
     div.profile-content table td div.show-profile {
-        font-size: 55%;
+        font-size: xx-small;
         cursor: pointer;
         color: silver;
+    }
+    div.profile-content table td div.description {
+        font-size: xx-small;
     }
     div.profile-content img {
         border-radius: 4px;
@@ -649,4 +662,48 @@ div.alphabet {
             border: 1px solid gainsboro;
             text-align: center;
             padding: 0.3em;
+        }
+        
+/* ****************************************************************************
+ * define the appearance of the permalink.
+ */
+ div.permalink-content {
+    padding-top: 1.25em;
+ }
+    div.permalink-header {
+        margin: 0 0.25em 0 0.25em;
+        padding: 0.5em 1em 0.5em 1em;
+        text-align: left;
+        border-top: 1px solid gainsboro;
+        border-left: 1px solid gainsboro;
+        border-right: 1px solid gainsboro;
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+    }
+        div.permalink-header div.permalink-date {
+            font-size: 60%;
+            font-weight: bold;
+            color: dimgray;
+            background: white/*lavender*/;
+        }
+    div.permalink-wrapper {
+        margin: 0 0.25em 0.25em 0.25em;
+        padding: 0.5em 1em 0.5em 1em;
+        background: white;
+        border: 1px solid gainsboro;
+        border-bottom-left-radius: 5px;
+        border-bottom-right-radius: 5px;
+    }
+        div.permalink-wrapper table {
+            width: 100%;
+        }
+        div.permalink-wrapper p.permalink-text {
+            margin-top: 0.5em;
+            font-size: 80%;
+            border-bottom: 1px solid gainsboro;
+        }
+        div.permalink-wrapper p.permalink-detail {
+            margin-bottom: 0.5em;
+            font-size: xx-small;
+            color: silver;
         }

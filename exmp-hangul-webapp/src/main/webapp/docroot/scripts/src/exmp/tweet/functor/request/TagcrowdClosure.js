@@ -31,7 +31,7 @@ exmp.tweet.functor.request.TagcrowdClosure = {
         
         // create an ajax object.
         new $.ajax({
-            url: "tagcrowd.html",
+            url: "/tagcrowd.html",
             type: "POST",
             data: {
                 tweet: obj.content

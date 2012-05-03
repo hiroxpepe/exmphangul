@@ -14,6 +14,8 @@
 
 package org.examproject.tweet.model
 
+import java.util.Date
+
 import reflect.BeanProperty
 
 /**
@@ -33,7 +35,10 @@ class TweetModel {
     // must string class !!
     @BeanProperty
     var statusId: String = _
-
+    
+    @BeanProperty
+    var created: Date = _
+    
     @BeanProperty
     var isFavorited: Boolean = false
     

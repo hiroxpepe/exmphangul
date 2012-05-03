@@ -35,5 +35,10 @@
     <definition name="error" extends="main-template">
         <put-attribute name="content" value="/WEB-INF/views/error.jsp" />
     </definition>
+    
+    <!-- contents of the content, the controller of Spring MVC call "permalink" -->
+    <definition name="permalink" extends="main-template">
+        <put-attribute name="content" value="/WEB-INF/views/permalink.jsp" />
+    </definition>
 
 </tiles-definitions>

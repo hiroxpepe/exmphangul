@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mappings xmlns="http://dozer.sourceforge.net" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://dozer.sourceforge.net http://dozer.sourceforge.net/schema/beanmapping.xsd">
+    
+    <mapping>
+        <class-a>org.examproject.tweet.entity.Tweet</class-a>
+        <class-b>org.examproject.tweet.dto.TweetDto</class-b>
+        <field>
+            <a>date</a>
+            <b>created</b>
+        </field>
+        <field>
+            <a>name</a>
+            <b>userName</b>
+        </field>
+        <field>
+            <a>text</a>
+            <b>text</b>
+        </field>
+    </mapping>
+</mappings>

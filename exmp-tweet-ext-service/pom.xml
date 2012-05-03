@@ -12,6 +12,7 @@
     <properties>
         <exmp.version>0.1.0-SNAPSHOT</exmp.version>
         <spring.version>3.1.1.RELEASE</spring.version>
+        <dozer.version>5.3.2</dozer.version>
         <slf4j.version>1.6.1</slf4j.version>
         <scala.version>2.9.1</scala.version>
         <scala.plugin.version>2.9.1</scala.plugin.version>
@@ -22,6 +23,13 @@
     <dependencies>
         <!--//////////////////////////////////////////////////////////////////////////-->
         <!-- USER LIB -->
+        
+        <!-- exmp-tweet-service -->
+        <dependency>
+            <groupId>org.examproject</groupId>
+            <artifactId>exmp-tweet-service</artifactId>
+            <version>${exmp.version}</version>
+        </dependency>
         
         <!-- exmp-tweet-data-jpa -->
         <dependency>
@@ -52,6 +60,13 @@
             <groupId>commons-collections</groupId>
             <artifactId>commons-collections</artifactId>
             <version>3.2</version>
+        </dependency>
+        
+        <!-- Dozer -->
+        <dependency>
+            <groupId>net.sf.dozer</groupId>
+            <artifactId>dozer</artifactId>
+            <version>${dozer.version}</version>
         </dependency>
         
         <!-- Spring -->

@@ -111,8 +111,6 @@ exmp.tweet.core.Controller = window;{
     exmp.tweet.core.Controller._initializeTweetListDiv = function() {
         
         var listClosure = exmp.tweet.functor.request.TweetListClosure;
-        var calendarClosure = exmp.tweet.functor.request.CalendarClosure;
-        var tagcrowdClosure = exmp.tweet.functor.request.TagcrowdClosure;
         var pageUrl = location.href;
         
         if (!(pageUrl.indexOf("index.html") == -1)) {
@@ -120,22 +118,34 @@ exmp.tweet.core.Controller = window;{
                 listClosure.execute({
                     userId: $("#user-id").val()
                 });
-
-                // TODO: add, ch user-id ??
-                tagcrowdClosure.execute({
-                    tweet: ""
-                });
-
-                var date = new Date();
-                var year = date.getFullYear();
-                var month = date.getMonth();
-                calendarClosure.execute({
-                    userId: $("#user-id").val(),
-                    year: year,
-                    month: month + 1
-                });
             }
         }
+    }
+    
+    /**
+     * initializes a div of entry list.
+     * an http request of ajax for get the sidebar data.
+     */
+    exmp.tweet.core.Controller._initializeSidebar = function() {
+        
+        var calendarClosure = exmp.tweet.functor.request.CalendarClosure;
+        var tagcrowdClosure = exmp.tweet.functor.request.TagcrowdClosure;
+        
+        // get the tagcrowd.
+        // TODO: add, ch user-id ??
+        tagcrowdClosure.execute({
+            tweet: ""
+        });
+
+        // get the calendar.
+        var date = new Date();
+        var year = date.getFullYear();
+        var month = date.getMonth();
+        calendarClosure.execute({
+            userId: $("#user-id").val(),
+            year: year,
+            month: month + 1
+        });
     }
     
     /**
@@ -158,6 +168,8 @@ exmp.tweet.core.Controller = window;{
         var colorClosure = exmp.hangul.functor.event.KeyupColorClosure;
         
         // calls for the initialization methods.
+        
+        controller._initializeSidebar();
         
         controller._initializeTabsDiv();
         
@@ -218,6 +230,5 @@ exmp.tweet.core.Controller = window;{
                 $("#user-description").hide();
             }
         );
-        
     }
 }
