@@ -31,12 +31,11 @@ exmp.tweet.functor.htmltag.TweetListTransformer = {
         // set the user list name for the select.
         if (obj.userListNameList != null) {
             for (var h = 0; h < obj.userListNameList.length; h++) {
-                //console.log(obj.userListNameList[h]);
                 var listName = obj.userListNameList[h];
                 $("#user-list-name").append(
                     $("<option value='" + listName +"'>" + listName + "</option>")
                 );
-                // TODO: set the value in this.?
+                // TODO: set the value in this?
             }
         }
         

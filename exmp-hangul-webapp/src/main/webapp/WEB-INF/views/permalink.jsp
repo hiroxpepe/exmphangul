@@ -11,7 +11,12 @@
     </form:form>
     
     <div class="permalink-header">
-        <div class="permalink-date">${year} - ${month} - ${day}</div>
+        <c:if test="${not empty day}">
+            <div class="permalink-date">${year} - ${month} - ${day}</div>
+        </c:if>
+        <c:if test="${not empty word}">
+            <div class="permalink-word">${word}</div>
+        </c:if>
     </div>
     <div class="permalink-wrapper">
         <table>

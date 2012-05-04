@@ -22,7 +22,7 @@ import javax.inject.Inject;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.dozer.Mapper;
-import org.examproject.tweet.dto.ProfileDto;
+import org.dozer.MappingException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -33,6 +33,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import org.examproject.tweet.dto.ProfileDto;
 import org.examproject.tweet.dto.TweetDto;
 import org.examproject.tweet.form.TweetForm;
 import org.examproject.tweet.model.ProfileModel;
@@ -42,7 +43,6 @@ import org.examproject.tweet.service.TweetService;
 import org.examproject.tweet.value.OAuthValue;
 import org.examproject.tweet.value.SettingParamValue;
 import org.examproject.tweet.value.TweetAuthValue;
-import org.examproject.tweet.value.TweetCookie;
 
 /**
  * @author hiroxpepe
@@ -76,10 +76,10 @@ public class PermalinkController {
     // public methods
     
     @RequestMapping(
-        value="/permalink/{userName}/{year}/{month}/{day}.html",
+        value="/tweet/{userName}/{year}/{month}/{day}.html",
         method=RequestMethod.GET
     )
-    public String doPermalink(
+    public String doTweetPermalink(
         @PathVariable
         String userName,
         @PathVariable
@@ -134,12 +134,12 @@ public class PermalinkController {
             model.addAttribute(tweetForm);
             
             // get the service object.
-            PermalinkService permalinkServiceservice = (PermalinkService) context.getBean(
+            PermalinkService permalinkService = (PermalinkService) context.getBean(
                 PERMALINK_SERVICE_BEAN_ID
             );
             
-            // get the calendar.
-            List<TweetDto> tweetDtoList = permalinkServiceservice.getList(
+            // get the tweet.
+            List<TweetDto> tweetDtoList = permalinkService.getTweetListByDate(
                 userName,
                 Integer.valueOf(year),
                 Integer.valueOf(month),
@@ -167,8 +167,115 @@ public class PermalinkController {
             model.addAttribute(month);
             model.addAttribute(day);
             
-            ///////////////////////////////////////////////////////////////////
-            // TODO: add to get the profile.
+            if (isValidParameterOfGet(
+                oauthToken,
+                oauthTokenSecret,
+                userId,
+                screenName)
+            ) {
+                // get the profile.
+                ProfileModel profileModel = getProfile(
+                    oauthToken,
+                    oauthTokenSecret,
+                    responseListMode,
+                    userListName,
+                    screenName
+                );
+                
+                // set the profile model.
+                model.addAttribute(profileModel);
+            }
+            
+            // return view name.
+            return "permalink";
+        
+        } catch(Exception e) {
+            LOG.fatal(e.getMessage());
+            return "error";
+        } 
+    }
+    
+    @RequestMapping(
+        value="/word/{userName}/{word}.html",
+        method=RequestMethod.GET
+    )
+    public String doWordPermalink(
+        @PathVariable
+        String userName,
+        @PathVariable
+        String word,
+        @RequestParam(value="locale", defaultValue="")
+        String locale,
+        @CookieValue(value="__exmphangul_request_token", defaultValue="")
+        String requestToken,
+        @CookieValue(value="__exmphangul_access_token", defaultValue="")
+        String oauthToken,
+        @CookieValue(value="__exmphangul_token_secret", defaultValue="")
+        String oauthTokenSecret,
+        @CookieValue(value="__exmphangul_user_id", defaultValue="")
+        String userId,
+        @CookieValue(value="__exmphangul_screen_name", defaultValue="")
+        String screenName,
+        @CookieValue(value="__exmphangul_response_list_mode", defaultValue="")
+        String responseListMode,
+        @CookieValue(value="__exmphangul_user_list_name", defaultValue="")
+        String userListName,
+        Model model
+     ) {
+        LOG.debug("called.");
+        try {
+            // TODO: debug
+            LOG.debug("userName: " + userName);
+            LOG.debug("word: " + word);
+            
+            // get the current local.
+            if (locale.equals("")) {
+                Locale loc = Locale.getDefault();
+                locale = loc.getLanguage();
+            }
+            
+            // create the form-object.
+            TweetForm tweetForm = new TweetForm();
+            
+            // set the cookie value to the form-object.
+            tweetForm.setUserId(userId);
+            tweetForm.setScreenName(screenName);
+            tweetForm.setLocale(locale);
+            tweetForm.setResponseListMode(responseListMode);
+            tweetForm.setUserListName(userListName);
+            
+            // set the form-object to the model. 
+            model.addAttribute(tweetForm);
+            
+            // get the service object.
+            PermalinkService permalinkService = (PermalinkService) context.getBean(
+                PERMALINK_SERVICE_BEAN_ID
+            );
+            
+            // get the tweet.
+            List<TweetDto> tweetDtoList = permalinkService.getTweetListByWord(
+                userName,
+                word
+            );
+            LOG.debug("tweetDtoList size: " + tweetDtoList.size());
+            
+            // map the object.
+            List<TweetModel> tweetModelList = new ArrayList<TweetModel>();
+            for (TweetDto tweetDto : tweetDtoList) {
+                TweetModel tweetModel = context.getBean(TweetModel.class);
+                // map the dto-object to the model-object.
+                mapper.map(
+                    tweetDto,
+                    tweetModel
+                );
+                tweetModelList.add(
+                    tweetModel
+                );
+            }
+            
+            // set the list-object to the model. 
+            model.addAttribute(tweetModelList);
+            model.addAttribute(word);
             
             if (isValidParameterOfGet(
                 oauthToken,
@@ -176,36 +283,17 @@ public class PermalinkController {
                 userId,
                 screenName)
             ) {
-                // get the service object.
-                TweetService tweetService = (TweetService) context.getBean(
-                    TWEET_SERVICE_BEAN_ID,
-                    // get the authentication value object.
-                    (TweetAuthValue) context.getBean(
-                        TWEET_AUTH_VALUE_BEAN_ID,
-                        authValue.getConsumerKey(),
-                        authValue.getConsumerSecret(),
-                        oauthToken,
-                        oauthTokenSecret
-                    ),
-                    // get the setting value object.
-                    (SettingParamValue) context.getBean(
-                        SETTING_PARAM_VALUE_BEAN_ID,
-                        responseListMode,
-                        userListName
-                    )
-                );
-                
-                // get the dto-object and map to the model-object.
-                ProfileDto profileDto = tweetService.getProfile(screenName);
-                ProfileModel profileModel = context.getBean(ProfileModel.class);
-                mapper.map(
-                    profileDto,
-                    profileModel
+                // get the profile.
+                ProfileModel profileModel = getProfile(
+                    oauthToken,
+                    oauthTokenSecret,
+                    responseListMode,
+                    userListName,
+                    screenName
                 );
                 
                 // set the profile model.
                 model.addAttribute(profileModel);
-                
             }
             
             // return view name.
@@ -219,6 +307,44 @@ public class PermalinkController {
     
     ///////////////////////////////////////////////////////////////////////////
     // private methods
+    
+    private ProfileModel getProfile(
+            String oauthToken,
+            String oauthTokenSecret,
+            String responseListMode,
+            String userListName,
+            String screenName
+    ) throws MappingException {
+        
+        // get the service object.
+        TweetService tweetService = (TweetService) context.getBean(
+            TWEET_SERVICE_BEAN_ID,
+            // get the authentication value object.
+            (TweetAuthValue) context.getBean(
+                TWEET_AUTH_VALUE_BEAN_ID,
+                authValue.getConsumerKey(),
+                authValue.getConsumerSecret(),
+                oauthToken,
+                oauthTokenSecret
+            ),
+            // get the setting value object.
+            (SettingParamValue) context.getBean(
+                SETTING_PARAM_VALUE_BEAN_ID,
+                responseListMode,
+                userListName
+            )
+        );
+        
+        // get the dto-object and map to the model-object.
+        ProfileDto profileDto = tweetService.getProfile(screenName);
+        ProfileModel profileModel = context.getBean(ProfileModel.class);
+        mapper.map(
+            profileDto,
+            profileModel
+        );
+        
+        return profileModel;
+    }
     
     // check the parameter.
     private boolean isValidParameterOfGet(

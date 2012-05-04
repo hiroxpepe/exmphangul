@@ -99,7 +99,6 @@ exmp.tweet.functor.htmltag.CalendarTransformer = {
             }
             var td = document.createElement('td');
             if (calendar[m][d]) {
-                //console.log("--- d: " + d);
                 var day = calendar[m][d];
                 var link = this._getLinkUrl(day, obj);
                 if (link) {
@@ -136,12 +135,8 @@ exmp.tweet.functor.htmltag.CalendarTransformer = {
     
     _getLinkUrl: function(day, obj) {
         for (var i = 0; i < obj.calendarModelList.length; i++) {
-            //console.log("============================================");
-            //console.log("obj.calendarModelList[i].day: " + obj.calendarModelList[i].day);
-            //console.log("obj.calendarModelList[i].linkUrl: " + obj.calendarModelList[i].linkUrl);
-            //console.log("day: " + day);
-            if ((obj.calendarModelList[i].day == day) && (obj.calendarModelList[i].isExist == true)) {
-                //console.log("------------------ hit! ------------------");
+            if ((obj.calendarModelList[i].day == day) && 
+                (obj.calendarModelList[i].isExist == true)) {
                 return obj.calendarModelList[i].linkUrl;
             }
         }

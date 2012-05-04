@@ -30,5 +30,8 @@ class TagcrowdModel {
     // must string class!!
     @BeanProperty
     var statusId: String = _
+    
+    @BeanProperty
+    var linkUrl: String = _
 
 }

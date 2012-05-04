@@ -33,4 +33,7 @@ class TagcrowdDto {
     @BeanProperty
     var statusId: String = _
     
+    @BeanProperty
+    var linkUrl: String = _
+    
 }

@@ -669,6 +669,7 @@ div.alphabet {
  */
  div.permalink-content {
     padding-top: 1.25em;
+    padding-bottom: 1.25em;
  }
     div.permalink-header {
         margin: 0 0.25em 0 0.25em;
@@ -681,10 +682,16 @@ div.alphabet {
         border-top-right-radius: 5px;
     }
         div.permalink-header div.permalink-date {
-            font-size: 60%;
+            font-size: 80%;
             font-weight: bold;
             color: dimgray;
-            background: white/*lavender*/;
+            background: white;
+        }
+        div.permalink-header div.permalink-word {
+            font-size: 80%;
+            font-weight: bold;
+            color: dimgray;
+            background: white;
         }
     div.permalink-wrapper {
         margin: 0 0.25em 0.25em 0.25em;

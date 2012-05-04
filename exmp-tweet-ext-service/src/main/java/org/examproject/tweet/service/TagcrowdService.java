@@ -58,23 +58,32 @@ public class TagcrowdService {
     
     public List<TagcrowdDto> getList(String username) {
         LOG.debug("called.");
-        List<TagcrowdDto> tagcrowdDtoList = new ArrayList<TagcrowdDto>();
-        List<Vocab> vocabList = vocabRepository.findByName(username);
-        List<String> tmpStrList = new ArrayList<String>();
-        for (Vocab vocab : vocabList) {
-            Word word = wordRepository.findById(vocab.getWordId());
-            if (tmpStrList.contains(word.getText())) {
-                continue;
-            }
-            TagcrowdDto tagcrowdDto = context.getBean(TagcrowdDto.class);
-            tagcrowdDto.setStatusId(String.valueOf(vocab.getStatusId()));
-            tagcrowdDto.setUserName(vocab.getName());
-            tagcrowdDto.setText(word.getText());
-            tagcrowdDtoList.add(tagcrowdDto);
-            tmpStrList.add(word.getText());
-        }
         try {
+            List<TagcrowdDto> tagcrowdDtoList = new ArrayList<TagcrowdDto>();
+            List<Vocab> vocabList = vocabRepository.findByName(username);
+            List<String> tmpStrList = new ArrayList<String>();
+            for (Vocab vocab : vocabList) {
+                Word word = wordRepository.findById(vocab.getWordId());
+                if (tmpStrList.contains(word.getText())) {
+                    continue;
+                }
+                TagcrowdDto tagcrowdDto = context.getBean(TagcrowdDto.class);
+                tagcrowdDto.setStatusId(String.valueOf(vocab.getStatusId()));
+                tagcrowdDto.setUserName(vocab.getName());
+                tagcrowdDto.setText(word.getText());
+                tagcrowdDto.setLinkUrl(
+                    "/word/" + 
+                    username + 
+                    "/" + word.getText() +
+                    ".html"
+                );
+                tagcrowdDtoList.add(tagcrowdDto);
+                tmpStrList.add(word.getText());
+            }
+            
+            // return the object list.
             return tagcrowdDtoList;
+            
         } catch(Exception e) {
             LOG.error("an error occurred: " + e.getMessage());
             throw new RuntimeException(e);

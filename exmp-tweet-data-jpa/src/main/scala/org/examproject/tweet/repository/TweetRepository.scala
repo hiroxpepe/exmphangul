@@ -27,6 +27,8 @@ import org.examproject.tweet.entity.Tweet
  */
 trait TweetRepository extends JpaRepository[Tweet, Long] {
     
+    def findById(id: Long): Tweet
+    
     def findByNameAndDateBetween(name: String, begin: Date, end: Date): List[Tweet]
     
     def findByDateBetween(begin: Date, end: Date): List[Tweet]

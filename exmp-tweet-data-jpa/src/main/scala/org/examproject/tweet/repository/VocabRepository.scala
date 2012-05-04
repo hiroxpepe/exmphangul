@@ -28,4 +28,6 @@ trait VocabRepository extends JpaRepository[Vocab, Long] {
     
     def findByName(name: String): List[Vocab]
     
+    def findByWordId(wordId: Long): List[Vocab]
+    
 }

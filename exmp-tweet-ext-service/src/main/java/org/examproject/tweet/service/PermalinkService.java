@@ -27,7 +27,11 @@ import org.springframework.context.ApplicationContext;
 
 import org.examproject.tweet.dto.TweetDto;
 import org.examproject.tweet.entity.Tweet;
+import org.examproject.tweet.entity.Vocab;
+import org.examproject.tweet.entity.Word;
 import org.examproject.tweet.repository.TweetRepository;
+import org.examproject.tweet.repository.VocabRepository;
+import org.examproject.tweet.repository.WordRepository;
 import org.examproject.tweet.util.DateValue;
 import org.examproject.tweet.util.DayBeginDateTransformer;
 import org.examproject.tweet.util.DayEndDateTransformer;
@@ -50,13 +54,19 @@ public class PermalinkService {
     @Inject
     private final TweetRepository tweetRepository = null;
     
+    @Inject
+    private final VocabRepository vocabRepository = null;
+    
+    @Inject
+    private final WordRepository wordRepository = null;
+    
     ///////////////////////////////////////////////////////////////////////////
     // constructor
     
     ///////////////////////////////////////////////////////////////////////////
     // public methods
     
-    public List<TweetDto> getList(
+    public List<TweetDto> getTweetListByDate(
         String userName,
         int year,
         int month,
@@ -92,6 +102,53 @@ public class PermalinkService {
                     tweetDto
                 );
             }
+            
+            return tweetDtoList;
+            
+        } catch(Exception e) {
+            LOG.error("an error occurred: " + e.getMessage());
+            throw new RuntimeException(e);
+        }
+    }
+    
+    public List<TweetDto> getTweetListByWord(
+        String userName,
+        String text 
+   ) {
+        LOG.debug("called.");
+        try {
+            // get the word.
+            List<Word> words = wordRepository.findByText(text);
+            Word word = words.get(0);
+            
+            // get the vocab list.
+            List<Vocab> vocabList = vocabRepository.findByWordId(word.getId());
+                    
+            LOG.debug("permalink vocab count: " + vocabList.size());
+            
+            // map the object.
+            List<TweetDto> tweetDtoList = new ArrayList<TweetDto>();
+            List<Long> tmpStatusIdList =  new ArrayList<Long>();
+            for (Vocab vocab : vocabList) {
+                Long statusId = vocab.getStatusId();
+                if (tmpStatusIdList.contains(statusId)) {
+                    continue;
+                }
+                // get the tweet.
+                Tweet tweet = tweetRepository.findById(statusId);
+                // map the entity-object to the dto-object.
+                TweetDto tweetDto = context.getBean(TweetDto.class);
+                mapper.map(
+                    tweet,
+                    tweetDto
+                );
+                tweetDtoList.add(
+                    tweetDto
+                );
+                tmpStatusIdList.add(statusId);
+            }
+            
+            LOG.debug("permalink tweet count: " + tweetDtoList.size());
             
             return tweetDtoList;
             

@@ -91,11 +91,15 @@ public class CalendarService {
                 CalendarDto calendarDto = calendarDtoList.get(dIdx - 1);
                 calendarDto.setDate(tweet.getDate());
                 calendarDto.setLinkUrl(
-                    "/permalink/" + username + 
-                    linkDateFormat.format(tweet.getDate()) + ".html"
+                    "/tweet/" + 
+                    username + 
+                    linkDateFormat.format(tweet.getDate()) + 
+                    ".html"
                 );
                 calendarDto.setIsExist(true);
             }
+            
+            // return the object list.
             return calendarDtoList;
             
         } catch(Exception e) {
