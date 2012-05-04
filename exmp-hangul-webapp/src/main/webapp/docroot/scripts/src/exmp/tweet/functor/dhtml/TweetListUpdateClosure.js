@@ -15,7 +15,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 /**
  * a functor class of the application.
- * update the HTML table of the entry list.
+ * update the HTML table of the tweet list.
  * 
  * @author hiroxpepe
  */

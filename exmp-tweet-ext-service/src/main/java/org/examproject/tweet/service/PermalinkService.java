@@ -66,6 +66,33 @@ public class PermalinkService {
     ///////////////////////////////////////////////////////////////////////////
     // public methods
     
+    public TweetDto getTweetByStatusId(
+        Long statusId
+    ) {
+        LOG.debug("called.");
+        try {
+            
+            // get the tweet list.
+            Tweet tweet = tweetRepository.findById(statusId);
+
+            LOG.debug("tweet statusId: " + tweet.getId());
+            
+            // map the object.
+            TweetDto tweetDto = context.getBean(TweetDto.class);
+            // map the entity-object to the dto-object.
+            mapper.map(
+                tweet,
+                tweetDto
+            );
+            
+            return tweetDto;
+            
+        } catch(Exception e) {
+            LOG.error("an error occurred: " + e.getMessage());
+            throw new RuntimeException(e);
+        }
+    }
+    
     public List<TweetDto> getTweetListByDate(
         String userName,
         int year,

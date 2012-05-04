@@ -15,21 +15,21 @@
 ///////////////////////////////////////////////////////////////////////////////
 /**
  * a functor class of the application.
- * update the HTML table of the tagcrowd.
+ * update the HTML table of the recent.
  * 
  * @author hiroxpepe
  */
-exmp.tweet.functor.dhtml.TagcrowdUpdateClosure = {
+exmp.tweet.functor.dhtml.RecentUpdateClosure = {
     
     ///////////////////////////////////////////////////////////////////////////
     // public methods
     
     execute: function(obj) {
-        //console.log("exmp.tweet.functor.dhtml.TagcrowdUpdateClosure#execute");
+        console.log("exmp.tweet.functor.dhtml.RecentUpdateClosure#execute");
         
-        var transformer = exmp.tweet.functor.htmltag.TagcrowdTransformer;
+        var transformer = exmp.tweet.functor.htmltag.RecentTransformer;
         
-        $("#tweet-tagcrowd").html(
+        $("#tweet-recent").html(
             transformer.transform(
                 obj
             )

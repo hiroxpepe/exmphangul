@@ -130,12 +130,7 @@ exmp.tweet.core.Controller = window;{
         
         var calendarClosure = exmp.tweet.functor.request.CalendarClosure;
         var tagcrowdClosure = exmp.tweet.functor.request.TagcrowdClosure;
-        
-        // get the tagcrowd.
-        // TODO: add, ch user-id ??
-        tagcrowdClosure.execute({
-            tweet: ""
-        });
+        var recentClosure = exmp.tweet.functor.request.RecentClosure;
 
         // get the calendar.
         var date = new Date();
@@ -145,6 +140,16 @@ exmp.tweet.core.Controller = window;{
             userId: $("#user-id").val(),
             year: year,
             month: month + 1
+        });
+        
+        // get the tagcrowd.
+        tagcrowdClosure.execute({
+           userId: $("#user-id").val()
+        });
+        
+        // get the recent.
+        recentClosure.execute({
+           userId: $("#user-id").val()
         });
     }
     

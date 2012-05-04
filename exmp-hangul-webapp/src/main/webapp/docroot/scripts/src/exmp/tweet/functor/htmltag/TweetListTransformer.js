@@ -44,7 +44,7 @@ exmp.tweet.functor.htmltag.TweetListTransformer = {
         if (obj.tweetModelList != null) {
             for (var i = 0; i < obj.tweetModelList.length; i++) {
                 
-                // get the value
+                // get the value.
                 var image = obj.tweetModelList[i].userProfileImageURL;
                 var name = obj.tweetModelList[i].userName;
                 var text = obj.tweetModelList[i].text;

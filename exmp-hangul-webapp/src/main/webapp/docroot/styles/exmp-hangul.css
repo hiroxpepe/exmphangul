@@ -638,6 +638,27 @@ div.tagcrowd-content {
         }
         
 /* ****************************************************************************
+ * define the appearance of the recent content.
+ */
+div.recent-content {
+    margin: 1em 0.25em 0.25em 0.25em;
+    padding: 0.5em;
+    background: white;
+    border: 1px solid gainsboro;
+    border-radius: 6px;
+}
+    div.recent-div a.recent-a {
+        margin: 0.25em;
+        text-align: center;
+        cursor: pointer;
+        font-size: 85%;
+        color: #777799;
+    }
+        div.recent-div a.recent-a:hover {
+            font-weight: bold;
+        }
+        
+/* ****************************************************************************
  * define the appearance of the alphabet grid content.
  */
 div.alphabet {
@@ -681,6 +702,12 @@ div.alphabet {
         border-top-left-radius: 5px;
         border-top-right-radius: 5px;
     }
+        div.permalink-header div.permalink-status-id {
+            font-size: 80%;
+            font-weight: bold;
+            color: dimgray;
+            background: white;
+        }
         div.permalink-header div.permalink-date {
             font-size: 80%;
             font-weight: bold;

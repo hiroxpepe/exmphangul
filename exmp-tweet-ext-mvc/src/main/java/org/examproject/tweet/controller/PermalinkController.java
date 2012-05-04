@@ -75,11 +75,16 @@ public class PermalinkController {
     ///////////////////////////////////////////////////////////////////////////
     // public methods
     
+    ///////////////////////////////////////////////////////////////////////////
+    /**
+     * permalink page request.
+     * expected http request is '/tweet/username/2012/05/04.html'
+     */
     @RequestMapping(
         value="/tweet/{userName}/{year}/{month}/{day}.html",
         method=RequestMethod.GET
     )
-    public String doTweetPermalink(
+    public String doDatePermalink(
         @PathVariable
         String userName,
         @PathVariable
@@ -120,15 +125,14 @@ public class PermalinkController {
                 locale = loc.getLanguage();
             }
             
-            // create the form-object.
-            TweetForm tweetForm = new TweetForm();
-            
-            // set the cookie value to the form-object.
-            tweetForm.setUserId(userId);
-            tweetForm.setScreenName(screenName);
-            tweetForm.setLocale(locale);
-            tweetForm.setResponseListMode(responseListMode);
-            tweetForm.setUserListName(userListName);
+            // get the form.
+            TweetForm tweetForm = getForm(
+                userId,
+                screenName,
+                locale,
+                responseListMode,
+                userListName
+            );
             
             // set the form-object to the model. 
             model.addAttribute(tweetForm);
@@ -195,6 +199,122 @@ public class PermalinkController {
         } 
     }
     
+    ///////////////////////////////////////////////////////////////////////////
+    /**
+     * permalink page request.
+     * expected http request is '/tweet/username/2012/05/04.html'
+     */
+    @RequestMapping(
+        value="/tweet/{userName}/{statusId}.html",
+        method=RequestMethod.GET
+    )
+    public String doTweetPermalink(
+        @PathVariable
+        String userName,
+        @PathVariable
+        String statusId,
+        @RequestParam(value="locale", defaultValue="")
+        String locale,
+        @CookieValue(value="__exmphangul_request_token", defaultValue="")
+        String requestToken,
+        @CookieValue(value="__exmphangul_access_token", defaultValue="")
+        String oauthToken,
+        @CookieValue(value="__exmphangul_token_secret", defaultValue="")
+        String oauthTokenSecret,
+        @CookieValue(value="__exmphangul_user_id", defaultValue="")
+        String userId,
+        @CookieValue(value="__exmphangul_screen_name", defaultValue="")
+        String screenName,
+        @CookieValue(value="__exmphangul_response_list_mode", defaultValue="")
+        String responseListMode,
+        @CookieValue(value="__exmphangul_user_list_name", defaultValue="")
+        String userListName,
+        Model model
+     ) {
+        LOG.debug("called.");
+        try {
+            // TODO: debug
+            LOG.debug("userName: " + userName);
+            LOG.debug("statusId: " + statusId);
+            
+            // get the current local.
+            if (locale.equals("")) {
+                Locale loc = Locale.getDefault();
+                locale = loc.getLanguage();
+            }
+            
+            // get the form.
+            TweetForm tweetForm = getForm(
+                userId,
+                screenName,
+                locale,
+                responseListMode,
+                userListName
+            );
+            
+            // set the form-object to the model. 
+            model.addAttribute(tweetForm);
+            
+            // get the service object.
+            PermalinkService permalinkService = (PermalinkService) context.getBean(
+                PERMALINK_SERVICE_BEAN_ID
+            );
+            
+            // get the tweet.
+            TweetDto tweetDto = permalinkService.getTweetByStatusId(
+                Long.valueOf(statusId)
+            );
+            LOG.debug("tweetDto statusId: " + tweetDto.getStatusId());
+            
+            // map the object.
+            List<TweetModel> tweetModelList = new ArrayList<TweetModel>();
+            TweetModel tweetModel = context.getBean(TweetModel.class);
+            // map the dto-object to the model-object.
+            mapper.map(
+                tweetDto,
+                tweetModel
+            );
+            tweetModelList.add(
+                tweetModel
+            );
+            
+            // set the list-object to the model. 
+            model.addAttribute(tweetModelList);
+            model.addAttribute("statusId", tweetModel.getStatusId());
+            
+            if (isValidParameterOfGet(
+                oauthToken,
+                oauthTokenSecret,
+                userId,
+                screenName)
+            ) {
+                // get the profile.
+                ProfileModel profileModel = getProfile(
+                    oauthToken,
+                    oauthTokenSecret,
+                    responseListMode,
+                    userListName,
+                    screenName
+                );
+                
+                // set the profile model.
+                model.addAttribute(profileModel);
+            }
+            
+            // return view name.
+            return "permalink";
+        
+        } catch(Exception e) {
+            LOG.fatal(e.getMessage());
+            return "error";
+        } 
+    }
+    
+    ///////////////////////////////////////////////////////////////////////////
+    /**
+     * permalink page request.
+     * expected http request is '/tweet/username/word.html'
+     */
     @RequestMapping(
         value="/word/{userName}/{word}.html",
         method=RequestMethod.GET
@@ -234,15 +354,14 @@ public class PermalinkController {
                 locale = loc.getLanguage();
             }
             
-            // create the form-object.
-            TweetForm tweetForm = new TweetForm();
-            
-            // set the cookie value to the form-object.
-            tweetForm.setUserId(userId);
-            tweetForm.setScreenName(screenName);
-            tweetForm.setLocale(locale);
-            tweetForm.setResponseListMode(responseListMode);
-            tweetForm.setUserListName(userListName);
+            // get the form.
+            TweetForm tweetForm = getForm(
+                userId,
+                screenName,
+                locale,
+                responseListMode,
+                userListName
+            );
             
             // set the form-object to the model. 
             model.addAttribute(tweetForm);
@@ -307,6 +426,26 @@ public class PermalinkController {
     
     ///////////////////////////////////////////////////////////////////////////
     // private methods
+    
+    private TweetForm getForm(
+        String userId,
+        String screenName,
+        String locale,
+        String responseListMode,
+        String userListName
+    ) {
+        // create the form-object.
+        TweetForm tweetForm = new TweetForm();
+        
+        // set the cookie value to the form-object.
+        tweetForm.setUserId(userId);
+        tweetForm.setScreenName(screenName);
+        tweetForm.setLocale(locale);
+        tweetForm.setResponseListMode(responseListMode);
+        tweetForm.setUserListName(userListName);
+        
+        return tweetForm;
+    }
     
     private ProfileModel getProfile(
             String oauthToken,

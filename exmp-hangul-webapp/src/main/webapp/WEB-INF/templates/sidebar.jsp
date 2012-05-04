@@ -19,6 +19,11 @@
         <tiles:insertTemplate 
             template="/WEB-INF/views/_tagcrowd.jsp"
         />
+        
+        <%-- insert the recent content --%>
+        <tiles:insertTemplate 
+            template="/WEB-INF/views/_recent.jsp"
+        />
     </c:if>
     
 </div>

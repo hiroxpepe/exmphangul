@@ -32,11 +32,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import org.examproject.tweet.dto.CalendarDto;
 import org.examproject.tweet.dto.TagcrowdDto;
+import org.examproject.tweet.dto.TweetDto;
 import org.examproject.tweet.model.CalendarModel;
 import org.examproject.tweet.model.TagcrowdModel;
+import org.examproject.tweet.model.TweetModel;
 import org.examproject.tweet.response.CalendarResponse;
 import org.examproject.tweet.response.TagcrowdResponse;
+import org.examproject.tweet.response.TweetResponse;
 import org.examproject.tweet.service.CalendarService;
+import org.examproject.tweet.service.RecentService;
 import org.examproject.tweet.service.TagcrowdService;
 
 /**
@@ -58,6 +62,10 @@ public class ExtensionController {
                 
     private static final String TAGCROWD_RESPONSE_BEAN_ID = "tagcrowdResponse";
     
+    private static final String RECENT_SERVICE_BEAN_ID = "recentService";
+    
+    private static final String RECENT_RESPONSE_BEAN_ID = "tweetResponse";
+    
     @Inject
     private final ApplicationContext context = null;
     
@@ -67,6 +75,11 @@ public class ExtensionController {
     ///////////////////////////////////////////////////////////////////////////
     // public methods
     
+    ///////////////////////////////////////////////////////////////////////////
+    /**
+     * get the calendar.
+     * expected ajax http request is '/calendar.html'
+     */
     @RequestMapping(
         value="/calendar",
         method=RequestMethod.POST,
@@ -143,14 +156,17 @@ public class ExtensionController {
         } 
     }
     
+    ///////////////////////////////////////////////////////////////////////////
+    /**
+     * get the tagcrowd.
+     * expected ajax http request is '/tagcrowd.html'
+     */
     @RequestMapping(
         value="/tagcrowd",
         method=RequestMethod.POST,
         headers="Accept=application/json"
     )
     public @ResponseBody TagcrowdResponse doTagcrowd(
-        @RequestParam(value="tweet", defaultValue="")
-        String content,
         @RequestParam(value="user_id", defaultValue="")
         String requestUserId,
         @RequestParam(value="status_id", defaultValue="")
@@ -213,4 +229,77 @@ public class ExtensionController {
             );
         } 
     }
+    
+    ///////////////////////////////////////////////////////////////////////////
+    /**
+     * get the recent.
+     * expected ajax http request is '/recent.html'
+     */
+    @RequestMapping(
+        value="/recent",
+        method=RequestMethod.POST,
+        headers="Accept=application/json"
+    )
+    public @ResponseBody TweetResponse doRecent(
+        @RequestParam(value="user_id", defaultValue="")
+        String requestUserId,
+        @CookieValue(value="__exmphangul_request_token", defaultValue="")
+        String requestToken,
+        @CookieValue(value="__exmphangul_access_token", defaultValue="")
+        String oauthToken,
+        @CookieValue(value="__exmphangul_token_secret", defaultValue="")
+        String oauthTokenSecret,
+        @CookieValue(value="__exmphangul_user_id", defaultValue="")
+        String userId,
+        @CookieValue(value="__exmphangul_screen_name", defaultValue="")
+        String screenName,
+        @CookieValue(value="__exmphangul_response_list_mode", defaultValue="")
+        String responseListMode,
+        @CookieValue(value="__exmphangul_user_list_name", defaultValue="")
+        String userListName
+     ) {
+        LOG.debug("called.");     
+        try {
+            // TODO: debug
+            LOG.debug("screenName: " + screenName);
+            
+            // get the service object.
+            RecentService service = (RecentService) context.getBean(
+                RECENT_SERVICE_BEAN_ID
+            );
+            
+            // get the recent tweet.
+            List<TweetDto> tweetDtoList=  service.getList(
+                screenName
+            );
+
+            // map the object.
+            List<TweetModel> tweetModelList=  new ArrayList<TweetModel>();
+            for (TweetDto tweetDto : tweetDtoList) {
+                TweetModel tweetModel = context.getBean(TweetModel.class);
+                // map the form-object to the dto-object.
+                mapper.map(
+                    tweetDto,
+                    tweetModel
+                );
+                tweetModelList.add(
+                    tweetModel
+                );
+            }
+
+            // return the response object.
+            return new TweetResponse(
+                tweetModelList
+            );
+        
+        } catch(Exception e) {
+            LOG.fatal(e.getMessage());
+            return (TweetResponse) context.getBean(
+                RECENT_RESPONSE_BEAN_ID,
+                true,
+                e.getMessage()
+            );
+        } 
+    }
+    
 }

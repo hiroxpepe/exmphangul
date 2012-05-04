@@ -19,19 +19,19 @@
  * 
  * @author hiroxpepe
  */
-exmp.tweet.functor.request.TagcrowdClosure = {
+exmp.tweet.functor.request.RecentClosure = {
     
     ///////////////////////////////////////////////////////////////////////////
     // public methods
     
     execute: function(obj) {
-        console.log("tagcrowd begin.");
+        console.log("recent begin.");
         
-        var tagcrowdUpdateClosure = exmp.tweet.functor.dhtml.TagcrowdUpdateClosure;
+        var recentUpdateClosure = exmp.tweet.functor.dhtml.RecentUpdateClosure;
         
         // create an ajax object.
         new $.ajax({
-            url: "/tagcrowd.html",
+            url: "/recent.html",
             type: "POST",
             data: {
                 user_id: obj.userId
@@ -48,11 +48,11 @@ exmp.tweet.functor.request.TagcrowdClosure = {
                 }
                 
                 // update the HTML table of the tagcrowd.
-                tagcrowdUpdateClosure.execute(
+                recentUpdateClosure.execute(
                     data
                 );
                 
-                console.log("tagcrowd complete.");
+                console.log("recent complete.");
             },
             
             // callback function of the error.

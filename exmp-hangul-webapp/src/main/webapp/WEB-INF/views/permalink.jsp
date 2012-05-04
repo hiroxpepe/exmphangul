@@ -11,6 +11,9 @@
     </form:form>
     
     <div class="permalink-header">
+        <c:if test="${not empty statusId}">
+            <div class="permalink-status-id">${statusId}</div>
+        </c:if>
         <c:if test="${not empty day}">
             <div class="permalink-date">${year} - ${month} - ${day}</div>
         </c:if>

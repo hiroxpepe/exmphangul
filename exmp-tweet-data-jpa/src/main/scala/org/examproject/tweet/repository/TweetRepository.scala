@@ -29,12 +29,11 @@ trait TweetRepository extends JpaRepository[Tweet, Long] {
     
     def findById(id: Long): Tweet
     
-    def findByNameAndDateBetween(name: String, begin: Date, end: Date): List[Tweet]
+    def findByName(name: String): List[Tweet]
     
     def findByDateBetween(begin: Date, end: Date): List[Tweet]
     
-    def findByDateLessThan(end: Date): List[Tweet]
+    def findByNameAndDateBetween(name: String, begin: Date, end: Date): List[Tweet]
     
-    def findByDateGreaterThan(begin: Date): List[Tweet]
-    
+    def findByNameOrderByDateDesc(name: String): List[Tweet]
 }

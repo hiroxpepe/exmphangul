@@ -118,7 +118,19 @@
         scope="prototype">
     </bean>
     
-    <!-- tweet -->
+    <!-- recent -->
+    
+    <bean name="recentService"
+        class="org.examproject.tweet.service.RecentService">
+    </bean>
+    
+    <!-- permalink -->
+    
+    <bean name="permalinkService"
+        class="org.examproject.tweet.service.PermalinkService">
+    </bean>
+    
+    <!-- entity -->
     
     <bean name="tweet"
         class="org.examproject.tweet.entity.Tweet"
@@ -133,12 +145,6 @@
     <bean name="word"
         class="org.examproject.tweet.entity.Word"
         scope="prototype">
-    </bean>
-    
-    <!-- permalink -->
-    
-    <bean name="permalinkService"
-        class="org.examproject.tweet.service.PermalinkService">
     </bean>
     
 </beans>

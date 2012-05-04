@@ -6,6 +6,10 @@
         <class-a>org.examproject.tweet.entity.Tweet</class-a>
         <class-b>org.examproject.tweet.dto.TweetDto</class-b>
         <field>
+            <a>id</a>
+            <b>statusId</b>
+        </field>
+        <field>
             <a>date</a>
             <b>created</b>
         </field>
