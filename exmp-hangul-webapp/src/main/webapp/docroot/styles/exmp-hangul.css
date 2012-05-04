@@ -98,7 +98,7 @@ div.menu {
  */
 div.content {
     width: 70%;
-    min-height: 950px;
+    min-height: 970px;
     height: auto;
     float: left;
     text-align: left;
@@ -635,7 +635,7 @@ div.tagcrowd-content {
         margin: 0.25em;
         text-align: center;
         cursor: pointer;
-        font-size: 85%;
+        font-size: 80%;
         color: #777799;
     }
         span.tagcrowd-span a.tagcrowd-a:hover {
@@ -661,7 +661,7 @@ div.recent-content {
         margin: 0.25em;
         text-align: center;
         cursor: pointer;
-        font-size: 85%;
+        font-size: 80%;
         color: #777799;
     }
         div.recent-div a.recent-a:hover {

@@ -29,7 +29,7 @@ import org.examproject.tweet.entity.Vocab;
 import org.examproject.tweet.entity.Word;
 import org.examproject.tweet.repository.VocabRepository;
 import org.examproject.tweet.repository.WordRepository;
-import org.examproject.tweet.util.IsContainKrCodePredicate;
+import org.examproject.tweet.util.IsContainKrHangulCodePredicate;
 import org.examproject.tweet.util.SentenceToWordsTransformer;
 
 /**
@@ -95,7 +95,7 @@ public class TagcrowdService {
         LOG.debug("called.");
         List<TagcrowdDto> tagcrowdDtoList = null;
         try {
-            Predicate predicate = new IsContainKrCodePredicate();
+            Predicate predicate = new IsContainKrHangulCodePredicate();
             boolean isNeed = predicate.evaluate(content);
             if (isNeed) {
                 Transformer transformer = new SentenceToWordsTransformer();

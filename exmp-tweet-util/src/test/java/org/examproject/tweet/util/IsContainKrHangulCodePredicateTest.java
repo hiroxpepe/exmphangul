@@ -7,9 +7,9 @@ import static org.junit.Assert.*;
 /**
  * @author hiroxpepe
  */
-public class IsContainKrCodePredicateTest {
+public class IsContainKrHangulCodePredicateTest {
     
-    public IsContainKrCodePredicateTest() {
+    public IsContainKrHangulCodePredicateTest() {
     }
 
     @BeforeClass
@@ -31,7 +31,7 @@ public class IsContainKrCodePredicateTest {
     @Test
     public void testEvaluate() {
         System.out.println("evaluate");
-        IsContainKrCodePredicate instance = new IsContainKrCodePredicate();
+        IsContainKrHangulCodePredicate instance = new IsContainKrHangulCodePredicate();
         
         String str1 = "hoge";
         boolean expResult1 = false;

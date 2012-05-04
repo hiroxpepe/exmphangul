@@ -26,7 +26,7 @@ import org.springframework.context.ApplicationContext;
 import org.examproject.tweet.dto.TweetDto;
 import org.examproject.tweet.entity.Tweet;
 import org.examproject.tweet.repository.TweetRepository;
-import org.examproject.tweet.util.IsContainKrCodePredicate;
+import org.examproject.tweet.util.IsContainKrHangulCodePredicate;
 
 /**
  * @author hiroxpepe
@@ -64,7 +64,7 @@ public class RecentService {
             LOG.debug("tweet count: " + tweetList.size());
             
             // map the object.
-            IsContainKrCodePredicate predicate = new IsContainKrCodePredicate();
+            IsContainKrHangulCodePredicate predicate = new IsContainKrHangulCodePredicate();
             List<TweetDto> tweetDtoList = new ArrayList<TweetDto>();
             for (Tweet tweet : tweetList) {
                 // contain the kr code only.
