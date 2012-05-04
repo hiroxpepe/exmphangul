@@ -15,7 +15,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 /**
  * a functor class of the application.
- * send HTTP request for reply post.
+ * send http request for reply tweet.
  * 
  * @author hiroxpepe
  */

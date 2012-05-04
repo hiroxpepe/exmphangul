@@ -22,7 +22,6 @@ import javax.inject.Inject;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.dozer.Mapper;
-import org.dozer.MappingException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -77,7 +76,7 @@ public class PermalinkController {
     
     ///////////////////////////////////////////////////////////////////////////
     /**
-     * permalink page request.
+     * date permalink page request.
      * expected http request is '/tweet/username/2012/05/04.html'
      */
     @RequestMapping(
@@ -201,8 +200,8 @@ public class PermalinkController {
     
     ///////////////////////////////////////////////////////////////////////////
     /**
-     * permalink page request.
-     * expected http request is '/tweet/username/2012/05/04.html'
+     * statusId permalink page request.
+     * expected http request is '/tweet/username/1234567890.html'
      */
     @RequestMapping(
         value="/tweet/{userName}/{statusId}.html",
@@ -280,7 +279,10 @@ public class PermalinkController {
             
             // set the list-object to the model. 
             model.addAttribute(tweetModelList);
-            model.addAttribute("statusId", tweetModel.getStatusId());
+            model.addAttribute(
+                "statusId",
+                tweetModel.getStatusId()
+            );
             
             if (isValidParameterOfGet(
                 oauthToken,
@@ -312,7 +314,7 @@ public class PermalinkController {
     
     ///////////////////////////////////////////////////////////////////////////
     /**
-     * permalink page request.
+     * word permalink page request.
      * expected http request is '/tweet/username/word.html'
      */
     @RequestMapping(
@@ -453,8 +455,7 @@ public class PermalinkController {
             String responseListMode,
             String userListName,
             String screenName
-    ) throws MappingException {
-        
+    ) { 
         // get the service object.
         TweetService tweetService = (TweetService) context.getBean(
             TWEET_SERVICE_BEAN_ID,

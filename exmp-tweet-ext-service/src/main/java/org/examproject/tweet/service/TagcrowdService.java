@@ -51,9 +51,6 @@ public class TagcrowdService {
     private final WordRepository wordRepository = null;
     
     ///////////////////////////////////////////////////////////////////////////
-    // constructor
-    
-    ///////////////////////////////////////////////////////////////////////////
     // public methods
     
     public List<TagcrowdDto> getList(String username) {
@@ -140,8 +137,5 @@ public class TagcrowdService {
             throw new RuntimeException(e);
         }
     }
-    
-    ///////////////////////////////////////////////////////////////////////////
-    // private methods
     
 }

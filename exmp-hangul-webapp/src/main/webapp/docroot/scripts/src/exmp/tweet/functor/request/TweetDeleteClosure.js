@@ -15,7 +15,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 /**
  * a functor class of the application.
- * send HTTP request for delete action.
+ * send http request for delete action.
  * 
  * @author hiroxpepe
  */

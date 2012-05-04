@@ -63,6 +63,5 @@ exmp.tweet.functor.event.TweetListEffectClosure = {
                 });
             }
         );
-        
     }
 }

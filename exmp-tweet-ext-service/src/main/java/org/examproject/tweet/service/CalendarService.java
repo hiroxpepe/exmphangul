@@ -48,9 +48,6 @@ public class CalendarService {
     private final TweetRepository tweetRepository = null;
     
     ///////////////////////////////////////////////////////////////////////////
-    // constructor
-    
-    ///////////////////////////////////////////////////////////////////////////
     // public methods
     
     public List<CalendarDto> getList(
@@ -107,8 +104,5 @@ public class CalendarService {
             throw new RuntimeException(e);
         }
     }
-    
-    ///////////////////////////////////////////////////////////////////////////
-    // private methods
     
 }

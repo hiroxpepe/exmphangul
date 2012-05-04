@@ -626,6 +626,11 @@ div.tagcrowd-content {
     border: 1px solid gainsboro;
     border-radius: 6px;
 }
+    div.tagcrowd-content div.nodata {
+        text-align: center;
+        font-size: 60%;
+        color: silver;
+    }
     span.tagcrowd-span a.tagcrowd-a {
         margin: 0.25em;
         text-align: center;
@@ -647,6 +652,11 @@ div.recent-content {
     border: 1px solid gainsboro;
     border-radius: 6px;
 }
+    div.recent-content div.nodata {
+        text-align: center;
+        font-size: 60%;
+        color: silver;
+    }
     div.recent-div a.recent-a {
         margin: 0.25em;
         text-align: center;

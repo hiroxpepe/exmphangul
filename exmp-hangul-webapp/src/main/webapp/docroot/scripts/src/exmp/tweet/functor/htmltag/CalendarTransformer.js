@@ -15,8 +15,8 @@
 ///////////////////////////////////////////////////////////////////////////////
 /**
  * a functor class of the application.
- * this class is a transformer that JSON data get by
- * Ajax HTTP requests and convert to HTML tags.
+ * this class is a transformer that json data get by
+ * ajax http requests and convert to html tags.
  * 
  * @author hiroxpepe
  */

@@ -15,8 +15,8 @@
 ///////////////////////////////////////////////////////////////////////////////
 /**
  * a functor class of the application.
- * get the value from the HTML form and 
- * create a JSON object for HTTP POST.
+ * get the value from the html form and 
+ * create a json object for http post.
  * 
  * @author hiroxpepe
  */

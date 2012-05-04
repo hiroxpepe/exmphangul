@@ -15,7 +15,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 /**
  * a functor class of the application.
- * send HTTP request for the setting.
+ * send http request for the setting.
  * 
  * @author hiroxpepe
  */

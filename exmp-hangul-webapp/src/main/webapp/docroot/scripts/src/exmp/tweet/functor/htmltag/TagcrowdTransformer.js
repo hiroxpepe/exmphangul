@@ -15,8 +15,8 @@
 ///////////////////////////////////////////////////////////////////////////////
 /**
  * a functor class of the application.
- * this class is a transformer that JSON data get by
- * Ajax HTTP requests and convert to HTML tags.
+ * this class is a transformer that json data get by
+ * ajax http requests and convert to html tags.
  * 
  * @author hiroxpepe
  */
@@ -46,12 +46,12 @@ exmp.tweet.functor.htmltag.TagcrowdTransformer = {
                             "</a>" +
                         "</span>";
             }
+            if (obj.tagcrowdModelList.length == 0) {
+                html += "<div class='nodata'>No Data.</div>";
+            }
             html += "</div>";
         }
         return html;
     }
-    
-    ///////////////////////////////////////////////////////////////////////////
-    // private methods
-    
+        
 }

@@ -37,7 +37,7 @@ public class RecentService {
         RecentService.class
     );
     
-    private static final int RECENT_COUNT = 15;
+    private static final int RECENT_COUNT = 20;
     
     @Inject
     private final ApplicationContext context = null;
@@ -47,9 +47,6 @@ public class RecentService {
     
     @Inject
     private final TweetRepository tweetRepository = null;
-    
-    ///////////////////////////////////////////////////////////////////////////
-    // constructor
     
     ///////////////////////////////////////////////////////////////////////////
     // public methods
@@ -97,8 +94,5 @@ public class RecentService {
             throw new RuntimeException(e);
         }
     }
-    
-    ///////////////////////////////////////////////////////////////////////////
-    // private methods
-    
+        
 }

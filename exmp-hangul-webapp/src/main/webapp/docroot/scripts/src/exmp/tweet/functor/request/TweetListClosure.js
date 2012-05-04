@@ -15,7 +15,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 /**
  * a functor class of the application.
- * send HTTP request for get the tweet list.
+ * send http request for get the tweet list.
  * 
  * @author hiroxpepe
  */

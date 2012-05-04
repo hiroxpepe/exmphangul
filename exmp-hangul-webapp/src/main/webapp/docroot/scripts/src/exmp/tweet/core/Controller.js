@@ -160,7 +160,6 @@ exmp.tweet.core.Controller = window;{
         $("#response-list-mode").append($('<option value="home">home</option>'));
         $("#response-list-mode").append($('<option value="user">user</option>'));
         $("#response-list-mode").append($('<option value="list">list</option>'));
-        //$("#response-list-mode").val("home");
     }
     
     /**

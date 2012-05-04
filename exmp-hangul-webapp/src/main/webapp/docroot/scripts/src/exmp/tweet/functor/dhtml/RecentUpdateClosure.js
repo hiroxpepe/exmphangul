@@ -15,7 +15,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 /**
  * a functor class of the application.
- * update the HTML table of the recent.
+ * update the html table of the recent.
  * 
  * @author hiroxpepe
  */
@@ -25,7 +25,7 @@ exmp.tweet.functor.dhtml.RecentUpdateClosure = {
     // public methods
     
     execute: function(obj) {
-        console.log("exmp.tweet.functor.dhtml.RecentUpdateClosure#execute");
+        //console.log("exmp.tweet.functor.dhtml.RecentUpdateClosure#execute");
         
         var transformer = exmp.tweet.functor.htmltag.RecentTransformer;
         

@@ -15,7 +15,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 /**
  * a functor class of the application.
- * send HTTP request for favorite action.
+ * send http request for favorite action.
  * 
  * @author hiroxpepe
  */

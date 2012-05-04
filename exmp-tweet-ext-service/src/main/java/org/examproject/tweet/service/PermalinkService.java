@@ -61,9 +61,6 @@ public class PermalinkService {
     private final WordRepository wordRepository = null;
     
     ///////////////////////////////////////////////////////////////////////////
-    // constructor
-    
-    ///////////////////////////////////////////////////////////////////////////
     // public methods
     
     public TweetDto getTweetByStatusId(
@@ -184,8 +181,5 @@ public class PermalinkService {
             throw new RuntimeException(e);
         }
     }
-    
-    ///////////////////////////////////////////////////////////////////////////
-    // private methods
     
 }

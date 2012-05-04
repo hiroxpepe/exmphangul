@@ -15,7 +15,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 /**
  * a functor class of the application.
- * send HTTP request for get the calendar.
+ * send http request for get the calendar.
  * 
  * @author hiroxpepe
  */
