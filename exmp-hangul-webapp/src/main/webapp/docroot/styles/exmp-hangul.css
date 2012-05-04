@@ -98,7 +98,7 @@ div.menu {
  */
 div.content {
     width: 70%;
-    min-height: 720px;
+    min-height: 950px;
     height: auto;
     float: left;
     text-align: left;
@@ -641,7 +641,7 @@ div.tagcrowd-content {
  * define the appearance of the recent content.
  */
 div.recent-content {
-    margin: 1em 0.25em 0.25em 0.25em;
+    margin: 1em 0.25em 1.25em 0.25em;
     padding: 0.5em;
     background: white;
     border: 1px solid gainsboro;

@@ -42,7 +42,7 @@ exmp.tweet.functor.htmltag.RecentTransformer = {
                 html += "<div class='recent-div'>" +
                             "<a href='/tweet/" + name + "/" + statusId + ".html" + 
                                 "' id='recent-a-" + statusId + 
-                                "' class='recent-a'>" + text + 
+                                "' class='recent-a'>" + text.substring(0, 12) + 
                             "</a>" +
                         "</div>";
             }
