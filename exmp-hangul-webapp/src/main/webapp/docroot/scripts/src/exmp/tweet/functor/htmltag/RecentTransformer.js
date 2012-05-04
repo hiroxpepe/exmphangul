@@ -26,7 +26,7 @@ exmp.tweet.functor.htmltag.RecentTransformer = {
     // public methods
     
     transform: function(obj) {
-        console.log("exmp.tweet.functor.htmltag.RecentTransformer#transform");
+        //console.log("exmp.tweet.functor.htmltag.RecentTransformer#transform");
         
         // dynamically generate an html tags.
         var html = "<div>";
