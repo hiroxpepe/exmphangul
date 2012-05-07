@@ -14,17 +14,15 @@
 
 package org.examproject.tweet.entity
 
-import java.lang.Boolean
 import java.lang.Long
 import java.io.Serializable
-import java.util.Date
 import javax.persistence.Column
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue
 import javax.persistence.GenerationType
 import javax.persistence.Id
+import javax.persistence.ManyToOne
 import javax.persistence.Table
-import javax.persistence.Temporal
 
 import org.springframework.stereotype.Component
 
@@ -41,21 +39,21 @@ import scala.reflect.BeanProperty
 class Vocab extends Serializable {
     
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(unique=true)
     @BeanProperty
     var id: Long = _
     
-    @Column(name="word_id")
-    @BeanProperty
-    var wordId: Long = _
-    
-    @Column(name="status_id")
-    @BeanProperty
-    var statusId: Long = _
-    
     @Column(name="name")
     @BeanProperty
     var name: String = _
+    
+    @ManyToOne
+    @BeanProperty
+    var word: Word = _
+    
+    @ManyToOne
+    @BeanProperty
+    var status: Tweet = _
     
 }

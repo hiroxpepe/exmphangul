@@ -154,7 +154,7 @@ public class PermalinkService {
             List<TweetDto> tweetDtoList = new ArrayList<TweetDto>();
             List<Long> tmpStatusIdList =  new ArrayList<Long>();
             for (Vocab vocab : vocabList) {
-                Long statusId = vocab.getStatusId();
+                Long statusId = vocab.getStatus().getId();
                 if (tmpStatusIdList.contains(statusId)) {
                     continue;
                 }

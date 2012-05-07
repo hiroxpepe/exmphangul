@@ -81,6 +81,7 @@ public class TweetServiceAspect {
         }
         // contain korean.
         if (krPredicate.evaluate(text)) {
+            // TODO: must process in the service object!
             Tweet tweet = context.getBean(Tweet.class);
             tweet.setId(Long.valueOf(tweetDto.getStatusId()));
             tweet.setDate(tweetDto.getCreated());

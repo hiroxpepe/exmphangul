@@ -14,17 +14,18 @@
 
 package org.examproject.tweet.entity
 
-import java.lang.Boolean
 import java.lang.Long
 import java.io.Serializable
 import java.util.Date
+import java.util.HashSet
+import java.util.Set
 import javax.persistence.Column
 import javax.persistence.Entity
-import javax.persistence.GeneratedValue
-import javax.persistence.GenerationType
 import javax.persistence.Id
+import javax.persistence.OneToMany
 import javax.persistence.Table
 import javax.persistence.Temporal
+import javax.persistence.TemporalType
 
 import org.springframework.stereotype.Component
 
@@ -46,7 +47,7 @@ class Tweet extends Serializable {
     var id: Long = _
     
     @Column(name="date")
-    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.TIMESTAMP)
     @BeanProperty
     var date: Date = new Date()
     
@@ -57,5 +58,9 @@ class Tweet extends Serializable {
     @Column(name="text")
     @BeanProperty
     var text: String = _
+    
+    @OneToMany(mappedBy="status")
+    @BeanProperty
+    var vocabSet: Set[Vocab] = new HashSet[Vocab]()
     
 }

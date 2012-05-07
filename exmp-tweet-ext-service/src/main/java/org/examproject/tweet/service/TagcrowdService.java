@@ -25,8 +25,10 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.context.ApplicationContext;
 
 import org.examproject.tweet.dto.TagcrowdDto;
+import org.examproject.tweet.entity.Tweet;
 import org.examproject.tweet.entity.Vocab;
 import org.examproject.tweet.entity.Word;
+import org.examproject.tweet.repository.TweetRepository;
 import org.examproject.tweet.repository.VocabRepository;
 import org.examproject.tweet.repository.WordRepository;
 import org.examproject.tweet.util.IsContainKrHangulCodePredicate;
@@ -45,6 +47,9 @@ public class TagcrowdService {
     private final ApplicationContext context = null;
     
     @Inject
+    private final TweetRepository tweetRepository = null;
+    
+    @Inject
     private final VocabRepository vocabRepository = null;
     
     @Inject
@@ -60,12 +65,12 @@ public class TagcrowdService {
             List<Vocab> vocabList = vocabRepository.findByName(username);
             List<String> tmpStrList = new ArrayList<String>();
             for (Vocab vocab : vocabList) {
-                Word word = wordRepository.findById(vocab.getWordId());
+                Word word = vocab.getWord();
                 if (tmpStrList.contains(word.getText())) {
                     continue;
                 }
                 TagcrowdDto tagcrowdDto = context.getBean(TagcrowdDto.class);
-                tagcrowdDto.setStatusId(String.valueOf(vocab.getStatusId()));
+                tagcrowdDto.setStatusId(String.valueOf(vocab.getStatus().getId()));
                 tagcrowdDto.setUserName(vocab.getName());
                 tagcrowdDto.setText(word.getText());
                 tagcrowdDto.setLinkUrl(
@@ -105,6 +110,9 @@ public class TagcrowdService {
                     boolean isKr = predicate.evaluate(oneWord);
                     if (isKr) {
                         ///////////////////////////////////////////////////////
+                        // get the vocab entity.
+                        Vocab vocab = context.getBean(Vocab.class);
+                        ///////////////////////////////////////////////////////
                         // get the word id.
                         Long wordId = null;
                         List<Word> wordList = wordRepository.findByText(oneWord);
@@ -114,18 +122,17 @@ public class TagcrowdService {
                             Word wordEntity = context.getBean(Word.class);
                             wordEntity.setText(oneWord);
                             Word newWordEntity = (Word) wordRepository.save(wordEntity);
-                            wordId = newWordEntity.getId();
+                            vocab.setWord(newWordEntity);
                         }
                         // already exist.
                         else {
                             Word wordEntity = wordList.get(0);
-                            wordId = wordEntity.getId();
+                            vocab.setWord(wordEntity);
                         }
                         ///////////////////////////////////////////////////////
-                        // set vocabulary this tweet !
-                        Vocab vocab = context.getBean(Vocab.class);
-                        vocab.setWordId(wordId);
-                        vocab.setStatusId(statusId);
+                        // set vocabulary this tweet!
+                        Tweet tweet = tweetRepository.findById(statusId);
+                        vocab.setStatus(tweet);
                         vocab.setName(username);
                         vocabRepository.save(vocab);
                     }
