@@ -39,10 +39,10 @@ import org.examproject.tweet.util.DayEndDateTransformer;
 /**
  * @author hiroxpepe
  */
-public class PermalinkService {
+public class SimplePermalinkService implements PermalinkService {
  
     private static final Log LOG = LogFactory.getLog(
-        PermalinkService.class
+        SimplePermalinkService.class
     );
     
     @Inject
@@ -63,19 +63,23 @@ public class PermalinkService {
     ///////////////////////////////////////////////////////////////////////////
     // public methods
     
+    ///////////////////////////////////////////////////////////////////////////
+    /**
+     * get the tweet dto list by statusid.
+     */
+    @Override
     public TweetDto getTweetByStatusId(
         Long statusId
     ) {
         LOG.debug("called.");
-        try {
-            
+        try {       
             // get the tweet list.
             Tweet tweet = tweetRepository.findById(statusId);
-
             LOG.debug("tweet statusId: " + tweet.getId());
             
             // map the object.
             TweetDto tweetDto = context.getBean(TweetDto.class);
+            
             // map the entity-object to the dto-object.
             mapper.map(
                 tweet,
@@ -90,11 +94,16 @@ public class PermalinkService {
         }
     }
     
+    ///////////////////////////////////////////////////////////////////////////
+    /**
+     * get the tweet dto list by date.
+     */
+    @Override
     public List<TweetDto> getTweetListByDate(
         String userName,
-        int year,
-        int month,
-        int day
+        Integer year,
+        Integer month,
+        Integer day
     ) {
         LOG.debug("called.");
         try {
@@ -135,6 +144,11 @@ public class PermalinkService {
         }
     }
     
+    ///////////////////////////////////////////////////////////////////////////
+    /**
+     * get the tweet dto list by word.
+     */
+    @Override
     public List<TweetDto> getTweetListByWord(
         String userName,
         String text 
@@ -146,8 +160,7 @@ public class PermalinkService {
             Word word = words.get(0);
             
             // get the vocab list.
-            List<Vocab> vocabList = vocabRepository.findByWordId(word.getId());
-                    
+            List<Vocab> vocabList = vocabRepository.findByWordId(word.getId());        
             LOG.debug("permalink vocab count: " + vocabList.size());
             
             // map the object.
@@ -176,6 +189,37 @@ public class PermalinkService {
             
             return tweetDtoList;
             
+        } catch(Exception e) {
+            LOG.error("an error occurred: " + e.getMessage());
+            throw new RuntimeException(e);
+        }
+    }
+    
+    ///////////////////////////////////////////////////////////////////////////
+    /**
+    * update the entity.
+    */
+    @Override
+    public TweetDto update(
+        TweetDto tweetDto
+    ) {
+        LOG.debug("called.");
+        try {
+            // save the entity.
+            Tweet tweet = context.getBean(Tweet.class);
+            tweet.setId(Long.valueOf(tweetDto.getStatusId()));
+            tweet.setDate(tweetDto.getCreated());
+            tweet.setName(tweetDto.getUserName());
+            tweet.setText(tweetDto.getText());
+            Tweet newTweet = (Tweet) tweetRepository.save(tweet);
+            
+            // map the entity to dto.
+            TweetDto newTweetDto = context.getBean(TweetDto.class);
+            mapper.map(
+                newTweet,
+                newTweetDto
+            );
+            return newTweetDto;
         } catch(Exception e) {
             LOG.error("an error occurred: " + e.getMessage());
             throw new RuntimeException(e);

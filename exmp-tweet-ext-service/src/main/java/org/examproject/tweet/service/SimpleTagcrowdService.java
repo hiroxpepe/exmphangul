@@ -25,6 +25,7 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.context.ApplicationContext;
 
 import org.examproject.tweet.dto.TagcrowdDto;
+import org.examproject.tweet.dto.TweetDto;
 import org.examproject.tweet.entity.Tweet;
 import org.examproject.tweet.entity.Vocab;
 import org.examproject.tweet.entity.Word;
@@ -37,10 +38,10 @@ import org.examproject.tweet.util.SentenceToWordsTransformer;
 /**
  * @author hiroxpepe
  */
-public class TagcrowdService {
+public class SimpleTagcrowdService implements TagcrowdService {
  
     private static final Log LOG = LogFactory.getLog(
-        TagcrowdService.class
+        SimpleTagcrowdService.class
     );
     
     @Inject
@@ -58,7 +59,14 @@ public class TagcrowdService {
     ///////////////////////////////////////////////////////////////////////////
     // public methods
     
-    public List<TagcrowdDto> getList(String username) {
+    ///////////////////////////////////////////////////////////////////////////
+    /**
+     * get the tagcrowd dto list.
+     */
+    @Override
+    public List<TagcrowdDto> getTagcrowdListByName(
+        String username
+    ) {
         LOG.debug("called.");
         try {
             List<TagcrowdDto> tagcrowdDtoList = new ArrayList<TagcrowdDto>();
@@ -92,14 +100,20 @@ public class TagcrowdService {
         }
     }
     
+    ///////////////////////////////////////////////////////////////////////////
+    /**
+     * update the entity.
+     */
+    @Override
     public List<TagcrowdDto> update(
-        Long statusId,
-        String content,
-        String username
+        TweetDto tweetDto
     ) {
         LOG.debug("called.");
-        List<TagcrowdDto> tagcrowdDtoList = null;
         try {
+            List<TagcrowdDto> tagcrowdDtoList = null;
+            Long statusId = Long.parseLong(tweetDto.getStatusId());
+            String content = tweetDto.getText();
+            String username = tweetDto.getUserName();
             Predicate predicate = new IsContainKrHangulCodePredicate();
             boolean isNeed = predicate.evaluate(content);
             if (isNeed) {

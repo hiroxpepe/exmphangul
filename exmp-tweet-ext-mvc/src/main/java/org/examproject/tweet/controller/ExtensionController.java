@@ -121,7 +121,7 @@ public class ExtensionController {
             );
             
             // get the calendar.
-            List<CalendarDto> calendarDtoList = service.getList(
+            List<CalendarDto> calendarDtoList = service.getCalendarListByNameAndYearAndMonth(
                 screenName,
                 Integer.valueOf(year),
                 Integer.valueOf(month)
@@ -197,7 +197,7 @@ public class ExtensionController {
             );
             
             // get the tagcrowd.
-            List<TagcrowdDto> tagcrowdDtoList = service.getList(
+            List<TagcrowdDto> tagcrowdDtoList = service.getTagcrowdListByName(
                 screenName
             );
 
@@ -269,7 +269,7 @@ public class ExtensionController {
             );
             
             // get the recent tweet.
-            List<TweetDto> tweetDtoList=  service.getList(
+            List<TweetDto> tweetDtoList = service.getTweetListByName(
                 screenName
             );
 

@@ -31,10 +31,10 @@ import org.examproject.tweet.util.IsContainKrHangulCodePredicate;
 /**
  * @author hiroxpepe
  */
-public class RecentService {
+public class SimpleRecentService implements RecentService {
  
     private static final Log LOG = LogFactory.getLog(
-        RecentService.class
+        SimpleRecentService.class
     );
     
     private static final int RECENT_COUNT = 20;
@@ -51,7 +51,12 @@ public class RecentService {
     ///////////////////////////////////////////////////////////////////////////
     // public methods
     
-    public List<TweetDto> getList(
+    ///////////////////////////////////////////////////////////////////////////
+    /**
+     * get the tweet dto list by name.
+     */
+    @Override
+    public List<TweetDto> getTweetListByName(
         String userName
     ) {
         LOG.debug("called.");
@@ -60,7 +65,6 @@ public class RecentService {
             List<Tweet> tweetList = tweetRepository.findByNameOrderByDateDesc(
                 userName
             );
-            
             LOG.debug("tweet count: " + tweetList.size());
             
             // map the object.

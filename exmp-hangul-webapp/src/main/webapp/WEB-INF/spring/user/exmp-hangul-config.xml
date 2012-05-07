@@ -89,7 +89,7 @@
     </bean>
     
     <bean name="tagcrowdService"
-        class="org.examproject.tweet.service.TagcrowdService">
+        class="org.examproject.tweet.service.SimpleTagcrowdService">
     </bean>
     
      <bean name="tagcrowdDto"
@@ -110,7 +110,7 @@
     </bean>
     
     <bean name="calendarService"
-        class="org.examproject.tweet.service.CalendarService">
+        class="org.examproject.tweet.service.SimpleCalendarService">
     </bean>
     
      <bean name="calendarDto"
@@ -121,13 +121,13 @@
     <!-- recent -->
     
     <bean name="recentService"
-        class="org.examproject.tweet.service.RecentService">
+        class="org.examproject.tweet.service.SimpleRecentService">
     </bean>
     
     <!-- permalink -->
     
     <bean name="permalinkService"
-        class="org.examproject.tweet.service.PermalinkService">
+        class="org.examproject.tweet.service.SimplePermalinkService">
     </bean>
     
     <!-- entity -->

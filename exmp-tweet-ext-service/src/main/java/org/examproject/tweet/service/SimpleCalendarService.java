@@ -35,10 +35,10 @@ import org.examproject.tweet.util.MonthEndDateTransformer;
 /**
  * @author hiroxpepe
  */
-public class CalendarService {
+public class SimpleCalendarService implements CalendarService{
  
     private static final Log LOG = LogFactory.getLog(
-        CalendarService.class
+        SimpleCalendarService.class
     );
     
     @Inject
@@ -50,10 +50,15 @@ public class CalendarService {
     ///////////////////////////////////////////////////////////////////////////
     // public methods
     
-    public List<CalendarDto> getList(
+    ///////////////////////////////////////////////////////////////////////////
+    /**
+     * get the calendar dto list by name and year and month.
+     */
+    @Override
+    public List<CalendarDto> getCalendarListByNameAndYearAndMonth(
         String username,
-        int year,
-        int month
+        Integer year,
+        Integer month
     ) {
         LOG.debug("called.");
         try {

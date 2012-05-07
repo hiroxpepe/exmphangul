@@ -10,24 +10,19 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */ 
+ */
 
-package org.examproject.tweet.repository
+package org.examproject.tweet.service
 
-import java.lang.Long
 import java.util.List
 
-import org.springframework.data.jpa.repository.JpaRepository
-
-import org.examproject.tweet.entity.Word
+import org.examproject.tweet.dto.TweetDto
 
 /**
  * @author hiroxpepe
  */
-trait WordRepository extends JpaRepository[Word, Long] {
+trait RecentService {
     
-    def findById(id: Long): Word
+    def getTweetListByName(userName: String): List[TweetDto]
     
-    def findByText(text: String): List[Word]
-
 }
