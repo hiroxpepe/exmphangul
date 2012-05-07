@@ -98,7 +98,7 @@ div.menu {
  */
 div.content {
     width: 70%;
-    min-height: 970px;
+    min-height: 720px;
     height: auto;
     float: left;
     text-align: left;
@@ -164,6 +164,7 @@ div.header-content {
             border-radius: 4px;
         }
     span.header-title {
+        cursor: pointer;
         font-size: xx-large;
         font-weight: bold;
     }

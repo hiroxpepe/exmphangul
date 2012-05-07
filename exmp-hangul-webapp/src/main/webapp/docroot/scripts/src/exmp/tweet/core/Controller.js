@@ -87,10 +87,20 @@ exmp.tweet.core.Controller = window;{
     // private methods
     
     /**
+     * an event handler that called when
+     * the div of tirle is clicked.
+     */
+    exmp.tweet.core.Controller._headerTitleDivOnClick = function() {
+        $("div.container")
+            .toggleClass(
+                "wide", 300
+            );
+    }
+    
+    /**
      * initializes a div of the tabs area.
      */
     exmp.tweet.core.Controller._initializeTabsDiv = function() {
-        
         $("div.tab-content div.tab").hide();
         $("div.tab-content div.tab:first").show();
         $("div.tab-content ul li:first").addClass("active");
@@ -211,6 +221,10 @@ exmp.tweet.core.Controller = window;{
         
         $("#setting-button").click(function() {
             controller._doSettingButtonOnClick();
+        });
+        
+        $("span.header-title").click(function() {
+            controller._headerTitleDivOnClick();
         });
         
         // and do a some initialize.
