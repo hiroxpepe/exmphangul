@@ -7,22 +7,22 @@
     <c:if test="${not empty tweetForm.userId}">
         <%-- insert the profile content --%>
         <tiles:insertTemplate 
-            template="/WEB-INF/views/_profile.jsp"
+            template="/WEB-INF/views/sidebar/_profile.jsp"
         />
         
         <%-- insert the calendar content --%>
         <tiles:insertTemplate 
-            template="/WEB-INF/views/_calendar.jsp"
+            template="/WEB-INF/views/sidebar/_calendar.jsp"
         />
         
         <%-- insert the tagcrowd content --%>
         <tiles:insertTemplate 
-            template="/WEB-INF/views/_tagcrowd.jsp"
+            template="/WEB-INF/views/sidebar/_tagcrowd.jsp"
         />
         
         <%-- insert the recent content --%>
         <tiles:insertTemplate 
-            template="/WEB-INF/views/_recent.jsp"
+            template="/WEB-INF/views/sidebar/_recent.jsp"
         />
     </c:if>
     

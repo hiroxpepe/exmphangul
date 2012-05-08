@@ -23,6 +23,7 @@
                 <fmt:message key="index.label.hangul" />
             </div>
             <div class="block">
+                caret start=<span class="caretStart"></span>
                 <textarea id="tweet"></textarea>
             </div>
             

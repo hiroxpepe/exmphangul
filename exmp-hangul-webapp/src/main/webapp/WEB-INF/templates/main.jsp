@@ -12,6 +12,7 @@
         <link rel="stylesheet" type="text/css" href="<c:url value="/docroot/styles/exmp-hangul.css" />" />
         <script language="javascript" type="text/javascript" src="<c:url value="/docroot/scripts/jquery.js" />"></script>
         <script language="javascript" type="text/javascript" src="<c:url value="/docroot/scripts/jquery-ui.custom.min.js" />"></script>
+        <script language="javascript" type="text/javascript" src="<c:url value="/docroot/scripts/jquery.caret.min.js" />"></script>
         <script language="javascript" type="text/javascript" src="<c:url value="/docroot/scripts/jquery.json.js" />"></script>
         <script language="javascript" type="text/javascript" src="<c:url value="/docroot/scripts/utf.js" />"></script>
         <script language="javascript" type="text/javascript" src="<c:url value="/docroot/scripts/exmp-hangul.min.js" />"></script>

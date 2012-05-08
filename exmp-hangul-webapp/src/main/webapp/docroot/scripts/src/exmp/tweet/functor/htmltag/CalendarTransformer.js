@@ -111,7 +111,7 @@ exmp.tweet.functor.htmltag.CalendarTransformer = {
                 else {
                     td.innerHTML = day;
                 }
-                td.className = this._daynames[d % 7];
+                td.className = this._daynames[d % 7].toLowerCase();
             }
             tr.appendChild(td);
             if (d % 7 == 6) {

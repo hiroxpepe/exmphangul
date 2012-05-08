@@ -8,16 +8,16 @@
         </div>
         <table>
             <tr>
-                <th id="g">&#12593;</th>
-                <th id="kk">&#12594;</th>
-                <th id="n">&#12596;</th>
-                <th id="d">&#12599;</th>
-                <th id="tt">&#12600;</th>
-                <th id="r">&#12601;</th>
-                <th id="m">&#12609;</th>
-                <th id="b">&#12610;</th>
-                <th id="pp">&#12611;</th>
-                <th id="s">&#12613;</th>
+                <th id="g" class="hangul">&#12593;</th>
+                <th id="kk" class="hangul">&#12594;</th>
+                <th id="n" class="hangul">&#12596;</th>
+                <th id="d" class="hangul">&#12599;</th>
+                <th id="tt" class="hangul">&#12600;</th>
+                <th id="r" class="hangul">&#12601;</th>
+                <th id="m" class="hangul">&#12609;</th>
+                <th id="b" class="hangul">&#12610;</th>
+                <th id="pp" class="hangul">&#12611;</th>
+                <th id="s" class="hangul">&#12613;</th>
             </tr>
             <tr>
                 <td>g</td>
@@ -32,15 +32,15 @@
                 <td>s</td>
             </tr>
             <tr>
-                <th id="ss">&#12614;</th>
-                <th id="ng">&#12615;</th>
-                <th id="j">&#12616;</th>
-                <th id="jj">&#12617;</th>
-                <th id="ch">&#12618;</th>
-                <th id="k">&#12619;</th>
-                <th id="t">&#12620;</th>
-                <th id="p">&#12621;</th>
-                <th id="h">&#12622;</th>
+                <th id="ss" class="hangul">&#12614;</th>
+                <th id="ng" class="hangul">&#12615;</th>
+                <th id="j" class="hangul">&#12616;</th>
+                <th id="jj" class="hangul">&#12617;</th>
+                <th id="ch" class="hangul">&#12618;</th>
+                <th id="k" class="hangul">&#12619;</th>
+                <th id="t" class="hangul">&#12620;</th>
+                <th id="p" class="hangul">&#12621;</th>
+                <th id="h" class="hangul">&#12622;</th>
             </tr>
             <tr>
                 <td>ss</td>
@@ -64,17 +64,17 @@
         </div>
         <table>
             <tr>
-                <th id="a">&#12623;</th>
-                <th id="ae">&#12624;</th>
-                <th id="ya">&#12625;</th>
-                <th id="yae">&#12626;</th>
-                <th id="eo">&#12627;</th>
-                <th id="e">&#12628;</th>
-                <th id="yeo">&#12629;</th>
-                <th id="ye">&#12630;</th>
-                <th id="o">&#12631;</th>
-                <th id="wa">&#12632;</th>
-                <th id="wae">&#12633;</th>
+                <th id="a" class="hangul">&#12623;</th>
+                <th id="ae" class="hangul">&#12624;</th>
+                <th id="ya" class="hangul">&#12625;</th>
+                <th id="yae" class="hangul">&#12626;</th>
+                <th id="eo" class="hangul">&#12627;</th>
+                <th id="e" class="hangul">&#12628;</th>
+                <th id="yeo" class="hangul">&#12629;</th>
+                <th id="ye" class="hangul">&#12630;</th>
+                <th id="o" class="hangul">&#12631;</th>
+                <th id="wa" class="hangul">&#12632;</th>
+                <th id="wae" class="hangul">&#12633;</th>
             </tr>
             <tr>
                 <td>a</td>
@@ -90,16 +90,16 @@
                 <td>wae</td>
             </tr>
             <tr>
-                <th id="oe">&#12634;</th>
-                <th id="yo">&#12635;</th>
-                <th id="u">&#12636;</th>
-                <th id="wo">&#12637;</th>
-                <th id="we">&#12638;</th>
-                <th id="wi">&#12639;</th>
-                <th id="yu">&#12640;</th>
-                <th id="eu">&#12641;</th>
-                <th id="ui">&#12642;</th>
-                <th id="i">&#12643;</th>
+                <th id="oe" class="hangul">&#12634;</th>
+                <th id="yo" class="hangul">&#12635;</th>
+                <th id="u" class="hangul">&#12636;</th>
+                <th id="wo" class="hangul">&#12637;</th>
+                <th id="we" class="hangul">&#12638;</th>
+                <th id="wi" class="hangul">&#12639;</th>
+                <th id="yu" class="hangul">&#12640;</th>
+                <th id="eu" class="hangul">&#12641;</th>
+                <th id="ui" class="hangul">&#12642;</th>
+                <th id="i" class="hangul">&#12643;</th>
             </tr>
             <tr>
                 <td>oe</td>

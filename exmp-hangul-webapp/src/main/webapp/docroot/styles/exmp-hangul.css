@@ -588,32 +588,32 @@ div.tweet-list-content {
             width: 2em;
             text-align: center;
         }
-            table.calendar-table th.Su { 
+            table.calendar-table th.su { 
                 background-color: #ffcccc;
                 border-radius: 2px;
             }
-            table.calendar-table th.Sa { 
+            table.calendar-table th.sa { 
                 background-color: #ccccff;
                 border-radius: 2px;
             }
-            table.calendar-table td.Su { 
+            table.calendar-table td.su { 
                 background-color: #ffcccc;
                 border-radius: 2px;
             }
-            table.calendar-table td.Sa { 
+            table.calendar-table td.sa { 
                 background-color: #ccccff;
                 border-radius: 2px;
             }
-            table.calendar-table td.Su td.Mo td.Tu td.We td.Th td.Fr td.Sa a {
+            table.calendar-table td.su td.mo td.tu td.we td.th td.fr td.sa a {
                 text-decoration: none;
             }
-            table.calendar-table td.Su td.Mo td.Tu td.We td.Th td.Fr td.Sa a:active {
+            table.calendar-table td.su td.mo td.tu td.we td.th td.fr td.sa a:active {
                 text-decoration: none;
             }
-            table.calendar-table td.Su td.Mo td.Tu td.We td.Th td.Fr td.Sa a:visited {
+            table.calendar-table td.su td.mo td.tu td.we td.th td.fr td.sa a:visited {
                 text-decoration: none;
             }
-            table.calendar-table td.Su td.Mo td.Tu td.We td.Th td.Fr td.Sa a:hover {
+            table.calendar-table td.su td.mo td.tu td.we td.th td.fr td.sa a:hover {
                 text-decoration: none;
             }
         
@@ -667,33 +667,6 @@ div.recent-content {
     }
         div.recent-div a.recent-a:hover {
             font-weight: bold;
-        }
-        
-/* ****************************************************************************
- * define the appearance of the alphabet grid content.
- */
-div.alphabet {
-    width: 1px;
-    height: 1px;
-    background: white;
-    padding: 0.25em;
-    padding-bottom: 1em;
-}
-    div.alphabet table {
-        border: 1px solid gainsboro;
-        border-collapse: collapse;
-        border-spacing: 0;
-    }
-        div.alphabet table th {
-            background-color: #f3f3f3;
-            border: 1px solid gainsboro;
-            text-align: center;
-            padding: 0.3em;
-        }
-        div.alphabet table td {
-            border: 1px solid gainsboro;
-            text-align: center;
-            padding: 0.3em;
         }
         
 /* ****************************************************************************
@@ -751,4 +724,34 @@ div.alphabet {
             margin-bottom: 0.5em;
             font-size: xx-small;
             color: silver;
+        }
+        
+/* ****************************************************************************
+ * define the appearance of the alphabet grid content.
+ */
+div.alphabet {
+    width: 1px;
+    height: 1px;
+    background: white;
+    padding: 0.25em;
+    padding-bottom: 1em;
+}
+    div.alphabet table {
+        border: 1px solid gainsboro;
+        border-collapse: collapse;
+        border-spacing: 0;
+    }
+        div.alphabet table th {
+            background-color: #f3f3f3;
+            border: 1px solid gainsboro;
+            text-align: center;
+            padding: 0.3em;
+        }
+            th.hangul {
+                cursor: pointer;
+            }
+        div.alphabet table td {
+            border: 1px solid gainsboro;
+            text-align: center;
+            padding: 0.3em;
         }

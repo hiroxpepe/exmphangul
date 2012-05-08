@@ -248,5 +248,18 @@ exmp.tweet.core.Controller = window;{
                 $("#user-description").hide();
             }
         );
+            
+        // add
+        $("#tweet").keydown(function() {
+            $("span.caretStart").text($(this).caret().start);
+        });
+        $("#tweet").keypress(function() {
+            $("span.caretStart").text($(this).caret().start);
+        });
+//        $("#tweet").mousemove(function() {
+//            $("span.caretStart").text($(this).caret().start);
+//        });
+        
+        exmp.hangul.functor.event.ClickHangulClosure.execute(null);
     }
 }
