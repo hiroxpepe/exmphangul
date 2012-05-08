@@ -14,7 +14,7 @@
 
 package org.examproject.tweet.dto
 
-import java.util.Date
+import java.lang.Integer
 
 import reflect.BeanProperty
 
@@ -29,11 +29,10 @@ class TagcrowdDto {
     @BeanProperty
     var text: String = _
     
-    // must string class!!
-    @BeanProperty
-    var statusId: String = _
-    
     @BeanProperty
     var linkUrl: String = _
+    
+    @BeanProperty
+    var count: Integer = _
     
 }

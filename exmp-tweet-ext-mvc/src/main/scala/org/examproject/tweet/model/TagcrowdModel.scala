@@ -14,6 +14,8 @@
 
 package org.examproject.tweet.model
 
+import java.lang.Integer
+
 import reflect.BeanProperty
 
 /**
@@ -27,11 +29,10 @@ class TagcrowdModel {
     @BeanProperty
     var text: String = _
     
-    // must string class!!
-    @BeanProperty
-    var statusId: String = _
-    
     @BeanProperty
     var linkUrl: String = _
+    
+    @BeanProperty
+    var count: Integer = _
 
 }

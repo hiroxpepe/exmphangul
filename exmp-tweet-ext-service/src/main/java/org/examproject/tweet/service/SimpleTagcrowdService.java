@@ -15,11 +15,14 @@
 package org.examproject.tweet.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 import java.util.List;
 import javax.inject.Inject;
-
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.Transformer;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.context.ApplicationContext;
@@ -39,7 +42,7 @@ import org.examproject.tweet.util.SentenceToWordsTransformer;
  * @author hiroxpepe
  */
 public class SimpleTagcrowdService implements TagcrowdService {
- 
+    
     private static final Log LOG = LogFactory.getLog(
         SimpleTagcrowdService.class
     );
@@ -65,30 +68,51 @@ public class SimpleTagcrowdService implements TagcrowdService {
      */
     @Override
     public List<TagcrowdDto> getTagcrowdListByName(
-        String username
+        String userName
     ) {
         LOG.debug("called.");
         try {
             List<TagcrowdDto> tagcrowdDtoList = new ArrayList<TagcrowdDto>();
-            List<Vocab> vocabList = vocabRepository.findByName(username);
-            List<String> tmpStrList = new ArrayList<String>();
+            Map<String, Integer> tmpWordMap = new HashMap<String, Integer>();
+            
+            // get the vocab entity list.
+            List<Vocab> vocabList = vocabRepository.findByName(userName);
+            
+            // get the word count.
             for (Vocab vocab : vocabList) {
                 Word word = vocab.getWord();
-                if (tmpStrList.contains(word.getText())) {
-                    continue;
+                String wordText = word.getText();
+                if (tmpWordMap.containsKey(wordText)) {
+                    Integer count = tmpWordMap.get(wordText);
+                    tmpWordMap.put(wordText, count + 1);
                 }
+                else {
+                    tmpWordMap.put(wordText, 1);
+                }
+            }
+            
+            // map to the tagcrowd dto.
+            Iterator it = tmpWordMap.keySet().iterator();
+            while (it.hasNext()) {
+                String keyWord = (String) it.next();
+                Integer count = tmpWordMap.get(keyWord);
+                
+                // create the link url.
+                StringBuilder sb = new StringBuilder();
+                sb.append("/word/")
+                  .append(userName)
+                  .append("/")
+                  .append(keyWord)
+                  .append(".html");
+                String linkUrl = sb.toString();
+                
+                // map to the tagcrowd dto.
                 TagcrowdDto tagcrowdDto = context.getBean(TagcrowdDto.class);
-                tagcrowdDto.setStatusId(String.valueOf(vocab.getStatus().getId()));
-                tagcrowdDto.setUserName(vocab.getName());
-                tagcrowdDto.setText(word.getText());
-                tagcrowdDto.setLinkUrl(
-                    "/word/" + 
-                    username + 
-                    "/" + word.getText() +
-                    ".html"
-                );
+                tagcrowdDto.setUserName(userName);
+                tagcrowdDto.setText(keyWord);
+                tagcrowdDto.setLinkUrl(linkUrl);
+                tagcrowdDto.setCount(count);
                 tagcrowdDtoList.add(tagcrowdDto);
-                tmpStrList.add(word.getText());
             }
             
             // return the object list.
@@ -110,28 +134,34 @@ public class SimpleTagcrowdService implements TagcrowdService {
     ) {
         LOG.debug("called.");
         try {
-            List<TagcrowdDto> tagcrowdDtoList = null;
             Long statusId = Long.parseLong(tweetDto.getStatusId());
             String content = tweetDto.getText();
-            String username = tweetDto.getUserName();
+            String userName = tweetDto.getUserName();
+            
+            // get the korean word only.
             Predicate predicate = new IsContainKrHangulCodePredicate();
             boolean isNeed = predicate.evaluate(content);
             if (isNeed) {
+                
+                // split words from the sentence.
                 Transformer transformer = new SentenceToWordsTransformer();
                 String[] words = (String[]) transformer.transform(content);
+                
+                // process all words.
                 for (int i = 0; i < words.length; i++) {
                     String oneWord = words[i];
                     boolean isKr = predicate.evaluate(oneWord);
                     if (isKr) {
-                        ///////////////////////////////////////////////////////
+                        
                         // get the vocab entity.
                         Vocab vocab = context.getBean(Vocab.class);
-                        ///////////////////////////////////////////////////////
+                        
                         // get the word id.
-                        Long wordId = null;
                         List<Word> wordList = wordRepository.findByText(oneWord);
-                        // if the new word. 
+                        
+                        // if the new word.
                         if (wordList.isEmpty()) {
+                            
                             // create this word.
                             Word wordEntity = context.getBean(Word.class);
                             wordEntity.setText(oneWord);
@@ -143,15 +173,18 @@ public class SimpleTagcrowdService implements TagcrowdService {
                             Word wordEntity = wordList.get(0);
                             vocab.setWord(wordEntity);
                         }
-                        ///////////////////////////////////////////////////////
+                        
                         // set vocabulary this tweet!
                         Tweet tweet = tweetRepository.findById(statusId);
                         vocab.setStatus(tweet);
-                        vocab.setName(username);
+                        vocab.setName(userName);
                         vocabRepository.save(vocab);
                     }
                 }
             }
+            
+            // TODO: return tagcrowd dto list..
+            List<TagcrowdDto> tagcrowdDtoList = null;
             return tagcrowdDtoList;
         } catch(Exception e) {
             LOG.error("an error occurred: " + e.getMessage());

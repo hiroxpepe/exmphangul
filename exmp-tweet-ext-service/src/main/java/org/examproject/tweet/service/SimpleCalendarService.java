@@ -82,6 +82,7 @@ public class SimpleCalendarService implements CalendarService{
             for (int i = 0; i < 31; i++) {
                 CalendarDto calendarDto = context.getBean(CalendarDto.class);
                 calendarDto.setDay(i + 1);
+                calendarDto.setCount(0);
                 calendarDtoList.add(calendarDto);
             }
             
@@ -99,6 +100,7 @@ public class SimpleCalendarService implements CalendarService{
                     ".html"
                 );
                 calendarDto.setIsExist(true);
+                calendarDto.setCount(calendarDto.getCount() + 1);
             }
             
             // return the object list.

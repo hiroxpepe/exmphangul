@@ -36,4 +36,7 @@ class CalendarDto {
     @BeanProperty
     var isExist: Boolean = false
     
+    @BeanProperty
+    var count: Integer = _
+    
 }

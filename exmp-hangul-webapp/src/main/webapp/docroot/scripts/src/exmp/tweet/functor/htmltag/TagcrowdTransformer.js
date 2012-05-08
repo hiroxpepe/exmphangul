@@ -34,14 +34,16 @@ exmp.tweet.functor.htmltag.TagcrowdTransformer = {
             for (var i = 0; i < obj.tagcrowdModelList.length; i++) {
                 
                 // get the value
-                var statusId = obj.tagcrowdModelList[i].statusId;
+                /*var statusId = obj.tagcrowdModelList[i].statusId;*/
                 var text = obj.tagcrowdModelList[i].text;
                 var link = obj.tagcrowdModelList[i].linkUrl;
-                
+                var count = obj.tagcrowdModelList[i].count;
+
                 // create an html tag.
                 html += "<span class='tagcrowd-span'>" +
                             "<a href='" + link + 
-                                "' id='tagcrowd-a-" + statusId + 
+                                "' title='" + count + " tweets" +
+                                /*"' id='tagcrowd-a-" + statusId + */
                                 "' class='tagcrowd-a'>" + text + 
                             "</a>" +
                         "</span>";

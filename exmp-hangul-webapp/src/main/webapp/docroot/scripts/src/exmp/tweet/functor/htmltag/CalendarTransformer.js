@@ -101,9 +101,10 @@ exmp.tweet.functor.htmltag.CalendarTransformer = {
             if (calendar[m][d]) {
                 var day = calendar[m][d];
                 var link = this._getLinkUrl(day, obj);
+                var count = this._getTweetCount(day, obj);
                 if (link) {
                     td.innerHTML = 
-                        "<a href='" + link + "'>" + 
+                        "<a href='" + link + "' title='" + count + " tweets'>" + 
                             "<b>" + day + "</b>" + 
                         "</a>";
                 }
@@ -138,6 +139,16 @@ exmp.tweet.functor.htmltag.CalendarTransformer = {
             if ((obj.calendarModelList[i].day == day) && 
                 (obj.calendarModelList[i].isExist == true)) {
                 return obj.calendarModelList[i].linkUrl;
+            }
+        }
+        return null;
+    },
+    
+    _getTweetCount: function(day, obj) {
+        for (var i = 0; i < obj.calendarModelList.length; i++) {
+            if ((obj.calendarModelList[i].day == day) && 
+                (obj.calendarModelList[i].isExist == true)) {
+                return obj.calendarModelList[i].count;
             }
         }
         return null;
