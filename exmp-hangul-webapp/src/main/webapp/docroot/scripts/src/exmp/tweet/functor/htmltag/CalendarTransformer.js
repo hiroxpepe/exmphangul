@@ -104,8 +104,8 @@ exmp.tweet.functor.htmltag.CalendarTransformer = {
                 var count = this._getTweetCount(day, obj);
                 if (link) {
                     td.innerHTML = 
-                        "<a href='" + link + "' title='" + count + " tweets'>" + 
-                            "<b>" + day + "</b>" + 
+                        "<a class='day-a' href='" + link + "' title='" + count + " tweets'>" + 
+                            day + 
                         "</a>";
                 }
                 else {

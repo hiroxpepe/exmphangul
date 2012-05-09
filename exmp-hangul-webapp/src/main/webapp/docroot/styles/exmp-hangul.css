@@ -584,9 +584,18 @@ div.tweet-list-content {
             text-align: center;
             font-size: 70%;
         }
-        div.calendar table.calendar-table td, th {
+        div.calendar table.calendar-table caption {
+            color: dimgray;
+        }
+        div.calendar table.calendar-table th {
             width: 2em;
             text-align: center;
+            color: dimgray;
+        }
+        div.calendar table.calendar-table td {
+            width: 2em;
+            text-align: center;
+            color: gray;
         }
             table.calendar-table th.su { 
                 background-color: #ffcccc;
@@ -604,17 +613,18 @@ div.tweet-list-content {
                 background-color: #ccccff;
                 border-radius: 2px;
             }
-            table.calendar-table td.su td.mo td.tu td.we td.th td.fr td.sa a {
-                text-decoration: none;
+            table.calendar-table a.day-a {
+                color: #777799;
             }
-            table.calendar-table td.su td.mo td.tu td.we td.th td.fr td.sa a:active {
-                text-decoration: none;
+            table.calendar-table a.day-a:active {
+                color: #777799;
             }
-            table.calendar-table td.su td.mo td.tu td.we td.th td.fr td.sa a:visited {
-                text-decoration: none;
+            table.calendar-table a.day-a:visited {
+                color: #777799;
             }
-            table.calendar-table td.su td.mo td.tu td.we td.th td.fr td.sa a:hover {
-                text-decoration: none;
+            table.calendar-table a.day-a:hover {
+                font-weight: bold;
+                color: #777799;
             }
         
 /* ****************************************************************************
