@@ -7,7 +7,7 @@
         
     <%-- insert the alphabet table --%>
     <tiles:insertTemplate 
-        template="/WEB-INF/views/_alphabetGrid.jsp"
+        template="/WEB-INF/views/content/_alphabetGrid.jsp"
     />
     
     <form:form  id="tweet-form" modelAttribute="tweetForm">
@@ -23,7 +23,8 @@
                 <fmt:message key="index.label.hangul" />
             </div>
             <div class="block">
-                caret start=<span class="caretStart"></span>
+                <%--caret start=<span class="caretStart"></span>--%>
+                <input type="hidden" id="caretStart" value="">
                 <textarea id="tweet"></textarea>
             </div>
             
@@ -59,7 +60,7 @@
         <c:if test="${not empty tweetForm.userId}">
             <%-- insert the tab content template. --%>
             <tiles:insertTemplate 
-            template="/WEB-INF/views/_tabContent.jsp"
+            template="/WEB-INF/views/content/_tabContent.jsp"
             />
         </c:if>
         

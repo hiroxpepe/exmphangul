@@ -21,34 +21,53 @@
  */
 exmp.hangul.functor.event.ClickHangulClosure = {
     
+    _letterArray: [
+        "g","kk","n","d","tt","r","m","b","pp","s",
+        "ss","ng","j","jj","ch","k","t","p","h",
+        "a","ae","ya","yae","eo","e","yeo","ye","o","wa","wae",
+        "oe","yo","u","wo","we","wi","yu","eu","ui","i"
+    ],
+    
     ///////////////////////////////////////////////////////////////////////////
     // public methods
     
     execute: function(obj) {
-        console.log("exmp.hangul.functor.event.ClickHangulClosure#execute");
+        //console.log("exmp.hangul.functor.event.ClickHangulClosure#execute");
         
-        this._addHangul();
+        this._createEventHandler();
     },
     
     ///////////////////////////////////////////////////////////////////////////
     // private methods
     
-    _addHangul: function() {
-        $("#g").click(function() {
-            console.log("click g");
-            
-            var caret = $("span.caretStart").text();
-            console.log("caret: " + caret);
-            
-            var tweet = $("#tweet").val();
-            var leftStr = tweet.substring(0, caret);
-            var rightStr = tweet.substring(caret);
-            console.log("leftStr:" + leftStr);
-            console.log("rightStr:" + rightStr);
-            
-            $("#tweet").val(leftStr + $("#g").html() + rightStr);
-        });
+    _createEventHandler: function() {
         
+        // create the event handler.
+        for (var i = 0; i < this._letterArray.length; i++) {
+            var letter = this._letterArray[i];
+            // click
+            $("#" + letter).click(function(event) {
+                var caret = $("#caretStart").val();
+                var tweet = $("#tweet").val();
+                var leftStr = tweet.substring(0, caret);
+                var rightStr = tweet.substring(caret);
+                $("#tweet").val(leftStr + event.target.innerText + rightStr);
+            });
+            // mouseover
+            $("#" + letter).mouseover(function(event) {
+                $("#" + event.target.id).css({
+                    color: "black",
+                    backgroundColor: "lavender"
+                });
+            });
+            // mouseout
+            $("#" + letter).mouseout(function(event) {
+                $("#" + event.target.id).css({
+                    color: "black",
+                    backgroundColor: "#f3f3f3"
+                });
+            });
+        }
     }
     
 }

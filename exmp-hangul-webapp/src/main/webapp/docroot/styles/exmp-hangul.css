@@ -371,7 +371,7 @@ div.content-wrapper {
         border-radius: 3px;
     }
     div.tweet-command-block {
-        padding: 0.5em 0.5em 0em 0.5em;
+        padding: 0.5em 0.25em 0em 0.25em;
         text-align: right;
     }
     
@@ -427,19 +427,19 @@ div.setting-content {
         width: 100%;
     }
         table.setting-table td.label-td {
-            width: 20%;
+            width: 25%;
             padding: 0 0.5em 0 0;
             text-align: right;
         }
         table.setting-table td.input-td {
-            width: 80%;
+            width: 75%;
         }
             table.setting-table td.input-td input {
                 border: 1px solid gainsboro;
                 border-radius: 2px;
             }
     div.setting-command-block {
-        padding: 0.5em 0 0.5em 0;
+        padding: 0.5em 0.65em 0.5em 0.65em;
         text-align: right;
     }
         

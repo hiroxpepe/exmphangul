@@ -180,6 +180,7 @@ exmp.tweet.core.Controller = window;{
         var controller = exmp.tweet.core.Controller;
         var eventClosure = exmp.hangul.functor.event.KeyupEventClosure; 
         var colorClosure = exmp.hangul.functor.event.KeyupColorClosure;
+        var hangulClosure = exmp.hangul.functor.event.ClickHangulClosure;
         
         // calls for the initialization methods.
         
@@ -249,17 +250,18 @@ exmp.tweet.core.Controller = window;{
             }
         );
             
-        // add
+        // get the caret position. 
         $("#tweet").keydown(function() {
-            $("span.caretStart").text($(this).caret().start);
+            $("#caretStart").val($(this).caret().start);
+        }).keypress(function() {
+            $("#caretStart").val($(this).caret().start);
+        }).mousemove(function() {
+            $("#caretStart").val($(this).caret().start);
         });
-        $("#tweet").keypress(function() {
-            $("span.caretStart").text($(this).caret().start);
-        });
-//        $("#tweet").mousemove(function() {
-//            $("span.caretStart").text($(this).caret().start);
-//        });
         
-        exmp.hangul.functor.event.ClickHangulClosure.execute(null);
+        // create the click handler.
+        hangulClosure.execute(
+            null
+        );
     }
 }
