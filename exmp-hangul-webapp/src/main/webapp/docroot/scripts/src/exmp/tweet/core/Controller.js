@@ -104,7 +104,7 @@ exmp.tweet.core.Controller = window;{
         $("div.tab-content div.tab").hide();
         $("div.tab-content div.tab:first").show();
         $("div.tab-content ul li:first").addClass("active");
-        $("div.tab-content ul li a").click(function(){
+        $("div.tab-content ul li a").click(function() {
             $("div.tab-content ul li").removeClass("active");
             $(this).parent().addClass("active");
             var currentTab = $(this).attr("href");
@@ -264,4 +264,5 @@ exmp.tweet.core.Controller = window;{
             null
         );
     }
+    
 }

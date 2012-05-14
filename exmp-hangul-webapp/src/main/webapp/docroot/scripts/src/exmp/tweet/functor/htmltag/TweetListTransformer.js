@@ -70,8 +70,11 @@ exmp.tweet.functor.htmltag.TweetListTransformer = {
                             "<span id='id-" + statusId + "'>" + text + "</span>" +
                         "</td>" +
                     "</tr>";
+                
+                // TODO: tmp..
+                if (i == 25) { break; }
             }
-            table += "</table>";
+            table += "</table>"; 
         }
         return table;
         

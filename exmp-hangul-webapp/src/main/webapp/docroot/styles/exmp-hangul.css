@@ -64,6 +64,7 @@ div.container {
     border-right: 1px solid gainsboro;
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
+    box-shadow: 0 0 4px 0 gainsboro;
 }
     div.container.wide {
         width: 950px;
@@ -296,6 +297,7 @@ input.command-button {
         background: darkgray;
         border: 1px solid #d2b48c;
         border-radius: 4px;
+        box-shadow: 0 0 4px 0 gainsboro;
     }
 
 /* ****************************************************************************
@@ -310,21 +312,22 @@ a.command-anchor {
     border: 1px solid #aaaaaa;
     border-radius: 5px;
 }
-a.command-anchor:active {
-    text-decoration: none;
-    color: white;
-}
-a.command-anchor:visited {
-    text-decoration: none;
-    color: white;
-}
-a.command-anchor:hover {
-    text-decoration: none;
-    color: white;
-    background: darkgray;
-    border: 1px solid #d2b48c;
-    border-radius: 4px;
-}
+    a.command-anchor:active {
+        text-decoration: none;
+        color: white;
+    }
+    a.command-anchor:visited {
+        text-decoration: none;
+        color: white;
+    }
+    a.command-anchor:hover {
+        text-decoration: none;
+        color: white;
+        background: darkgray;
+        border: 1px solid #d2b48c;
+        border-radius: 5px;
+        box-shadow: 0 0 4px 0 gainsboro;
+    }
     
 /* ****************************************************************************
  * additional configuration
@@ -339,6 +342,7 @@ div.login-content {
     text-align: center;
     border: 1px solid gainsboro;
     border-radius: 5px;
+    box-shadow: 0 0 4px 0 gainsboro;
 }
     p.login-description {
         font-size: 80%;
@@ -365,6 +369,7 @@ div.content-wrapper {
     background: white;
     border: 1px solid gainsboro;
     border-radius: 5px;
+    box-shadow: 0 0 2px 0 gainsboro;
 }
     div.content-wrapper textarea {
         border: 1px solid gainsboro;
@@ -399,6 +404,7 @@ div.tab-content {
         border-left: 1px solid wheat;
         border-right: 1px solid wheat;
         border-radius: 5px 5px 0px 0px;
+        box-shadow: 0 0 2px 0 wheat;
     }
     div.tab-content ul li.active a {
         color: #333333;
@@ -415,6 +421,7 @@ div.tab-content {
         background: lightyellow;
         border: 1px solid wheat;
         border-radius: 5px;
+        box-shadow: 0 0 2px 0 wheat;
     }
     
 /* ****************************************************************************
@@ -547,12 +554,14 @@ div.tweet-list-content {
     background: white;
     border: 1px solid gainsboro;
     border-radius: 6px;
+    box-shadow: 0 0 1px 0 lightsteelblue;
  }
     div.profile-content table td {
         padding: 0.25em;
         vertical-align: top;
     }
     div.profile-content table td div.profileName {
+        color: #4d4d4d;
         font-size: small;
     }
     div.profile-content table td div.show-profile {
@@ -561,6 +570,7 @@ div.tweet-list-content {
         color: silver;
     }
     div.profile-content table td div.description {
+        color: #4d4d4d;
         font-size: xx-small;
     }
     div.profile-content img {
@@ -576,6 +586,7 @@ div.tweet-list-content {
     background: white;
     border: 1px solid gainsboro;
     border-radius: 6px;
+    box-shadow: 0 0 1px 0 lightsteelblue;
  }
     div.calendar-content div.calendar {
     }
@@ -585,12 +596,12 @@ div.tweet-list-content {
             font-size: 70%;
         }
         div.calendar table.calendar-table caption {
-            color: dimgray;
+            color: #4d4d4d;
         }
         div.calendar table.calendar-table th {
             width: 2em;
             text-align: center;
-            color: dimgray;
+            color: #4d4d4d;
         }
         div.calendar table.calendar-table td {
             width: 2em;
@@ -636,6 +647,7 @@ div.tagcrowd-content {
     background: white;
     border: 1px solid gainsboro;
     border-radius: 6px;
+    box-shadow: 0 0 1px 0 lightsteelblue;
 }
     div.tagcrowd-content div.nodata {
         text-align: center;
@@ -662,6 +674,7 @@ div.recent-content {
     background: white;
     border: 1px solid gainsboro;
     border-radius: 6px;
+    box-shadow: 0 0 1px 0 lightsteelblue;
 }
     div.recent-content div.nodata {
         text-align: center;
@@ -695,6 +708,7 @@ div.recent-content {
         border-right: 1px solid gainsboro;
         border-top-left-radius: 5px;
         border-top-right-radius: 5px;
+        box-shadow: 0 0 2px 0 gainsboro;
     }
         div.permalink-header div.permalink-status-id {
             font-size: 80%;
@@ -721,6 +735,7 @@ div.recent-content {
         border: 1px solid gainsboro;
         border-bottom-left-radius: 5px;
         border-bottom-right-radius: 5px;
+        box-shadow: 0 0 2px 0 gainsboro;
     }
         div.permalink-wrapper table {
             width: 100%;

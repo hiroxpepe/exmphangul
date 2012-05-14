@@ -35,18 +35,9 @@ exmp.tweet.functor.dhtml.TagcrowdUpdateClosure = {
             )
         );
         
-        // if the page is a permalink.
-        if ($("div.permalink-content").height() > 0) {
-            // get the tagcrowd height.
-            var tagcrowdHeight = $("div.tagcrowd-content").height();
-
-            // get the content height.
-            var contentHeight = $("div.content").height();
-
-            // add the tagcrowd height to the content height.
-            $("div.content").height(
-                contentHeight + tagcrowdHeight
-            );
-        }
+        // add the tagcrowd height to the content min height.
+        var minHeight = $("div.content").css("min-height").replace("px", "");
+        var newMinHeight = parseInt(minHeight) + parseInt($("div.tagcrowd-content").height());
+        $("div.content").css("min-height", newMinHeight);
     }
 }
